@@ -134,5 +134,21 @@
 		"input": "𐑢𐑦𐑯𐑛",
 		"expected_csur": "\uE015\uE004\uE050\uE044",
 		"expected_hex": "U+E015 U+E004 U+E050 U+E044"
+	},
+	{
+		"id": "TC18",
+		"category": "Orphan Short Vowel - Article 'a'",
+		"description": "a: standalone schwa uses Telco Short Carrier (Everson U+E02E) + schwa-tehta under-dot (U+E045)",
+		"input": "𐑩",
+		"expected_csur": "\uE02E\uE045",
+		"expected_hex": "U+E02E U+E045"
+	},
+	{
+		"id": "TC19",
+		"category": "Velar Nasal Nwalme Mapping",
+		"description": "king: Quesse (U+E003) + Nwalme (U+E013) with attached i-tehta (U+E044)",
+		"input": "𐑒𐑦𐑙",
+		"expected_csur": "\uE003\uE013\uE044",
+		"expected_hex": "U+E003 U+E013 U+E044"
 	}
 ]

@@ -24,7 +24,7 @@ TENGWAR_CONSONANTS_FIXED = {
     "𐑠": ("\ue00e", "Anca"),
     "𐑥": ("\ue011", "Malta"),
     "𐑯": ("\ue010", "Númen"),
-    "𐑙": ("\ue012", "Noldo"),
+    "𐑙": ("\ue013", "Noldo"),
     "𐑢": ("\ue015", "Vala"),
     "𐑘": ("\ue016", "Anna"),
 }
