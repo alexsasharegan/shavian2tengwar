@@ -33,6 +33,7 @@ DIPHTHONGS = {
 
 NASAL_BAR_ABOVE = '\uE04E'
 ORE = '\uE014'
+EXTENDED_AMPA_LOGOGRAM = '\uE01D' # Appendix E standalone "of" logogram
 
 NASAL_PAIRS = {
     '𐑯𐑑': ('\uE010', '𐑑', 'Númen + Tinco'),
@@ -44,6 +45,21 @@ NASAL_PAIRS = {
 }
 
 ALL_VOWEL_CHARS = set(SHORT_VOWELS.keys()) | {'𐑰', '𐑵', '𐑭'} | set(DIPHTHONGS.keys()) | {'𐑸', '𐑹', '𐑺', '𐑽', '𐑻', '𐑼'}
+
+TENGWAR_PUNCTUATION = {
+    ',': '\uE060',  # Pusta (Single dot / bar pause)
+    '.': '\uE061',  # Double Pusta (Two dots / bars full stop)
+    ';': '\uE062',  # Ternary Stop
+    ':': '\uE062',  # Ternary Stop
+    '-': '\uE068',  # Tengwar Hyphen
+}
+
+def translate_punctuation(text: str) -> str:
+    """Translates standard ASCII punctuation marks into Tengwar PUA punctuation code points."""
+    out = []
+    for ch in text:
+        out.append(TENGWAR_PUNCTUATION.get(ch, ch))
+    return "".join(out)
 
 def get_encoding_config(use_csur: bool):
     """Returns encoding-specific code points for CSUR vs Everson 2001 (Alcarin)."""
@@ -80,6 +96,15 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     clean_word = word.replace('·', '')
     if not clean_word:
         return ""
+
+    # Check for standalone 'of' logogram (𐑝)
+    if clean_word == '𐑝':
+        if inspect:
+            print(f"\n=== INSPECTING WORD: '{word}' ===")
+            print("Step 0: Standalone 'of' (𐑝) -> Extended Ampa Logogram (U+E01D)")
+            print(f"Final Tengwar Output String: '{EXTENDED_AMPA_LOGOGRAM}'")
+            print(f"Final Hex Code Points:     U+E01D\n")
+        return EXTENDED_AMPA_LOGOGRAM
 
     cfg = get_encoding_config(use_csur)
 
@@ -289,7 +314,7 @@ def process_stream(text: str, inspect: bool = False, use_csur: bool = False) -> 
         if SHAVIAN_WORD_PATTERN.match(part):
             out.append(translate_word(part, inspect=inspect, use_csur=use_csur))
         else:
-            out.append(part)
+            out.append(translate_punctuation(part))
     return "".join(out)
 
 if __name__ == '__main__':
