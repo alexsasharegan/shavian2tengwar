@@ -33,11 +33,14 @@ Traditional English orthography is non-phonetic, making direct English-to-Tengwa
 
 The engine executes a 5-pass state machine on word-boundary isolated tokens (`TOKEN_SHAVIAN_WORD`) in **Following Consonant Mode** (vowel _tehtar_ attach to the _next_ consonant in the word):
 
-```text
-[ Input Stream ] ──► [ Tokenizer ] ──► TOKEN_PASSTHROUGH / ESCAPE ───────┐
-                          │                                              │
-                          ▼                                              ▼
-                 TOKEN_SHAVIAN_WORD ──► [ 5-Pass State Machine ] ──► [ Output Stream ]
+```mermaid
+flowchart LR
+    A["Input Stream"] --> B["Tokenizer"]
+    B --> C["TOKEN_PASSTHROUGH / ESCAPE"]
+    B --> D["TOKEN_SHAVIAN_WORD"]
+    D --> E["5-Pass State Machine"]
+    C --> F["Output Stream"]
+    E --> F
 ```
 
 1. **Pass 0 & 1: Normalization, Namer Dot Strip, & Big Five Logograms:**
@@ -125,8 +128,4 @@ The repository includes a test suite driven by `test_cases_everson_3.json`. The 
 ```bash
 # Test the Python reference implementation across all 26 cases
 python3 test_runner.py --cmd "python3 shavian2tengwar.py" --manifest test_cases_everson_3.json
-```
-
-```[cite: 28]
-
 ```
