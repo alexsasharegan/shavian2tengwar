@@ -21,7 +21,7 @@ Traditional English orthography is non-phonetic, making direct English-to-Tengwa
 ```text
 .
 ├── LICENSE
-├── main.py            # Primary Python CLI & translation engine
+├── shavian2tengwar.py            # Primary Python CLI & translation engine
 ├── test_cases.json    # Language-agnostic test case manifest
 └── test_runner.py     # Universal cross-implementation test harness
 ```
@@ -73,16 +73,16 @@ Because CSUR code points reside in the Unicode Private Use Area (`U+E000`–`U+E
 
 ```bash
 # Process string via pipe
-echo "𐑢𐑦𐑯𐑑𐑼" | python3 main.py
+echo "𐑢𐑦𐑯𐑑𐑼" | python3 shavian2tengwar.py
 
 # Process input file to output file
-python3 main.py < in.md > out.md
+python3 shavian2tengwar.py < in.md > out.md
 ```
 
 ### Direct Argument Processing
 
 ```bash
-python3 main.py "𐑦𐑯 𐑩 𐑣𐑴𐑤 𐑦𐑯 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑞𐑺 𐑤𐑦𐑝𐑛 𐑩 𐑣𐑪𐑚𐑦𐑑"
+python3 shavian2tengwar.py "𐑦𐑯 𐑩 𐑣𐑴𐑤 𐑦𐑯 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑞𐑺 𐑤𐑦𐑝𐑛 𐑩 𐑣𐑪𐑚𐑦𐑑"
 ```
 
 ### Interactive Word Inspector (`--inspect`)
@@ -90,7 +90,7 @@ python3 main.py "𐑦𐑯 𐑩 𐑣𐑴𐑤 𐑦𐑯 𐑞 𐑜𐑮𐑬𐑯𐑛 �
 Trace individual character state transitions, carrier flushes, and final CSUR hex outputs:
 
 ```bash
-python3 main.py --inspect "𐑢𐑦𐑯𐑑𐑼"
+python3 shavian2tengwar.py --inspect "𐑢𐑦𐑯𐑑𐑼"
 ```
 
 **Output:**
@@ -121,7 +121,7 @@ The repository includes a language-agnostic test suite driven by `test_cases.jso
 
 ```bash
 # Test the Python reference implementation
-python3 test_runner.py --cmd "python3 main.py"
+python3 test_runner.py --cmd "python3 shavian2tengwar.py"
 
 # Test future Go, Rust, or C++ implementations
 python3 test_runner.py --cmd "./shavian2tengwar_go"

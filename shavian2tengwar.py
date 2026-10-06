@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import sys
-import re
 import argparse
+import re
+import sys
 
 SHAVIAN_WORD_PATTERN = re.compile(r'([\u00B7\U00010450-\U0001047F]+)')
 
@@ -31,12 +31,13 @@ DIPHTHONGS = {
     '𐑿': ('\uE016', '\uE04C', 'YEW (Anna + u-tehta)'),
 }
 
+# R-Colored Vowels
 R_VOWELS = {
     '𐑸': ('\uE018', '\uE040', 'START (Rómen + a-tehta)'),
     '𐑹': ('\uE018', '\uE04A', 'NORTH (Rómen + o-tehta)'),
     '𐑺': ('\uE018', '\uE046', 'SQUARE (Rómen + e-tehta)'),
     '𐑽': ('\uE018', '\uE044', 'NEAR (Rómen + i-tehta)'),
-    '𐑻': ('\uE018', '\uE046', 'NURSE (Rómen + e-tehta)'),
+    '𐑻': ('\uE018', '\uE04C', 'NURSE (Rómen + u-tehta)'),  # Fixed: mapped to u-tehta (U+E04C)
     '𐑼': ('\uE014', None,     'lettER (Unadorned Óre)'),
 }
 
@@ -223,6 +224,9 @@ def translate_word(word: str, inspect: bool = False) -> str:
             i += 1
             continue
 
+        # Fallback for unexpected characters
+        if pending_vowel is not None:
+            flush_pending_vowel()
         output.append(c)
         i += 1
 

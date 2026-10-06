@@ -18,10 +18,10 @@
   {
     "id": "TC03",
     "category": "R-Colored Vowel Decomposition",
-    "description": "third: NURSE vowel decomposes into Romen + e-tehta",
+    "description": "third: NURSE vowel decomposes into Romen + tehta",
     "input": "𐑔𐑻𐑛",
-    "expected_csur": "\uE008\uE018\uE046\uE004",
-    "expected_hex": "U+E008 U+E018 U+E046 U+E004"
+    "expected_csur": "\uE008\uE018\uE04C\uE004",
+    "expected_hex": "U+E008 U+E018 U+E04C U+E004"
   },
   {
     "id": "TC04",
@@ -57,10 +57,50 @@
   },
   {
     "id": "TC08",
-    "category": "Big Four Abbreviation Pass-Through",
+    "category": "Big Five Abbreviation - the",
     "description": "the: single character maps directly to Anta base",
     "input": "𐑞",
     "expected_csur": "\uE00C",
     "expected_hex": "U+E00C"
+  },
+  {
+    "id": "TC09",
+    "category": "Big Five Abbreviation - of",
+    "description": "of: single character maps directly to Ampa base",
+    "input": "𐑝",
+    "expected_csur": "\uE00D",
+    "expected_hex": "U+E00D"
+  },
+  {
+    "id": "TC10",
+    "category": "Big Five Abbreviation - and",
+    "description": "and: single character maps directly to Numen base",
+    "input": "𐑯",
+    "expected_csur": "\uE010",
+    "expected_hex": "U+E010"
+  },
+  {
+    "id": "TC11",
+    "category": "Big Five Abbreviation - to",
+    "description": "to: single character maps directly to Tinco base",
+    "input": "𐑑",
+    "expected_csur": "\uE000",
+    "expected_hex": "U+E000"
+  },
+  {
+    "id": "TC12",
+    "category": "Big Five Abbreviation - for",
+    "description": "for: single character maps directly to Formen base",
+    "input": "𐑓",
+    "expected_csur": "\uE009",
+    "expected_hex": "U+E009"
+  },
+  {
+    "id": "TC13",
+    "category": "Rhotic Vowel Distinction (NURSE vs SQUARE)",
+    "description": "her hair: her (NURSE 𐑻) uses u-tehta, hair (SQUARE 𐑺) uses e-tehta",
+    "input": "𐑣𐑻 𐑣𐑺",
+    "expected_csur": "\uE020\uE018\uE04C \uE020\uE018\uE046",
+    "expected_hex": "U+E020 U+E018 U+E04C U+0020 U+E020 U+E018 U+E046"
   }
 ]
