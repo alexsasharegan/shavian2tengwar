@@ -1,0 +1,114 @@
+[
+	{
+		"id": "TC01",
+		"category": "Preconsonantal Nasal + Preceding Vowel",
+		"description": "winter: Numen + i-tehta, Tinco, ending in Ore (U+E014)",
+		"input": "𐑢𐑦𐑯𐑑𐑼",
+		"expected_csur": "\uE015\uE010\uE044\uE000\uE014",
+		"expected_hex": "U+E015 U+E010 U+E044 U+E000 U+E014"
+	},
+	{
+		"id": "TC02",
+		"category": "Preconsonantal Nasal (No Preceding Vowel)",
+		"description": "chamber: Nasal Bar Above on Umbar, ending in Ore (U+E014)",
+		"input": "𐑗𐑱𐑥𐑚𐑼",
+		"expected_csur": "\uE002\uE016\uE046\uE005\uE04E\uE014",
+		"expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E04E U+E014"
+	},
+	{
+		"id": "TC03",
+		"category": "R-Colored Vowel Decomposition",
+		"description": "third: NURSE vowel decomposes into Romen (Everson U+E020) + u-tehta",
+		"input": "𐑔𐑻𐑛",
+		"expected_csur": "\uE008\uE020\uE04C\uE004",
+		"expected_hex": "U+E008 U+E020 U+E04C U+E004"
+	},
+	{
+		"id": "TC04",
+		"category": "Nuquerna Positional Inversion",
+		"description": "bruised: Romen (Everson U+E020) + Esse Nuquerna (Everson U+E027)",
+		"input": "𐑚𐑮𐑵𐑟𐑛",
+		"expected_csur": "\uE005\uE020\uE027\uE04D\uE004",
+		"expected_hex": "U+E005 U+E020 U+E027 U+E04D U+E004"
+	},
+	{
+		"id": "TC05",
+		"category": "Orphan Word-Final Vowel Carrier",
+		"description": "merry: Romen (Everson U+E020) + Telco (Everson U+E02D)",
+		"input": "𐑥𐑧𐑮𐑦",
+		"expected_csur": "\uE011\uE020\uE046\uE02D\uE044",
+		"expected_hex": "U+E011 U+E020 U+E046 U+E02D U+E044"
+	},
+	{
+		"id": "TC06",
+		"category": "Word-Final Long Vowel Carrier",
+		"description": "he: Hyarmen (Everson U+E028) + Ara (Everson U+E02E)",
+		"input": "𐑣𐑰",
+		"expected_csur": "\uE028\uE02E\uE044",
+		"expected_hex": "U+E028 U+E02E U+E044"
+	},
+	{
+		"id": "TC07",
+		"category": "Contraction & Non-Shavian Splitting",
+		"description": "lady's: Lamba (Everson U+E022), Telco (Everson U+E02D), Esse (Everson U+E026)",
+		"input": "𐑤𐑱𐑛𐑦’𐑟",
+		"expected_csur": "\uE022\uE016\uE046\uE004\uE02D\uE044’\uE026",
+		"expected_hex": "U+E022 U+E016 U+E046 U+E004 U+E02D U+E044 U+2019 U+E026"
+	},
+	{
+		"id": "TC08",
+		"category": "Big Five Abbreviation - the",
+		"description": "the: single character maps directly to Anta base",
+		"input": "𐑞",
+		"expected_csur": "\uE00C",
+		"expected_hex": "U+E00C"
+	},
+	{
+		"id": "TC09",
+		"category": "Big Five Abbreviation - of",
+		"description": "of: single character maps directly to Ampa base",
+		"input": "𐑝",
+		"expected_csur": "\uE00D",
+		"expected_hex": "U+E00D"
+	},
+	{
+		"id": "TC10",
+		"category": "Big Five Abbreviation - and",
+		"description": "and: single character maps directly to Numen base",
+		"input": "𐑯",
+		"expected_csur": "\uE010",
+		"expected_hex": "U+E010"
+	},
+	{
+		"id": "TC11",
+		"category": "Big Five Abbreviation - to",
+		"description": "to: single character maps directly to Tinco base",
+		"input": "𐑑",
+		"expected_csur": "\uE000",
+		"expected_hex": "U+E000"
+	},
+	{
+		"id": "TC12",
+		"category": "Big Five Abbreviation - for",
+		"description": "for: single character maps directly to Formen base",
+		"input": "𐑓",
+		"expected_csur": "\uE009",
+		"expected_hex": "U+E009"
+	},
+	{
+		"id": "TC13",
+		"category": "Rhotic Vowel Distinction (NURSE vs SQUARE)",
+		"description": "her hair: Hyarmen (Everson U+E028), Romen (Everson U+E020)",
+		"input": "𐑣𐑻 𐑣𐑺",
+		"expected_csur": "\uE028\uE020\uE04C \uE028\uE020\uE046",
+		"expected_hex": "U+E028 U+E020 U+E04C U+0020 U+E028 U+E020 U+E046"
+	},
+	{
+		"id": "TC14",
+		"category": "Nimrodel Line 1 Verification",
+		"description": "old: Vala + o-tehta + Lamba (Everson U+E022) + Ando",
+		"input": "𐑴𐑤𐑛",
+		"expected_csur": "\uE015\uE04A\uE022\uE004",
+		"expected_hex": "U+E015 U+E04A U+E022 U+E004"
+	}
+]

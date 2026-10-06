@@ -5,14 +5,14 @@ import sys
 
 SHAVIAN_WORD_PATTERN = re.compile(r'([\u00B7\U00010450-\U0001047F]+)')
 
-# Base static mappings (excluding Silme and Esse, which depend on target encoding)
-TENGWAR_CONSONANTS_BASE = {
+# Fixed static mappings across both CSUR and Everson standards
+TENGWAR_CONSONANTS_FIXED = {
     '𐑐': ('\uE001', 'Parma'), '𐑚': ('\uE005', 'Umbar'), '𐑑': ('\uE000', 'Tinco'), '𐑛': ('\uE004', 'Ando'),
     '𐑒': ('\uE003', 'Quesse'), '𐑜': ('\uE007', 'Ungwe'), '𐑗': ('\uE002', 'Calma'), '𐑡': ('\uE006', 'Anga'),
     '𐑓': ('\uE009', 'Formen'), '𐑝': ('\uE00D', 'Ampa'), '𐑔': ('\uE008', 'Thúle'), '𐑞': ('\uE00C', 'Anta'),
     '𐑖': ('\uE00A', 'Harma'), '𐑠': ('\uE00E', 'Anca'),
-    '𐑥': ('\uE011', 'Malta'), '𐑯': ('\uE010', 'Númen'), '𐑙': ('\uE012', 'Noldo'), '𐑤': ('\uE01A', 'Lamba'),
-    '𐑣': ('\uE020', 'Hyarmen'), '𐑢': ('\uE015', 'Vala'), '𐑘': ('\uE016', 'Anna')
+    '𐑥': ('\uE011', 'Malta'), '𐑯': ('\uE010', 'Númen'), '𐑙': ('\uE012', 'Noldo'),
+    '𐑢': ('\uE015', 'Vala'), '𐑘': ('\uE016', 'Anna')
 }
 
 SHORT_VOWELS = {
@@ -31,21 +31,8 @@ DIPHTHONGS = {
     '𐑿': ('\uE016', '\uE04C', 'YEW (Anna + u-tehta)'),
 }
 
-# R-Colored Vowels
-R_VOWELS = {
-    '𐑸': ('\uE018', '\uE040', 'START (Rómen + a-tehta)'),
-    '𐑹': ('\uE018', '\uE04A', 'NORTH (Rómen + o-tehta)'),
-    '𐑺': ('\uE018', '\uE046', 'SQUARE (Rómen + e-tehta)'),
-    '𐑽': ('\uE018', '\uE044', 'NEAR (Rómen + i-tehta)'),
-    '𐑻': ('\uE018', '\uE04C', 'NURSE (Rómen + u-tehta)'),
-    '𐑼': ('\uE014', None,     'lettER (Unadorned Óre)'),
-}
-
 NASAL_BAR_ABOVE = '\uE04E'
-ROMEN = '\uE018'
 ORE = '\uE014'
-SHORT_CARRIER = '\uE028' # Telco
-LONG_CARRIER = '\uE029'  # Ára
 
 NASAL_PAIRS = {
     '𐑯𐑑': ('\uE010', '𐑑', 'Númen + Tinco'),
@@ -56,16 +43,37 @@ NASAL_PAIRS = {
     '𐑥𐑚': ('\uE011', '𐑚', 'Malta + Umbar'),
 }
 
-ALL_VOWEL_CHARS = set(SHORT_VOWELS.keys()) | {'𐑰', '𐑵', '𐑭'} | set(DIPHTHONGS.keys()) | set(R_VOWELS.keys())
+ALL_VOWEL_CHARS = set(SHORT_VOWELS.keys()) | {'𐑰', '𐑵', '𐑭'} | set(DIPHTHONGS.keys()) | {'𐑸', '𐑹', '𐑺', '𐑽', '𐑻', '𐑼'}
 
-def get_sibilants(use_csur: bool):
-    """Returns (Silme, Silme Nuquerna, Esse, Esse Nuquerna) based on selected encoding."""
+def get_encoding_config(use_csur: bool):
+    """Returns encoding-specific code points for CSUR vs Everson 2001 (Alcarin)."""
     if use_csur:
-        # Standard CSUR PUA Mapping
-        return ('\uE01C', '\uE01D', '\uE01E', '\uE01F')
+        return {
+            'silme': '\uE01C',
+            'silme_nuq': '\uE01D',
+            'esse': '\uE01E',
+            'esse_nuq': '\uE01F',
+            'romen': '\uE018',
+            'lamba': '\uE01A',
+            'hyarmen': '\uE020',
+            'short_carrier': '\uE028',
+            'long_carrier': '\uE029',
+            'mode_name': 'CSUR (Legacy)'
+        }
     else:
-        # Everson 2001 PUA Mapping (Default)
-        return ('\uE024', '\uE025', '\uE026', '\uE027')
+        # Everson 2001 / Alcarin Tengwar (Default)
+        return {
+            'silme': '\uE024',
+            'silme_nuq': '\uE025',
+            'esse': '\uE026',
+            'esse_nuq': '\uE027',
+            'romen': '\uE020',
+            'lamba': '\uE022',
+            'hyarmen': '\uE028',
+            'short_carrier': '\uE02D',
+            'long_carrier': '\uE02E',
+            'mode_name': 'Everson 2001 / Alcarin Tengwar (Default)'
+        }
 
 def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> str:
     """Translates a Shavian word into Tengwar PUA code points."""
@@ -73,16 +81,26 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     if not clean_word:
         return ""
 
-    silme, silme_nuq, esse, esse_nuq = get_sibilants(use_csur)
+    cfg = get_encoding_config(use_csur)
 
-    consonants = dict(TENGWAR_CONSONANTS_BASE)
-    consonants['𐑕'] = (silme, 'Silme')
-    consonants['𐑟'] = (esse, 'Esse')
+    consonants = dict(TENGWAR_CONSONANTS_FIXED)
+    consonants['𐑤'] = (cfg['lamba'], 'Lamba')
+    consonants['𐑣'] = (cfg['hyarmen'], 'Hyarmen')
+    consonants['𐑕'] = (cfg['silme'], 'Silme')
+    consonants['𐑟'] = (cfg['esse'], 'Esse')
+
+    r_vowels = {
+        '𐑸': (cfg['romen'], '\uE040', 'START (Rómen + a-tehta)'),
+        '𐑹': (cfg['romen'], '\uE04A', 'NORTH (Rómen + o-tehta)'),
+        '𐑺': (cfg['romen'], '\uE046', 'SQUARE (Rómen + e-tehta)'),
+        '𐑽': (cfg['romen'], '\uE044', 'NEAR (Rómen + i-tehta)'),
+        '𐑻': (cfg['romen'], '\uE04C', 'NURSE (Rómen + u-tehta)'),
+        '𐑼': (ORE, None, 'lettER (Unadorned Óre)'),
+    }
 
     trace = []
     if inspect:
-        mode_str = "CSUR" if use_csur else "Everson 2001 (Default)"
-        trace.append(f"\n=== INSPECTING WORD: '{word}' [Encoding: {mode_str}] ===")
+        trace.append(f"\n=== INSPECTING WORD: '{word}' [Encoding: {cfg['mode_name']}] ===")
         trace.append(f"Pass 1 (Namer Dot Strip): '{clean_word}'")
 
     output = []
@@ -95,20 +113,20 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
             return
         vtype = pending_vowel[0]
         if vtype == 'LONG_E':
-            output.append(LONG_CARRIER)
+            output.append(cfg['long_carrier'])
             output.append('\uE044')
             if inspect:
-                trace.append("  [Flush Vowel] Long E -> Long Carrier (U+E029) + i-tehta (U+E044)")
+                trace.append(f"  [Flush Vowel] Long E -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + i-tehta (U+E044)")
         elif vtype == 'LONG_U':
-            output.append(LONG_CARRIER)
+            output.append(cfg['long_carrier'])
             output.append('\uE04C')
             if inspect:
-                trace.append("  [Flush Vowel] Long U -> Long Carrier (U+E029) + u-tehta (U+E04C)")
+                trace.append(f"  [Flush Vowel] Long U -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + u-tehta (U+E04C)")
         elif vtype == 'SHORT':
-            output.append(SHORT_CARRIER)
+            output.append(cfg['short_carrier'])
             output.append(pending_vowel[1])
             if inspect:
-                trace.append(f"  [Flush Vowel] Short Vowel -> Short Carrier (U+E028) + {pending_vowel[2]}")
+                trace.append(f"  [Flush Vowel] Short Vowel -> Short Carrier (U+{ord(cfg['short_carrier']):04X}) + {pending_vowel[2]}")
         pending_vowel = None
 
     def emit_consonant(base_hex, base_name):
@@ -159,7 +177,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         # Pass 3: Contextual /r/
         if c == '𐑮':
             is_vowel_next = (i + 1 < len(clean_word) and clean_word[i+1] in ALL_VOWEL_CHARS)
-            r_hex = ROMEN if is_vowel_next else ORE
+            r_hex = cfg['romen'] if is_vowel_next else ORE
             r_name = "Rómen" if is_vowel_next else "Óre"
             if inspect:
                 trace.append(f"Step {i}: Char '𐑮' (r) -> Vowel next={is_vowel_next} -> Select {r_name}")
@@ -228,10 +246,10 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
             continue
 
         # R-Colored Vowels
-        if c in R_VOWELS:
+        if c in r_vowels:
             if pending_vowel is not None:
                 flush_pending_vowel()
-            r_base, tehta, rv_name = R_VOWELS[c]
+            r_base, tehta, rv_name = r_vowels[c]
             output.append(r_base)
             if tehta:
                 output.append(tehta)
@@ -250,8 +268,8 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
 
     # Pass 5: Nuquerna Flips
     top_tehtar_all = r'([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E])'
-    flipped_result = re.sub(f'{silme}{top_tehtar_all}', f'{silme_nuq}\\1', raw_result)
-    flipped_result = re.sub(f'{esse}{top_tehtar_all}', f'{esse_nuq}\\1', flipped_result)
+    flipped_result = re.sub(f"{cfg['silme']}{top_tehtar_all}", f"{cfg['silme_nuq']}\\1", raw_result)
+    flipped_result = re.sub(f"{cfg['esse']}{top_tehtar_all}", f"{cfg['esse_nuq']}\\1", flipped_result)
 
     if inspect and raw_result != flipped_result:
         trace.append("Pass 5: Applied Nuquerna Flip(s) to Silme/Esse.")
@@ -278,7 +296,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Convert Shavian text stream to Tengwar PUA code points.")
     parser.add_argument('text', nargs='?', help='Text string to convert. If omitted, reads from stdin.')
     parser.add_argument('--inspect', help='Inspect state-machine steps for a single Shavian word.')
-    parser.add_argument('--csur', action='store_true', help='Use classic CSUR mapping (U+E01C-U+E01F) instead of Everson 2001 default (U+E024-U+E027).')
+    parser.add_argument('--csur', action='store_true', help='Use classic CSUR mapping (U+E01C, U+E01A, U+E018) instead of Everson 2001 default.')
     args = parser.parse_args()
 
     if args.inspect:
