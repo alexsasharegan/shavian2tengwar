@@ -1,0 +1,66 @@
+[
+  {
+    "id": "TC01",
+    "category": "Preconsonantal Nasal + Preceding Vowel",
+    "description": "winter: vowel tehta attaches to Numen base, Tinco follows",
+    "input": "𐑢𐑦𐑯𐑑𐑼",
+    "expected_csur": "\uE015\uE010\uE044\uE000\uE014",
+    "expected_hex": "U+E015 U+E010 U+E044 U+E000 U+E014"
+  },
+  {
+    "id": "TC02",
+    "category": "Preconsonantal Nasal (No Preceding Vowel)",
+    "description": "chamber: Nasal Bar Above attaches directly to Umbar stop",
+    "input": "𐑗𐑱𐑥𐑚𐑼",
+    "expected_csur": "\uE002\uE016\uE046\uE005\uE04E\uE014",
+    "expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E04E U+E014"
+  },
+  {
+    "id": "TC03",
+    "category": "R-Colored Vowel Decomposition",
+    "description": "third: NURSE vowel decomposes into Romen + e-tehta",
+    "input": "𐑔𐑻𐑛",
+    "expected_csur": "\uE008\uE018\uE046\uE004",
+    "expected_hex": "U+E008 U+E018 U+E046 U+E004"
+  },
+  {
+    "id": "TC04",
+    "category": "Nuquerna Positional Inversion",
+    "description": "bruised: Esse flips to Esse Nuquerna when carrying top double u-curl",
+    "input": "𐑚𐑮𐑵𐑟𐑛",
+    "expected_csur": "\uE005\uE018\uE01F\uE04D\uE004",
+    "expected_hex": "U+E005 U+E018 U+E01F U+E04D U+E004"
+  },
+  {
+    "id": "TC05",
+    "category": "Orphan Word-Final Vowel Carrier",
+    "description": "merry: trailing short vowel attaches to Telco (Short Carrier)",
+    "input": "𐑥𐑧𐑮𐑦",
+    "expected_csur": "\uE011\uE018\uE046\uE028\uE044",
+    "expected_hex": "U+E011 U+E018 U+E046 U+E028 U+E044"
+  },
+  {
+    "id": "TC06",
+    "category": "Word-Final Long Vowel Carrier",
+    "description": "he: long vowel attaches to Ara (Long Carrier)",
+    "input": "𐑣𐑰",
+    "expected_csur": "\uE020\uE029\uE044",
+    "expected_hex": "U+E020 U+E029 U+E044"
+  },
+  {
+    "id": "TC07",
+    "category": "Contraction & Non-Shavian Splitting",
+    "description": "lady's: apostrophe splits token, orphan vowel gets carrier, trailing Esse is unadorned",
+    "input": "𐑤𐑱𐑛𐑦’𐑟",
+    "expected_csur": "\uE01A\uE016\uE046\uE004\uE028\uE044’\uE01E",
+    "expected_hex": "U+E01A U+E016 U+E046 U+E004 U+E028 U+E044 U+2019 U+E01E"
+  },
+  {
+    "id": "TC08",
+    "category": "Big Four Abbreviation Pass-Through",
+    "description": "the: single character maps directly to Anta base",
+    "input": "𐑞",
+    "expected_csur": "\uE00C",
+    "expected_hex": "U+E00C"
+  }
+]
