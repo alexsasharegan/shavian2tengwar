@@ -4,16 +4,16 @@
 		"category": "Universal Preconsonantal Nasal",
 		"description": "winter: Vala, Tinco + Nasal Bar Above + i-tehta, ending in Ore (U+E014)",
 		"input": "𐑢𐑦𐑯𐑑𐑼",
-		"expected_csur": "\uE015\uE000\uE04E\uE044\uE014",
-		"expected_hex": "U+E015 U+E000 U+E04E U+E044 U+E014"
+		"expected_csur": "\uE015\uE000\uE050\uE044\uE014",
+		"expected_hex": "U+E015 U+E000 U+E050 U+E044 U+E014"
 	},
 	{
 		"id": "TC02",
 		"category": "Preconsonantal Nasal (No Preceding Vowel in Pair)",
 		"description": "chamber: Calma + Anna + e-tehta, Umbar + Nasal Bar Above, Ore (U+E014)",
 		"input": "𐑗𐑱𐑥𐑚𐑼",
-		"expected_csur": "\uE002\uE016\uE046\uE005\uE04E\uE014",
-		"expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E04E U+E014"
+		"expected_csur": "\uE002\uE016\uE046\uE005\uE050\uE014",
+		"expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E050 U+E014"
 	},
 	{
 		"id": "TC03",
@@ -34,34 +34,34 @@
 	{
 		"id": "TC05",
 		"category": "Orphan Word-Final Vowel Carrier",
-		"description": "merry: Romen (Everson U+E020) + Telco (Everson U+E02D)",
+		"description": "merry: Romen (Everson U+E020) + Telco (Everson U+E02E)",
 		"input": "𐑥𐑧𐑮𐑦",
-		"expected_csur": "\uE011\uE020\uE046\uE02D\uE044",
-		"expected_hex": "U+E011 U+E020 U+E046 U+E02D U+E044"
+		"expected_csur": "\uE011\uE020\uE046\uE02E\uE044",
+		"expected_hex": "U+E011 U+E020 U+E046 U+E02E U+E044"
 	},
 	{
 		"id": "TC06",
 		"category": "Word-Final Long Vowel Carrier",
-		"description": "he: Hyarmen (Everson U+E028) + Ara (Everson U+E02E)",
+		"description": "he: Hyarmen (Everson U+E028) + Ara (Everson U+E02D)",
 		"input": "𐑣𐑰",
-		"expected_csur": "\uE028\uE02E\uE044",
-		"expected_hex": "U+E028 U+E02E U+E044"
+		"expected_csur": "\uE028\uE02D\uE044",
+		"expected_hex": "U+E028 U+E02D U+E044"
 	},
 	{
 		"id": "TC07",
 		"category": "Contraction & Non-Shavian Splitting",
-		"description": "lady's: Lamba (Everson U+E022), Telco (Everson U+E02D), Esse (Everson U+E026)",
+		"description": "lady's: Lamba (Everson U+E022), Telco (Everson U+E02E), Esse (Everson U+E026)",
 		"input": "𐑤𐑱𐑛𐑦’𐑟",
-		"expected_csur": "\uE022\uE016\uE046\uE004\uE02D\uE044’\uE026",
-		"expected_hex": "U+E022 U+E016 U+E046 U+E004 U+E02D U+E044 U+2019 U+E026"
+		"expected_csur": "\uE022\uE016\uE046\uE004\uE02E\uE044’\uE026",
+		"expected_hex": "U+E022 U+E016 U+E046 U+E004 U+E02E U+E044 U+2019 U+E026"
 	},
 	{
 		"id": "TC08",
 		"category": "Big Five Abbreviation - the",
 		"description": "the: single character maps directly to Extended Tinco logogram (U+E02C)",
 		"input": "𐑞",
-		"expected_csur": "\uE02C",
-		"expected_hex": "U+E02C"
+		"expected_csur": "\uE01C",
+		"expected_hex": "U+E01C"
 	},
 	{
 		"id": "TC09",
@@ -74,10 +74,10 @@
 	{
 		"id": "TC10",
 		"category": "Big Five Abbreviation - and",
-		"description": "and: single character maps directly to Ando + Nasal Bar Above shorthand (U+E004 U+E04E)",
+		"description": "and: single character maps directly to Ando + Nasal Bar Above shorthand (U+E004 U+E050)",
 		"input": "𐑯",
-		"expected_csur": "\uE004\uE04E",
-		"expected_hex": "U+E004 U+E04E"
+		"expected_csur": "\uE004\uE050",
+		"expected_hex": "U+E004 U+E050"
 	},
 	{
 		"id": "TC11",
@@ -124,15 +124,15 @@
 		"category": "Universal Preconsonantal Nasal - land",
 		"description": "land: Lamba + Ando + Nasal Bar Above + a-tehta",
 		"input": "𐑤𐑨𐑯𐑛",
-		"expected_csur": "\uE022\uE004\uE04E\uE040",
-		"expected_hex": "U+E022 U+E004 U+E04E U+E040"
+		"expected_csur": "\uE022\uE004\uE050\uE040",
+		"expected_hex": "U+E022 U+E004 U+E050 U+E040"
 	},
 	{
 		"id": "TC17",
 		"category": "Universal Preconsonantal Nasal - wind",
 		"description": "wind: Vala + Ando + Nasal Bar Above + i-tehta",
 		"input": "𐑢𐑦𐑯𐑛",
-		"expected_csur": "\uE015\uE004\uE04E\uE044",
-		"expected_hex": "U+E015 U+E004 U+E04E U+E044"
+		"expected_csur": "\uE015\uE004\uE050\uE044",
+		"expected_hex": "U+E015 U+E004 U+E050 U+E044"
 	}
 ]

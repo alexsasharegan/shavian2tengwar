@@ -4,6 +4,7 @@ import re
 import sys
 
 SHAVIAN_WORD_PATTERN = re.compile(r"([\u00B7\U00010450-\U0001047F]+)")
+STREAM_PATTERN = re.compile(r"(\{\{.*?\}\}|[·\u00B7\U00010450-\U0001047F]+)", re.DOTALL)
 
 # Fixed static mappings across both CSUR and Everson standards
 TENGWAR_CONSONANTS_FIXED = {
@@ -49,12 +50,12 @@ DIPHTHONGS = {
     "𐑿": ("\ue016", "\ue04c", "YEW (Anna + u-tehta)"),
 }
 
-NASAL_BAR_ABOVE = "\ue04e"
+NASAL_BAR_ABOVE = "\ue050"  # Tengwar Sign Nasalizer (Bar Above)
 ORE = "\ue014"
-EXTENDED_TINCO_LOGOGRAM = "\ue02c"  # Appendix E standalone "the" logogram
+EXTENDED_ANTA_LOGOGRAM = "\ue01c"  # Appendix E standalone "the" logogram
 EXTENDED_AMPA_LOGOGRAM = "\ue01d"  # Appendix E standalone "of" logogram
 AND_SHORTHAND_LOGOGRAM = (
-    "\ue004\ue04e"  # Appendix E standalone "and" shorthand (Ando + Nasal Bar Above)
+    "\ue004\ue050"  # Appendix E standalone "and" shorthand (Ando + Nasal Bar Above)
 )
 
 NASAL_PAIRS = {
@@ -115,8 +116,8 @@ def get_encoding_config(use_csur: bool):
             "romen": "\ue020",
             "lamba": "\ue022",
             "hyarmen": "\ue028",
-            "short_carrier": "\ue02d",
-            "long_carrier": "\ue02e",
+            "short_carrier": "\ue02e",
+            "long_carrier": "\ue02d",
             "mode_name": "Everson 2001 / Alcarin Tengwar (Default)",
         }
 
@@ -132,7 +133,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
             print("Step 0: Standalone 'the' (𐑞) -> Extended Tinco Logogram (U+E02C)")
-        return EXTENDED_TINCO_LOGOGRAM
+        return EXTENDED_ANTA_LOGOGRAM
 
     if clean_word == "𐑝":
         if inspect:
@@ -373,10 +374,13 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
 
 
 def process_stream(text: str, inspect: bool = False, use_csur: bool = False) -> str:
-    parts = SHAVIAN_WORD_PATTERN.split(text)
+    parts = STREAM_PATTERN.split(text)
     out = []
     for part in parts:
-        if SHAVIAN_WORD_PATTERN.match(part):
+        if part.startswith("{{") and part.endswith("}}"):
+            # Strip {{ and }} and emit contents verbatim (preserving newlines & literal text)
+            out.append(part[2:-2])
+        elif SHAVIAN_WORD_PATTERN.match(part):
             out.append(translate_word(part, inspect=inspect, use_csur=use_csur))
         else:
             out.append(translate_punctuation(part))
