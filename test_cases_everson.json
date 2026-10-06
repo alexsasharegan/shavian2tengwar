@@ -2,18 +2,18 @@
 	{
 		"id": "TC01",
 		"category": "Universal Preconsonantal Nasal",
-		"description": "winter: Vala, Tinco + Nasal Bar Above + i-tehta, ending in Ore (U+E014)",
+		"description": "winter: Vala, Tinco + Nasal Bar Above + i-tehta, ending in Ore + schwa-tehta (U+E014 U+E045)",
 		"input": "𐑢𐑦𐑯𐑑𐑼",
-		"expected_csur": "\uE015\uE000\uE050\uE044\uE014",
-		"expected_hex": "U+E015 U+E000 U+E050 U+E044 U+E014"
+		"expected_csur": "\uE015\uE000\uE050\uE044\uE014\uE045",
+		"expected_hex": "U+E015 U+E000 U+E050 U+E044 U+E014 U+E045"
 	},
 	{
 		"id": "TC02",
 		"category": "Preconsonantal Nasal (No Preceding Vowel in Pair)",
-		"description": "chamber: Calma + Anna + e-tehta, Umbar + Nasal Bar Above, Ore (U+E014)",
+		"description": "chamber: Calma + Anna + e-tehta, Umbar + Nasal Bar Above, Ore + schwa-tehta (U+E014 U+E045)",
 		"input": "𐑗𐑱𐑥𐑚𐑼",
-		"expected_csur": "\uE002\uE016\uE046\uE005\uE050\uE014",
-		"expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E050 U+E014"
+		"expected_csur": "\uE002\uE016\uE046\uE005\uE050\uE014\uE045",
+		"expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E050 U+E014 U+E045"
 	},
 	{
 		"id": "TC03",
@@ -203,5 +203,14 @@
 		"flags": "",
 		"expected_csur": "\uE004\uE016\uE046\uE062 \uE009\uE020\uE02D\uE044\uE062",
 		"expected_hex": "U+E004 U+E016 U+E046 U+E062 U+0020 U+E009 U+E020 U+E02D U+E044 U+E062"
+	},
+	{
+		"id": "TC26",
+		"category": "Rhotic Vowel ARRAY/arose Disambiguation",
+		"description": "arose: ARRAY ligature 𐑼 emits Romen + schwa-tehta (U+E020 U+E045), distinguishing from rose",
+		"input": "𐑼𐑴𐑟",
+		"flags": "",
+		"expected_csur": "\uE020\uE045\uE015\uE04A\uE026",
+		"expected_hex": "U+E020 U+E045 U+E015 U+E04A U+E026"
 	}
 ]

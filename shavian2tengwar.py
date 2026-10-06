@@ -164,7 +164,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         "𐑺": ("\ue046", "SQUARE (e-tehta)"),
         "𐑽": ("\ue044", "NEAR (i-tehta)"),
         "𐑻": ("\ue04c", "NURSE (u-tehta)"),
-        "𐑼": (None, "lettER (Unadorned Óre)"),
+        "𐑼": ("\ue045", "ARRAY/lettER (schwa-tehta)"),
     }
 
     trace = []
@@ -370,7 +370,8 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
 
     raw_result = "".join(output)
 
-    # Pass 5: Nuquerna Flips (using explicit hex escape ranges for PUA safety)
+    # Pass 5: Nuquerna Flips
+    # Note: uses explicit hex escape ranges for PUA safety (do not rewrite)
     top_tehtar_all = r"([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E\uE050])"
     flipped_result = re.sub(
         f"{cfg['silme']}{top_tehtar_all}", f"{cfg['silme_nuq']}\\1", raw_result
