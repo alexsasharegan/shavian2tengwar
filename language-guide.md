@@ -126,36 +126,6 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 
 ### 1. Direct Phoneme Mapping Matrix
 
-| IPA Phoneme | Shavian Glyph | Tengwa | Target Tengwa / Tehta | CSUR Hex Stream     | State Machine Transformation Rule                         |
-| ----------- | ------------- | ------ | --------------------- | ------------------- | --------------------------------------------------------- |
-| /p/         | **𐑐**         |       | _Parma_               | `U+E001`            | Direct 1:1 Consonant Base                                 |
-| /b/         | **𐑚**         |       | _Umbar_               | `U+E005`            | Direct 1:1 Consonant Base                                 |
-| /t/         | **𐑑**         |       | _Tinco_               | `U+E000`            | Direct 1:1 Consonant Base                                 |
-| /d/         | **𐑛**         |       | _Ando_                | `U+E004`            | Direct 1:1 Consonant Base                                 |
-| /k/         | **𐑒**         |       | _Quesse_              | `U+E003`            | Direct 1:1 Consonant Base                                 |
-| /ɡ/         | **𐑜**         |       | _Ungwe_               | `U+E007`            | Direct 1:1 Consonant Base                                 |
-| /f/         | **𐑓**         |       | _Formen_              | `U+E009`            | Direct 1:1 Consonant Base                                 |
-| /v/         | **𐑝**         |       | _Ampa_                | `U+E00D`            | Direct 1:1 Consonant Base                                 |
-| /θ/         | **𐑔**         |       | _Thúle_               | `U+E008`            | Direct 1:1 Consonant Base                                 |
-| /ð/         | **𐑞**         |       | _Anta_                | `U+E00C`            | Direct 1:1 Consonant Base                                 |
-| /s/         | **𐑕**         |       | _Silme_ / _Nuquerna_  | `U+E01C` / `U+E01D` | Flips to _Silme Nuquerna_ (`U+E01D`) if top tehta present |
-| /z/         | **𐑟**         |       | _Esse_ / _Nuquerna_   | `U+E01E` / `U+E01F` | Flips to _Esse Nuquerna_ (`U+E01F`) if top tehta present  |
-| /ɛ/         | **𐑧**         |      | _e-tehta_             | `U+E046`            | Attach acute stroke above next available consonant        |
-| /æ/         | **𐑨**         |      | _a-tehta_             | `U+E040`            | Attach three dots above next available consonant          |
-| /ə/         | **𐑩**         |      | _schwa-tehta_         | `U+E045`            | Attach single dot **below** next available consonant      |
-| /ɪ/         | **𐑦**         |      | _i-tehta_             | `U+E044`            | Attach dot above next available consonant                 |
-|             | 𐑪             |      |                       |                     |                                                           |
-|             | 𐑷             |      |                       |                     |                                                           |
-|             | 𐑭             |      |                       |                     |                                                           |
-| /ɜːr/       | **𐑻**         |      | _Rómen_ + _u-tehta_   | `U+E018 U+E04C`     | NURSE vowel: Decomposes into _Rómen_ + _u-tehta_<br>      |
-| /ɛər/       | **𐑺**         |      | _Rómen_ + _e-tehta_   | `U+E018 U+E046`     | SQUARE vowel: Decomposes into _Rómen_ + _e-tehta_<br>     |
-| /ər/        | **𐑼**         |       | _Óre_                 | `U+E014`            | lettER vowel: Decomposes into unadorned _Óre_<br>         |
-| /aɪ/        | **𐑲**         |      | _Anna_ + _a-tehta_    | `U+E016 U+E040`     | PRICE diphthong: Offglide _Anna_ base + _a-tehta_<br>     |
-|             | 𐑱             |      |                       |                     |                                                           |
-|             | 𐑶             |      |                       |                     |                                                           |
-|             | 𐑬             |      |                       |                     |                                                           |
-| /oʊ/        | **𐑴**         |      | _Vala_ + _o-tehta_    | `U+E015 U+E04A`     | GOAT diphthong: Offglide _Vala_ base + _o-tehta_<br>      |
-
 | IPA Phoneme | Shavian Glyph |    Tengwa     | Target Tengwa / Tehta | CSUR Hex Stream     | State Machine Transformation Rule                               |
 | :---------: | :-----------: | :-----------: | :-------------------- | :------------------ | :-------------------------------------------------------------- |
 |     /p/     |     **𐑐**     |     ****     | _Parma_               | `U+E001`            | Direct 1:1 Consonant Base                                       |
