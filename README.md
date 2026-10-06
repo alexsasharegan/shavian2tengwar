@@ -1,10 +1,10 @@
-# shave2tengwar
+# shavian2tengwar
 
 A Unix-style CLI stream converter written in Python that translates UTF-8 Shavian text (`U+10450`–`U+1047F`) into ConScript Unicode Registry (CSUR) Tengwar Private Use Area code points (`U+E000`–`U+E07F`).
 
 ## Overview
 
-Traditional English orthography is non-phonetic, making direct English-to-Tengwar transliteration complex and context-heavy. `shave2tengwar` uses the Shavian alphabet's 40–48 character phonemic system as an Intermediate Representation (IR). By first converting English into Shavian (e.g., via tools like *Shave*), orthographic noise is stripped away, allowing a deterministic 5-pass state machine to map phonemes into Tengwar characters and *tehtar* (vowel diacritics).
+Traditional English orthography is non-phonetic, making direct English-to-Tengwar transliteration complex and context-heavy. `shavian2tengwar` uses the Shavian alphabet's 40–48 character phonemic system as an Intermediate Representation (IR). By first converting English into Shavian (e.g., via tools like *Shave*), orthographic noise is stripped away, allowing a deterministic 5-pass state machine to map phonemes into Tengwar characters and *tehtar* (vowel diacritics).
 
 ### Key Features
 
@@ -124,6 +124,6 @@ The repository includes a language-agnostic test suite driven by `test_cases.jso
 python3 test_runner.py --cmd "python3 main.py"
 
 # Test future Go, Rust, or C++ implementations
-python3 test_runner.py --cmd "./shave2tengwar_go"
-python3 test_runner.py --cmd "./target/release/shave2tengwar"
+python3 test_runner.py --cmd "./shavian2tengwar_go"
+python3 test_runner.py --cmd "./target/release/shavian2tengwar"
 ```
