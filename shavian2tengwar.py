@@ -5,12 +5,12 @@ import sys
 
 SHAVIAN_WORD_PATTERN = re.compile(r'([\u00B7\U00010450-\U0001047F]+)')
 
-# --- STATIC CSUR MAPPINGS ---
-TENGWAR_CONSONANTS = {
+# Base static mappings (excluding Silme and Esse, which depend on target encoding)
+TENGWAR_CONSONANTS_BASE = {
     '𐑐': ('\uE001', 'Parma'), '𐑚': ('\uE005', 'Umbar'), '𐑑': ('\uE000', 'Tinco'), '𐑛': ('\uE004', 'Ando'),
     '𐑒': ('\uE003', 'Quesse'), '𐑜': ('\uE007', 'Ungwe'), '𐑗': ('\uE002', 'Calma'), '𐑡': ('\uE006', 'Anga'),
     '𐑓': ('\uE009', 'Formen'), '𐑝': ('\uE00D', 'Ampa'), '𐑔': ('\uE008', 'Thúle'), '𐑞': ('\uE00C', 'Anta'),
-    '𐑖': ('\uE00A', 'Harma'), '𐑠': ('\uE00E', 'Anca'), '𐑕': ('\uE01C', 'Silme'), '𐑟': ('\uE01E', 'Esse'),
+    '𐑖': ('\uE00A', 'Harma'), '𐑠': ('\uE00E', 'Anca'),
     '𐑥': ('\uE011', 'Malta'), '𐑯': ('\uE010', 'Númen'), '𐑙': ('\uE012', 'Noldo'), '𐑤': ('\uE01A', 'Lamba'),
     '𐑣': ('\uE020', 'Hyarmen'), '𐑢': ('\uE015', 'Vala'), '𐑘': ('\uE016', 'Anna')
 }
@@ -37,7 +37,7 @@ R_VOWELS = {
     '𐑹': ('\uE018', '\uE04A', 'NORTH (Rómen + o-tehta)'),
     '𐑺': ('\uE018', '\uE046', 'SQUARE (Rómen + e-tehta)'),
     '𐑽': ('\uE018', '\uE044', 'NEAR (Rómen + i-tehta)'),
-    '𐑻': ('\uE018', '\uE04C', 'NURSE (Rómen + u-tehta)'),  # Fixed: mapped to u-tehta (U+E04C)
+    '𐑻': ('\uE018', '\uE04C', 'NURSE (Rómen + u-tehta)'),
     '𐑼': ('\uE014', None,     'lettER (Unadorned Óre)'),
 }
 
@@ -58,15 +58,31 @@ NASAL_PAIRS = {
 
 ALL_VOWEL_CHARS = set(SHORT_VOWELS.keys()) | {'𐑰', '𐑵', '𐑭'} | set(DIPHTHONGS.keys()) | set(R_VOWELS.keys())
 
-def translate_word(word: str, inspect: bool = False) -> str:
-    """Translates a Shavian word into CSUR Tengwar with optional step-by-step tracing."""
+def get_sibilants(use_csur: bool):
+    """Returns (Silme, Silme Nuquerna, Esse, Esse Nuquerna) based on selected encoding."""
+    if use_csur:
+        # Standard CSUR PUA Mapping
+        return ('\uE01C', '\uE01D', '\uE01E', '\uE01F')
+    else:
+        # Everson 2001 PUA Mapping (Default)
+        return ('\uE024', '\uE025', '\uE026', '\uE027')
+
+def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> str:
+    """Translates a Shavian word into Tengwar PUA code points."""
     clean_word = word.replace('·', '')
     if not clean_word:
         return ""
 
+    silme, silme_nuq, esse, esse_nuq = get_sibilants(use_csur)
+
+    consonants = dict(TENGWAR_CONSONANTS_BASE)
+    consonants['𐑕'] = (silme, 'Silme')
+    consonants['𐑟'] = (esse, 'Esse')
+
     trace = []
     if inspect:
-        trace.append(f"\n=== INSPECTING WORD: '{word}' ===")
+        mode_str = "CSUR" if use_csur else "Everson 2001 (Default)"
+        trace.append(f"\n=== INSPECTING WORD: '{word}' [Encoding: {mode_str}] ===")
         trace.append(f"Pass 1 (Namer Dot Strip): '{clean_word}'")
 
     output = []
@@ -127,12 +143,12 @@ def translate_word(word: str, inspect: bool = False) -> str:
                 if pending_vowel is not None:
                     if inspect:
                         trace.append(f"Step {i}: Detected Nasal Pair '{pair}' ({pair_name}) WITH active vowel.")
-                    emit_consonant(nasal_base, TENGWAR_CONSONANTS[pair[0]][1])
+                    emit_consonant(nasal_base, consonants[pair[0]][1])
                     i += 1
                 else:
                     if inspect:
                         trace.append(f"Step {i}: Detected Nasal Pair '{pair}' ({pair_name}) WITHOUT active vowel.")
-                    stop_hex, stop_name = TENGWAR_CONSONANTS[stop_char]
+                    stop_hex, stop_name = consonants[stop_char]
                     output.append(stop_hex)
                     output.append(NASAL_BAR_ABOVE)
                     if inspect:
@@ -152,8 +168,8 @@ def translate_word(word: str, inspect: bool = False) -> str:
             continue
 
         # Standard Consonants
-        if c in TENGWAR_CONSONANTS:
-            base_hex, base_name = TENGWAR_CONSONANTS[c]
+        if c in consonants:
+            base_hex, base_name = consonants[c]
             if inspect:
                 trace.append(f"Step {i}: Char '{c}' -> Consonant {base_name}")
             emit_consonant(base_hex, base_name)
@@ -224,9 +240,6 @@ def translate_word(word: str, inspect: bool = False) -> str:
             i += 1
             continue
 
-        # Fallback for unexpected characters
-        if pending_vowel is not None:
-            flush_pending_vowel()
         output.append(c)
         i += 1
 
@@ -237,40 +250,41 @@ def translate_word(word: str, inspect: bool = False) -> str:
 
     # Pass 5: Nuquerna Flips
     top_tehtar_all = r'([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E])'
-    flipped_result = re.sub(f'\uE01C{top_tehtar_all}', '\uE01D\\1', raw_result)
-    flipped_result = re.sub(f'\uE01E{top_tehtar_all}', '\uE01F\\1', flipped_result)
+    flipped_result = re.sub(f'{silme}{top_tehtar_all}', f'{silme_nuq}\\1', raw_result)
+    flipped_result = re.sub(f'{esse}{top_tehtar_all}', f'{esse_nuq}\\1', flipped_result)
 
     if inspect and raw_result != flipped_result:
         trace.append("Pass 5: Applied Nuquerna Flip(s) to Silme/Esse.")
 
     if inspect:
         hex_stream = " ".join([f"U+{ord(ch):04X}" for ch in flipped_result])
-        trace.append(f"Final CSUR Output String: '{flipped_result}'")
-        trace.append(f"Final Hex Code Points:   {hex_stream}\n")
+        trace.append(f"Final Tengwar Output String: '{flipped_result}'")
+        trace.append(f"Final Hex Code Points:     {hex_stream}\n")
         print("\n".join(trace))
 
     return flipped_result
 
-def process_stream(text: str, inspect: bool = False) -> str:
+def process_stream(text: str, inspect: bool = False, use_csur: bool = False) -> str:
     parts = SHAVIAN_WORD_PATTERN.split(text)
     out = []
     for part in parts:
         if SHAVIAN_WORD_PATTERN.match(part):
-            out.append(translate_word(part, inspect=inspect))
+            out.append(translate_word(part, inspect=inspect, use_csur=use_csur))
         else:
             out.append(part)
     return "".join(out)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Convert Shavian text stream to CSUR Tengwar.")
+    parser = argparse.ArgumentParser(description="Convert Shavian text stream to Tengwar PUA code points.")
     parser.add_argument('text', nargs='?', help='Text string to convert. If omitted, reads from stdin.')
     parser.add_argument('--inspect', help='Inspect state-machine steps for a single Shavian word.')
+    parser.add_argument('--csur', action='store_true', help='Use classic CSUR mapping (U+E01C-U+E01F) instead of Everson 2001 default (U+E024-U+E027).')
     args = parser.parse_args()
 
     if args.inspect:
-        translate_word(args.inspect, inspect=True)
+        translate_word(args.inspect, inspect=True, use_csur=args.csur)
     elif args.text:
-        print(process_stream(args.text))
+        print(process_stream(args.text, use_csur=args.csur))
     else:
         input_data = sys.stdin.read()
-        sys.stdout.write(process_stream(input_data))
+        sys.stdout.write(process_stream(input_data, use_csur=args.csur))

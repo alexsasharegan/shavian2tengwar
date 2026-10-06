@@ -26,10 +26,10 @@
   {
     "id": "TC04",
     "category": "Nuquerna Positional Inversion",
-    "description": "bruised: Esse flips to Esse Nuquerna when carrying top double u-curl",
+    "description": "bruised: Esse flips to Esse Nuquerna (Everson U+E027) when carrying top double u-curl",
     "input": "𐑚𐑮𐑵𐑟𐑛",
-    "expected_csur": "\uE005\uE018\uE01F\uE04D\uE004",
-    "expected_hex": "U+E005 U+E018 U+E01F U+E04D U+E004"
+    "expected_csur": "\uE005\uE018\uE027\uE04D\uE004",
+    "expected_hex": "U+E005 U+E018 U+E027 U+E04D U+E004"
   },
   {
     "id": "TC05",
@@ -50,10 +50,10 @@
   {
     "id": "TC07",
     "category": "Contraction & Non-Shavian Splitting",
-    "description": "lady's: apostrophe splits token, orphan vowel gets carrier, trailing Esse is unadorned",
+    "description": "lady's: apostrophe splits token, orphan vowel gets carrier, trailing Esse is unadorned (Everson U+E026)",
     "input": "𐑤𐑱𐑛𐑦’𐑟",
-    "expected_csur": "\uE01A\uE016\uE046\uE004\uE028\uE044’\uE01E",
-    "expected_hex": "U+E01A U+E016 U+E046 U+E004 U+E028 U+E044 U+2019 U+E01E"
+    "expected_csur": "\uE01A\uE016\uE046\uE004\uE028\uE044’\uE026",
+    "expected_hex": "U+E01A U+E016 U+E046 U+E004 U+E028 U+E044 U+2019 U+E026"
   },
   {
     "id": "TC08",
