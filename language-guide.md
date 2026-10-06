@@ -179,23 +179,30 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 
 ---
 
-### 2. Verified Test Cases & Output Comparison
+### 2. The Big Five: Shorthand Logograms
+
+| Target Word | Shavian IR | Tengwar Output | Glyph Name           | Code Point Stream | State Machine Rule                 |
+| :---------- | :--------- | :------------- | :------------------- | :---------------- | :--------------------------------- |
+| _the_       | **𐑞**      | ****          | _Extended Tinco_     | `U+E02C`          | Standalone logogram for "the"      |
+| _of_        | **𐑝**      | ****          | _Extended Ampa_      | `U+E01D`          | Standalone logogram for "of"       |
+| _and_       | **𐑯**      | ****         | _Ando_ + _Nasal Bar_ | `U+E004 U+E04E`   | Standalone shorthand for "and"     |
+| _to_        | **𐑑**      | ****          | _Tinco_ Base         | `U+E000`          | Unadorned base shorthand for "to"  |
+| _for_       | **𐑓**      | ****          | _Formen_ Base        | `U+E009`          | Unadorned base shorthand for "for" |
+
+---
+
+### 3. Verified Test Cases & Output Comparison
 
 To verify visual output in Obsidian or PDF export, install **[Alcarin Tengwar](https://github.com/Tosche/Alcarin-Tengwar)**. The table below lists the exact Shavian input, rendered Tengwar output, Everson hex bytes, and feature rules applied:
 
-| Word      | Shavian Input | Tengwar Output | Everson 2001 Hex Stream                                   | Applied Rule / Logic                                                                              |
-| :-------- | :------------ | :------------- | :-------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| _winter_  | `𐑢𐑦𐑯𐑑𐑼`       | ****      | `U+E015 U+E010 U+E044 U+E000 U+E014`                      | _i-tehta_ attaches to _Númen_; _Tinco_ follows; ends in _Óre_.                                    |
-| _chamber_ | `𐑗𐑱𐑥𐑚𐑼`       | ****     | `U+E002 U+E016 U+E046 U+E005 U+E04E U+E014`               | Nasal pair `𐑥𐑚` lacks vowel, emitting _Umbar_ + _Nasal Bar Above_ (`U+E04E`).                     |
-| _third_   | `𐑔𐑻𐑛`         | ****       | `U+E008 U+E020 U+E04C U+E004`                             | NURSE vowel `𐑻` decomposes into _Rómen_ (`U+E020`) + _u-tehta_ (`U+E04C`).                        |
-| _hair_    | `𐑣𐑺`          | ****        | `U+E028 U+E020 U+E046`                                    | _Hyarmen_ (`U+E028`); SQUARE vowel `𐑺` decomposes into _Rómen_ + _e-tehta_ (`U+E046`).            |
-| _bruised_ | `𐑚𐑮𐑵𐑟𐑛`       | ****      | `U+E005 U+E020 U+E027 U+E04D U+E004`                      | _Rómen_ (`U+E020`); double u-curl forces _Esse_ to flip to _Esse Nuquerna_ (`U+E027`).            |
-| _merry_   | `𐑥𐑧𐑮𐑦`        | ****      | `U+E011 U+E020 U+E046 U+E02D U+E044`                      | _Rómen_ (`U+E020`); word-final short vowel attaches to _Short Carrier_ (_Telco_, `U+E02D`).       |
-| _he_      | `𐑣𐑰`          | ****        | `U+E028 U+E02E U+E044`                                    | _Hyarmen_ (`U+E028`); word-final long vowel attaches to _Long Carrier_ (_Ára_, `U+E02E`).         |
-| _lady's_  | `𐑤𐑱𐑛𐑦’𐑟`      | **’**   | `U+E022 U+E016 U+E046 U+E004 U+E02D U+E044 U+2019 U+E026` | _Lamba_ (`U+E022`); contraction apostrophe splits token; trailing _Esse_ (`U+E026`) is unadorned. |
-| _the_     | `𐑞`           | ****          | `U+E00C`                                                  | Big Five abbreviation: Single character maps directly to _Anta_ base.                             |
-| _of_      | `𐑝`           | ****          | `U+E00D`                                                  | Big Five abbreviation: Single character maps directly to _Ampa_ base.                             |
-| _and_     | `𐑯`           | ****          | `U+E010`                                                  | Big Five abbreviation: Single character maps directly to _Númen_ base.                            |
-| _to_      | `𐑑`           | ****          | `U+E000`                                                  | Big Five abbreviation: Single character maps directly to _Tinco_ base.                            |
-| _for_     | `𐑓`           | ****          | `U+E009`                                                  | Big Five abbreviation: Single character maps directly to _Formen_ base.                           |
-| _old_     | `𐑴𐑤𐑛`         | ****       | `U+E015 U+E04A U+E022 U+E004`                             | GOAT diphthong offglide _Vala_ + _o-tehta_, _Lamba_ (`U+E022`), _Ando_.                           |
+| Word      | Shavian Input | Tengwar Output | Everson 2001 Hex Stream                     | Applied Rule / Logic                                                                     |
+| :-------- | :------------ | :------------- | :------------------------------------------ | :--------------------------------------------------------------------------------------- |
+| _winter_  | `𐑢𐑦𐑯𐑑𐑼`       | ****      | `U+E015 U+E000 U+E04E U+E044 U+E014`        | Universal Nasal Bar over _Tinco_ (``); _i-tehta_ attaches above bar; ends in _Óre_.     |
+| _chamber_ | `𐑗𐑱𐑥𐑚𐑼`       | ****     | `U+E002 U+E016 U+E046 U+E005 U+E04E U+E014` | Preconsonantal nasal pair `𐑥𐑚` emits _Umbar_ + _Nasal Bar Above_ (`U+E04E`).             |
+| _the_     | `𐑞`           | ****          | `U+E02C`                                    | Big Five abbreviation: Standalone character maps directly to _Extended Tinco_ logogram.  |
+| _of_      | `𐑝`           | ****          | `U+E01D`                                    | Big Five abbreviation: Standalone character maps directly to _Extended Ampa_ logogram.   |
+| _and_     | `𐑯`           | ****         | `U+E004 U+E04E`                             | Big Five abbreviation: Standalone character maps directly to _Ando_ + _Nasal Bar Above_. |
+| _to_      | `𐑑`           | ****          | `U+E000`                                    | Big Five abbreviation: Standalone character maps directly to _Tinco_ base.               |
+| _for_     | `𐑓`           | ****          | `U+E009`                                    | Big Five abbreviation: Standalone character maps directly to _Formen_ base.              |
+| _land_    | `𐑤𐑨𐑯𐑛`        | ****       | `U+E022 U+E004 U+E04E U+E040`               | _Lamba_ (`U+E022`); Universal Nasal Bar over _Ando_ (``) with top _a-tehta_.            |
+| _wind_    | `𐑢𐑦𐑯𐑛`        | ****       | `U+E015 U+E004 U+E04E U+E044`               | _Vala_ (`U+E015`); Universal Nasal Bar over _Ando_ (``) with top _i-tehta_.             |
