@@ -82,7 +82,7 @@ python3 main.py < in.md > out.md
 ### Direct Argument Processing
 
 ```bash
-python3 main.py "𐑞 𐑝𐑶𐑕 𐑝 ·𐑮𐑦𐑗𐑼𐑛 𐑞 𐑔𐑻𐑛"
+python3 main.py "𐑦𐑯 𐑩 𐑣𐑴𐑤 𐑦𐑯 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑞𐑺 𐑤𐑦𐑝𐑛 𐑩 𐑣𐑪𐑚𐑦𐑑"
 ```
 
 ### Interactive Word Inspector (`--inspect`)
