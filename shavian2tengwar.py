@@ -157,14 +157,16 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         trace.append(f"Pass 1 (Namer Dot Strip): '{clean_word}'")
 
     output = []
-    pending_vowel = None  # Stores ('SHORT', tehta, name), ('LONG_E',), ('LONG_U',)
+    pending_vowel: tuple[str, str, str] | None = (
+        None  # Uniform structure: (vtype, tehta_hex, tehta_name)
+    )
     i = 0
 
     def flush_pending_vowel():
         nonlocal pending_vowel
         if pending_vowel is None:
             return
-        vtype = pending_vowel[0]
+        vtype, tehta, name = pending_vowel
         if vtype == "LONG_E":
             output.append(cfg["long_carrier"])
             output.append("\ue044")
@@ -181,10 +183,10 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                 )
         elif vtype == "SHORT":
             output.append(cfg["short_carrier"])
-            output.append(pending_vowel[1])
+            output.append(tehta)
             if inspect:
                 trace.append(
-                    f"  [Flush Vowel] Short Vowel -> Short Carrier (U+{ord(cfg['short_carrier']):04X}) + {pending_vowel[2]}"
+                    f"  [Flush Vowel] Short Vowel -> Short Carrier (U+{ord(cfg['short_carrier']):04X}) + {name}"
                 )
         pending_vowel = None
 
@@ -194,7 +196,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if inspect:
             trace.append(f"  [Emit Consonant] {base_name} (U+{ord(base_hex):04X})")
         if pending_vowel is not None:
-            vtype = pending_vowel[0]
+            vtype, tehta, name = pending_vowel
             if vtype == "LONG_E":
                 output.append("\ue047")
                 if inspect:
@@ -204,11 +206,9 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                 if inspect:
                     trace.append("    └─ Attached: Double Left Curl (U+E04D)")
             elif vtype == "SHORT":
-                output.append(pending_vowel[1])
+                output.append(tehta)
                 if inspect:
-                    trace.append(
-                        f"    └─ Attached: {pending_vowel[2]} (U+{ord(pending_vowel[1]):04X})"
-                    )
+                    trace.append(f"    └─ Attached: {name} (U+{ord(tehta):04X})")
             pending_vowel = None
 
     while i < len(clean_word):
@@ -291,7 +291,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑰":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("LONG_E",)
+            pending_vowel = ("LONG_E", "\ue047", "Double Acute")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑰' (FLEECE) -> Queue Pending Long E")
             i += 1
@@ -300,7 +300,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑵":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("LONG_U",)
+            pending_vowel = ("LONG_U", "\ue04d", "Double Left Curl")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑵' (GOOSE) -> Queue Pending Long U")
             i += 1
