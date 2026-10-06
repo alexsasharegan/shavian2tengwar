@@ -162,7 +162,7 @@ To verify visual output in Obsidian or PDF export, install **[Alcarin Tengwar](h
 | _chamber_<br> | `𐑗𐑱𐑥𐑚𐑼`       | ****          | `U+E002 U+E016 U+E046 U+E005 U+E04E U+E014`               | Nasal pair `𐑥𐑚` lacks vowel, emitting _Umbar_ + _Nasal Bar Above_ (`U+E04E`). |
 | _third_<br>   | `𐑔𐑻𐑛`         | ****            | `U+E008 U+E018 U+E04C U+E004`                             | NURSE vowel `𐑻` decomposes into _Rómen_ + _u-tehta_ (`U+E04C`).               |
 | _hair_        | `𐑣𐑺`          | ****             | `U+E020 U+E018 U+E046`                                    | SQUARE vowel `𐑺` decomposes into _Rómen_ + _e-tehta_ (`U+E046`).              |
-| _bruised_<br> | `𐑚𐑮𐑵𐑟𐑛`       | ****           | `U+E005 U+E018 U+E01F U+E04D U+E004`                      | Carrying _double u-curl_ forces _Esse_ to flip to _Esse Nuquerna_ (`U+E01F`). |
+| _bruised_<br> | `𐑚𐑮𐑵𐑟𐑛`       | ****           | `U+E005 U+E018 U+E01F U+E04D U+E004`                      | Carrying _double u-curl_ forces _Esse_ to flip to _Esse Nuquerna_ (`U+E01F`). |
 | _merry_<br>   | `𐑥𐑧𐑮𐑦`        | ****           | `U+E011 U+E018 U+E046 U+E028 U+E044`                      | Word-final short vowel attaches to _Short Carrier_ (_Telco_, `U+E028`).       |
 | _he_<br>      | `𐑣𐑰`          | ****             | `U+E020 U+E029 U+E044`                                    | Word-final long vowel attaches to _Long Carrier_ (_Ára_, `U+E029`).           |
-| _lady's_<br>  | `𐑤𐑱𐑛𐑦’𐑟`      | **’**        | `U+E01A U+E016 U+E046 U+E004 U+E028 U+E044 U+2019 U+E01E` | Contraction apostrophe splits token; trailing _Esse_ is unadorned.            |
+| _lady's_<br>  | `𐑤𐑱𐑛𐑦’𐑟`      | **’**        | `U+E01A U+E016 U+E046 U+E004 U+E028 U+E044 U+2019 U+E01E` | Contraction apostrophe splits token; trailing _Esse_ is unadorned.            |
