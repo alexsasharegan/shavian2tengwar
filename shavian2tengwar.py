@@ -158,12 +158,12 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     consonants["𐑟"] = (cfg["esse"], "Esse")
 
     r_vowels = {
-        "𐑸": (cfg["romen"], "\ue040", "START (Rómen + a-tehta)"),
-        "𐑹": (cfg["romen"], "\ue04a", "NORTH (Rómen + o-tehta)"),
-        "𐑺": (cfg["romen"], "\ue046", "SQUARE (Rómen + e-tehta)"),
-        "𐑽": (cfg["romen"], "\ue044", "NEAR (Rómen + i-tehta)"),
-        "𐑻": (cfg["romen"], "\ue04c", "NURSE (Rómen + u-tehta)"),
-        "𐑼": (ORE, None, "lettER (Unadorned Óre)"),
+        "𐑸": ("\ue040", "START (a-tehta)"),
+        "𐑹": ("\ue04a", "NORTH (o-tehta)"),
+        "𐑺": ("\ue046", "SQUARE (e-tehta)"),
+        "𐑽": ("\ue044", "NEAR (i-tehta)"),
+        "𐑻": ("\ue04c", "NURSE (u-tehta)"),
+        "𐑼": (None, "lettER (Unadorned Óre)"),
     }
 
     trace = []
@@ -335,12 +335,19 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c in r_vowels:
             if pending_vowel is not None:
                 flush_pending_vowel()
-            r_base, tehta, rv_name = r_vowels[c]
-            output.append(r_base)
+            tehta, rv_name = r_vowels[c]
+            is_vowel_next = (
+                i + 1 < len(clean_word) and clean_word[i + 1] in ALL_VOWEL_CHARS
+            )
+            r_hex = cfg["romen"] if is_vowel_next else ORE
+            r_name = "Rómen" if is_vowel_next else "Óre"
+            output.append(r_hex)
             if tehta:
                 output.append(tehta)
             if inspect:
-                trace.append(f"Step {i}: Char '{c}' -> R-Vowel {rv_name}")
+                trace.append(
+                    f"Step {i}: Char '{c}' -> R-Vowel {rv_name} using {r_name}"
+                )
             i += 1
             continue
 
@@ -353,7 +360,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     raw_result = "".join(output)
 
     # Pass 5: Nuquerna Flips
-    top_tehtar_all = r"([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E])"
+    top_tehtar_all = r"([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E\uE050])"
     flipped_result = re.sub(
         f"{cfg['silme']}{top_tehtar_all}", f"{cfg['silme_nuq']}\\1", raw_result
     )

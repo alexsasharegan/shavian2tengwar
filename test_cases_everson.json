@@ -18,10 +18,10 @@
 	{
 		"id": "TC03",
 		"category": "R-Colored Vowel Decomposition",
-		"description": "third: NURSE vowel decomposes into Romen (Everson U+E020) + u-tehta",
+		"description": "third: Thule (U+E008), Ore (U+E014) + u-tehta (U+E04C), Ando (U+E004)",
 		"input": "𐑔𐑻𐑛",
-		"expected_csur": "\uE008\uE020\uE04C\uE004",
-		"expected_hex": "U+E008 U+E020 U+E04C U+E004"
+		"expected_csur": "\uE008\uE014\uE04C\uE004",
+		"expected_hex": "U+E008 U+E014 U+E04C U+E004"
 	},
 	{
 		"id": "TC04",
@@ -58,7 +58,7 @@
 	{
 		"id": "TC08",
 		"category": "Big Five Abbreviation - the",
-		"description": "the: single character maps directly to Extended Tinco logogram (U+E02C)",
+		"description": "the: single character maps directly to Extended Anta logogram (U+E01C)",
 		"input": "𐑞",
 		"expected_csur": "\uE01C",
 		"expected_hex": "U+E01C"
@@ -98,10 +98,10 @@
 	{
 		"id": "TC13",
 		"category": "Rhotic Vowel Distinction (NURSE vs SQUARE)",
-		"description": "her hair: Hyarmen (Everson U+E028), Romen (Everson U+E020)",
+		"description": "her hair: Hyarmen (Everson U+E028) + Ore (U+E014) + u-tehta, Hyarmen + Ore + e-tehta",
 		"input": "𐑣𐑻 𐑣𐑺",
-		"expected_csur": "\uE028\uE020\uE04C \uE028\uE020\uE046",
-		"expected_hex": "U+E028 U+E020 U+E04C U+0020 U+E028 U+E020 U+E046"
+		"expected_csur": "\uE028\uE014\uE04C \uE028\uE014\uE046",
+		"expected_hex": "U+E028 U+E014 U+E04C U+0020 U+E028 U+E014 U+E046"
 	},
 	{
 		"id": "TC14",
