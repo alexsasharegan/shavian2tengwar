@@ -150,5 +150,58 @@
 		"input": "𐑒𐑦𐑙",
 		"expected_csur": "\uE003\uE013\uE044",
 		"expected_hex": "U+E003 U+E013 U+E044"
+	},
+	{
+		"id": "TC20",
+		"category": "Aspirated Wh Cluster",
+		"description": "white (rhetorical/historical hw): Hwesta (U+E00B) + Anna (U+E016) + a-tehta (U+E040) + Tinco (U+E000)",
+		"input": "𐑣𐑢𐑲𐑑",
+		"expected_csur": "\uE00B\uE016\uE040\uE000",
+		"expected_hex": "U+E00B U+E016 U+E040 U+E000"
+	},
+	{
+		"id": "TC21",
+		"category": "Verbatim Escape Block Retention (Default)",
+		"description": "verbatim block retains {{ and }} outer brackets by default",
+		"input": "{{𐑩𐑯}} ·𐑧𐑤𐑝𐑩𐑯",
+		"flags": "",
+		"expected_csur": "{{𐑩𐑯}} \uE022\uE046\uE00D\uE010\uE045",
+		"expected_hex": "U+007B U+007B U+10469 U+1046F U+007D U+007D U+0020 U+E022 U+E046 U+E00D U+E010 U+E045"
+	},
+	{
+		"id": "TC22",
+		"category": "Verbatim Escape Block Stripping (--strip-escapes)",
+		"description": "verbatim block unbraids {{ and }} outer brackets when --strip-escapes is enabled",
+		"input": "{{𐑩𐑯}} ·𐑧𐑤𐑝𐑩𐑯",
+		"flags": "--strip-escapes",
+		"expected_csur": "𐑩𐑯 \uE022\uE046\uE00D\uE010\uE045",
+		"expected_hex": "U+10469 U+1046F U+0020 U+E022 U+E046 U+E00D U+E010 U+E045"
+	},
+	{
+		"id": "TC23",
+		"category": "Legacy CSUR Mode Support (--csur)",
+		"description": "merry in CSUR uses CSUR Romen (U+E018) and CSUR Telco (U+E028)",
+		"input": "𐑥𐑧𐑮𐑦",
+		"flags": "--csur",
+		"expected_csur": "\uE011\uE018\uE046\uE028\uE044",
+		"expected_hex": "U+E011 U+E018 U+E046 U+E028 U+E044"
+	},
+	{
+		"id": "TC24",
+		"category": "Diphthong Offglide Processing",
+		"description": "price goat: PRICE uses Anna + a-tehta; Silme remains upright (U+E024); GOAT uses Vala + o-tehta",
+		"input": "𐑐𐑮𐑲𐑕 𐑜𐑴𐑑",
+		"flags": "",
+		"expected_csur": "\uE001\uE020\uE016\uE040\uE024 \uE007\uE015\uE04A\uE000",
+		"expected_hex": "U+E001 U+E020 U+E016 U+E040 U+E024 U+0020 U+E007 U+E015 U+E04A U+E000"
+	},
+	{
+		"id": "TC25",
+		"category": "Extended Punctuation Marks",
+		"description": "colon and semicolon convert to Ternary Stop (U+E062); free uses Ara + i-tehta (U+E02D U+E044)",
+		"input": "𐑛𐑱: 𐑓𐑮𐑰;",
+		"flags": "",
+		"expected_csur": "\uE004\uE016\uE046\uE062 \uE009\uE020\uE02D\uE044\uE062",
+		"expected_hex": "U+E004 U+E016 U+E046 U+E062 U+0020 U+E009 U+E020 U+E02D U+E044 U+E062"
 	}
 ]

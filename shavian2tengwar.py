@@ -3,8 +3,9 @@ import argparse
 import re
 import sys
 
-SHAVIAN_WORD_PATTERN = re.compile(r"([\u00B7\U00010450-\U0001047F]+)")
-STREAM_PATTERN = re.compile(r"(\{\{.*?\}\}|[·\u00B7\U00010450-\U0001047F]+)", re.DOTALL)
+# Readable literal Shavian range for word parsing
+SHAVIAN_WORD_PATTERN = re.compile(r"([·𐑐-𐑿]+)")
+STREAM_PATTERN = re.compile(r"(\{\{.*?\}\}|[·𐑐-𐑿]+)", re.DOTALL)
 
 # Fixed static mappings across both CSUR and Everson standards
 TENGWAR_CONSONANTS_FIXED = {
@@ -231,7 +232,17 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     while i < len(clean_word):
         c = clean_word[i]
 
-        # Pass 2: Universal Preconsonantal Nasals
+        # Pass 2a: Aspirated Wh Cluster (𐑣𐑢 -> Hwesta U+E00B)
+        if i < len(clean_word) - 1 and clean_word[i : i + 2] == "𐑣𐑢":
+            emit_consonant("\ue00b", "Hwesta")
+            if inspect:
+                trace.append(
+                    f"Step {i}: Detected Aspirated Wh Cluster '𐑣𐑢' -> Hwesta (U+E00B)"
+                )
+            i += 2
+            continue
+
+        # Pass 2b: Universal Preconsonantal Nasals
         if i < len(clean_word) - 1:
             pair = clean_word[i : i + 2]
             if pair in NASAL_PAIRS:
@@ -359,7 +370,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
 
     raw_result = "".join(output)
 
-    # Pass 5: Nuquerna Flips
+    # Pass 5: Nuquerna Flips (using explicit hex escape ranges for PUA safety)
     top_tehtar_all = r"([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E\uE050])"
     flipped_result = re.sub(
         f"{cfg['silme']}{top_tehtar_all}", f"{cfg['silme_nuq']}\\1", raw_result
@@ -380,13 +391,18 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     return flipped_result
 
 
-def process_stream(text: str, inspect: bool = False, use_csur: bool = False) -> str:
+def process_stream(
+    text: str,
+    inspect: bool = False,
+    use_csur: bool = False,
+    strip_escapes: bool = False,
+) -> str:
+    """Processes a text stream, translating Shavian words and punctuation while preserving or stripping {{...}} escape blocks."""
     parts = STREAM_PATTERN.split(text)
     out = []
     for part in parts:
         if part.startswith("{{") and part.endswith("}}"):
-            # Strip {{ and }} and emit contents verbatim (preserving newlines & literal text)
-            out.append(part[2:-2])
+            out.append(part[2:-2] if strip_escapes else part)
         elif SHAVIAN_WORD_PATTERN.match(part):
             out.append(translate_word(part, inspect=inspect, use_csur=use_csur))
         else:
@@ -409,12 +425,25 @@ if __name__ == "__main__":
         action="store_true",
         help="Use classic CSUR mapping (U+E01C, U+E01A, U+E018) instead of Everson 2001 default.",
     )
+    parser.add_argument(
+        "--strip-escapes",
+        action="store_true",
+        help="Strip outer {{ and }} escape brackets from verbatim pass-through blocks.",
+    )
     args = parser.parse_args()
 
     if args.inspect:
         translate_word(args.inspect, inspect=True, use_csur=args.csur)
     elif args.text:
-        print(process_stream(args.text, use_csur=args.csur))
+        print(
+            process_stream(
+                args.text, use_csur=args.csur, strip_escapes=args.strip_escapes
+            )
+        )
     else:
         input_data = sys.stdin.read()
-        sys.stdout.write(process_stream(input_data, use_csur=args.csur))
+        sys.stdout.write(
+            process_stream(
+                input_data, use_csur=args.csur, strip_escapes=args.strip_escapes
+            )
+        )
