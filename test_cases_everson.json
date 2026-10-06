@@ -66,10 +66,10 @@
 	{
 		"id": "TC09",
 		"category": "Big Five Abbreviation - of",
-		"description": "of: single character maps directly to Ampa base",
+		"description": "of: single character maps directly to Extended Ampa logogram (U+E01D)",
 		"input": "𐑝",
-		"expected_csur": "\uE00D",
-		"expected_hex": "U+E00D"
+		"expected_csur": "\uE01D",
+		"expected_hex": "U+E01D"
 	},
 	{
 		"id": "TC10",
@@ -110,5 +110,13 @@
 		"input": "𐑴𐑤𐑛",
 		"expected_csur": "\uE015\uE04A\uE022\uE004",
 		"expected_hex": "U+E015 U+E04A U+E022 U+E004"
+	},
+	{
+		"id": "TC15",
+		"category": "Native Tengwar Punctuation Translation",
+		"description": "comma, period, and hyphen translate to Pusta (U+E060), Double Pusta (U+E061), Hyphen (U+E068)",
+		"input": "𐑩𐑯, ·𐑧𐑤𐑝𐑩𐑯-𐑥𐑱𐑛.",
+		"expected_csur": "\uE010\uE045\uE060 \uE022\uE046\uE00D\uE010\uE045\uE068\uE011\uE016\uE046\uE004\uE061",
+		"expected_hex": "U+E010 U+E045 U+E060 U+0020 U+E022 U+E046 U+E00D U+E010 U+E045 U+E068 U+E011 U+E016 U+E046 U+E004 U+E061"
 	}
 ]
