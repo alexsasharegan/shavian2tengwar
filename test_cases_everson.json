@@ -1,16 +1,16 @@
 [
 	{
 		"id": "TC01",
-		"category": "Preconsonantal Nasal + Preceding Vowel",
-		"description": "winter: Numen + i-tehta, Tinco, ending in Ore (U+E014)",
+		"category": "Universal Preconsonantal Nasal",
+		"description": "winter: Vala, Tinco + Nasal Bar Above + i-tehta, ending in Ore (U+E014)",
 		"input": "𐑢𐑦𐑯𐑑𐑼",
-		"expected_csur": "\uE015\uE010\uE044\uE000\uE014",
-		"expected_hex": "U+E015 U+E010 U+E044 U+E000 U+E014"
+		"expected_csur": "\uE015\uE000\uE04E\uE044\uE014",
+		"expected_hex": "U+E015 U+E000 U+E04E U+E044 U+E014"
 	},
 	{
 		"id": "TC02",
-		"category": "Preconsonantal Nasal (No Preceding Vowel)",
-		"description": "chamber: Nasal Bar Above on Umbar, ending in Ore (U+E014)",
+		"category": "Preconsonantal Nasal (No Preceding Vowel in Pair)",
+		"description": "chamber: Calma + Anna + e-tehta, Umbar + Nasal Bar Above, Ore (U+E014)",
 		"input": "𐑗𐑱𐑥𐑚𐑼",
 		"expected_csur": "\uE002\uE016\uE046\uE005\uE04E\uE014",
 		"expected_hex": "U+E002 U+E016 U+E046 U+E005 U+E04E U+E014"
@@ -58,10 +58,10 @@
 	{
 		"id": "TC08",
 		"category": "Big Five Abbreviation - the",
-		"description": "the: single character maps directly to Anta base",
+		"description": "the: single character maps directly to Extended Tinco logogram (U+E02C)",
 		"input": "𐑞",
-		"expected_csur": "\uE00C",
-		"expected_hex": "U+E00C"
+		"expected_csur": "\uE02C",
+		"expected_hex": "U+E02C"
 	},
 	{
 		"id": "TC09",
@@ -74,10 +74,10 @@
 	{
 		"id": "TC10",
 		"category": "Big Five Abbreviation - and",
-		"description": "and: single character maps directly to Numen base",
+		"description": "and: single character maps directly to Ando + Nasal Bar Above shorthand (U+E004 U+E04E)",
 		"input": "𐑯",
-		"expected_csur": "\uE010",
-		"expected_hex": "U+E010"
+		"expected_csur": "\uE004\uE04E",
+		"expected_hex": "U+E004 U+E04E"
 	},
 	{
 		"id": "TC11",
@@ -118,5 +118,21 @@
 		"input": "𐑩𐑯, ·𐑧𐑤𐑝𐑩𐑯-𐑥𐑱𐑛.",
 		"expected_csur": "\uE010\uE045\uE060 \uE022\uE046\uE00D\uE010\uE045\uE068\uE011\uE016\uE046\uE004\uE061",
 		"expected_hex": "U+E010 U+E045 U+E060 U+0020 U+E022 U+E046 U+E00D U+E010 U+E045 U+E068 U+E011 U+E016 U+E046 U+E004 U+E061"
+	},
+	{
+		"id": "TC16",
+		"category": "Universal Preconsonantal Nasal - land",
+		"description": "land: Lamba + Ando + Nasal Bar Above + a-tehta",
+		"input": "𐑤𐑨𐑯𐑛",
+		"expected_csur": "\uE022\uE004\uE04E\uE040",
+		"expected_hex": "U+E022 U+E004 U+E04E U+E040"
+	},
+	{
+		"id": "TC17",
+		"category": "Universal Preconsonantal Nasal - wind",
+		"description": "wind: Vala + Ando + Nasal Bar Above + i-tehta",
+		"input": "𐑢𐑦𐑯𐑛",
+		"expected_csur": "\uE015\uE004\uE04E\uE044",
+		"expected_hex": "U+E015 U+E004 U+E04E U+E044"
 	}
 ]

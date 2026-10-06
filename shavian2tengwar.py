@@ -51,7 +51,11 @@ DIPHTHONGS = {
 
 NASAL_BAR_ABOVE = "\ue04e"
 ORE = "\ue014"
+EXTENDED_TINCO_LOGOGRAM = "\ue02c"  # Appendix E standalone "the" logogram
 EXTENDED_AMPA_LOGOGRAM = "\ue01d"  # Appendix E standalone "of" logogram
+AND_SHORTHAND_LOGOGRAM = (
+    "\ue004\ue04e"  # Appendix E standalone "and" shorthand (Ando + Nasal Bar Above)
+)
 
 NASAL_PAIRS = {
     "𐑯𐑑": ("\ue010", "𐑑", "Númen + Tinco"),
@@ -123,14 +127,26 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     if not clean_word:
         return ""
 
-    # Check for standalone 'of' logogram (𐑝)
+    # Pass 0: Standalone Big Five Logogram Shorthands
+    if clean_word == "𐑞":
+        if inspect:
+            print(f"\n=== INSPECTING WORD: '{word}' ===")
+            print("Step 0: Standalone 'the' (𐑞) -> Extended Tinco Logogram (U+E02C)")
+        return EXTENDED_TINCO_LOGOGRAM
+
     if clean_word == "𐑝":
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
             print("Step 0: Standalone 'of' (𐑝) -> Extended Ampa Logogram (U+E01D)")
-            print(f"Final Tengwar Output String: '{EXTENDED_AMPA_LOGOGRAM}'")
-            print("Final Hex Code Points:     U+E01D\n")
         return EXTENDED_AMPA_LOGOGRAM
+
+    if clean_word == "𐑯":
+        if inspect:
+            print(f"\n=== INSPECTING WORD: '{word}' ===")
+            print(
+                "Step 0: Standalone 'and' (𐑯) -> Ando + Nasal Bar Shorthand (U+E004 U+E04E)"
+            )
+        return AND_SHORTHAND_LOGOGRAM
 
     cfg = get_encoding_config(use_csur)
 
@@ -214,31 +230,27 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     while i < len(clean_word):
         c = clean_word[i]
 
-        # Pass 2: Preconsonantal Nasals
+        # Pass 2: Universal Preconsonantal Nasals
         if i < len(clean_word) - 1:
             pair = clean_word[i : i + 2]
             if pair in NASAL_PAIRS:
-                nasal_base, stop_char, pair_name = NASAL_PAIRS[pair]
+                _, stop_char, pair_name = NASAL_PAIRS[pair]
+                stop_hex, stop_name = consonants[stop_char]
+                output.append(stop_hex)
+                output.append(NASAL_BAR_ABOVE)
+                if inspect:
+                    trace.append(
+                        f"Step {i}: Detected Universal Nasal Pair '{pair}' ({pair_name}) -> Stop {stop_name} + Nasal Bar Above"
+                    )
                 if pending_vowel is not None:
+                    _, tehta, name = pending_vowel
+                    output.append(tehta)
                     if inspect:
                         trace.append(
-                            f"Step {i}: Detected Nasal Pair '{pair}' ({pair_name}) WITH active vowel."
+                            f"    └─ Attached Preceding Vowel Tehta: {name} (U+{ord(tehta):04X})"
                         )
-                    emit_consonant(nasal_base, consonants[pair[0]][1])
-                    i += 1
-                else:
-                    if inspect:
-                        trace.append(
-                            f"Step {i}: Detected Nasal Pair '{pair}' ({pair_name}) WITHOUT active vowel."
-                        )
-                    stop_hex, stop_name = consonants[stop_char]
-                    output.append(stop_hex)
-                    output.append(NASAL_BAR_ABOVE)
-                    if inspect:
-                        trace.append(
-                            f"  [Emit Pair] {stop_name} (U+{ord(stop_hex):04X}) + Nasal Bar Above (U+E04E)"
-                        )
-                    i += 2
+                    pending_vowel = None
+                i += 2
                 continue
 
         # Pass 3: Contextual /r/
