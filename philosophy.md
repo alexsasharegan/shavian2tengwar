@@ -1,3 +1,4 @@
+
 # Orthography vs. Phonology: The Philosophy of shavian2tengwar
 
 While the Tengwar community possesses documented conventions for writing English — including resources from [Chad Bornholdt's Tengwar Training Spreadsheet](https://www.texastolkien.com/home/tolkien-resources-helpful-links) and [Tecendil's Tengwar Handbook](https://www.tecendil.com/tengwar-handbook/) — these systems are orthographically biased. They often have an implicit dependency on English spelling, assigning Tengwar characters based on Latin letters rather than raw phonetics.
@@ -28,11 +29,11 @@ This architectural choice necessitates several deliberate deviations from the co
 ### 4. Rejecting the Terminal S-Hook (`sa-rince`)
 
 **The Community Norm:** Trailing `-s` appears constantly in written English due to plurals and possessives. Orthographic modes routinely apply the `sa-rince` terminal hook for brevity, regardless of whether the suffix is pronounced as an unvoiced `/s/` (_cats_) or a voiced `/z/` (_dogs_).
-**Our Engine:** ReadLex Rule 2 enforces strict phonetic voicing assimilation for suffixes. To preserve this critical acoustic distinction, we reject the generic `sa-rince`. Instead, our engine outputs explicit _Silmë_ bases (`` or ``) for terminal `/s/` and explicit _Essë_ bases (`` or ``) for terminal `/z/`.
+**Our Engine:** ReadLex Rule 2 enforces strict phonetic voicing assimilation for suffixes. To preserve this critical acoustic distinction, we reject the generic `sa-rince`. Instead, our engine outputs explicit _Silmë_ bases ( or ) for terminal `/s/` and explicit _Essë_ bases ( or ) for terminal `/z/`.
 
 ### 5. Unadorned Logograms
 
-**The Community Norm:** Specific shorthand logograms are used for common function words, such as _Extended Anta_ (``, `U+E01C`) for "the" and _Extended Ampa_ (``, `U+E01D`) for "of". Some community variants append the under-dot to these extended stems to account for a silent 'e'.
+**The Community Norm:** Specific shorthand logograms are used for common function words, such as _Extended Anta_ (, `U+E01C`) for "the" and _Extended Ampa_ (, `U+E01D`) for "of". Some community variants append the under-dot to these extended stems to account for a silent 'e'.
 **Our Engine:** We adopted the core Appendix E logograms but strictly avoid adorning them. Because our engine fiercely protects the under-dot as the schwa, placing it under an extended carrier as a static word-sign would introduce visual and mechanical confusion. Our logograms remain unadorned to preserve the semantic integrity of the vowel diacritics.
 
 ---
