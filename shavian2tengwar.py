@@ -118,7 +118,7 @@ def get_encoding_config(use_csur: bool):
             "lamba": "\ue022",
             "hyarmen": "\ue028",
             "short_carrier": "\ue02e",
-            "long_carrier": "\ue02d",
+            "long_carrier": "\ue02c",
             "mode_name": "Everson 2001 / Alcarin Tengwar (Default)",
         }
 

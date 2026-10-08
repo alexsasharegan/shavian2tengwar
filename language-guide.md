@@ -88,17 +88,18 @@ In Tolkien's standard layout, primary consonants are organized into **4 Series**
 
 Beyond the standard 24-tengwa grid, specialized base characters handle liquids, sibilants, glottal sounds, and silent carriers:
 
-| Tengwa Glyph | Code Point | Tengwa Name             | Structural Description / Function                       |
-| ------------ | ---------- | ----------------------- | ------------------------------------------------------- |
-| ****        | `U+E020`   | _Rómen_                 | Trilled/prevocalic /r/ (used before vowels)             |
-| ****        | `U+E022`   | _Lamba_                 | Upward hooked liquid character (/l/)                    |
-| ****        | `U+E024`   | _Silme_                 | Upright S-curve sibilant (/s/)                          |
-| ****        | `U+E025`   | _Silme Nuquerna_        | Inverted S-curve (used when carrying top tehta)         |
-| ****        | `U+E026`   | _Esse_ / _Aze_          | Z-curve / inverted double loop (/z/)                    |
-| ****        | `U+E027`   | _Esse Nuquerna_         | Inverted Z-curve (used when carrying top tehta)         |
-| ****        | `U+E028`   | _Hyarmen_               | Downward stem with left hook (/h/)                      |
-| ****        | `U+E02D`   | _Ára_ (Long Carrier)    | Extended vertical pillar ascending (long orphan vowel)  |
-| ****        | `U+E02E`   | _Telco_ (Short Carrier) | Unadorned vertical pillar x-height (short orphan vowel) |
+| Tengwa Glyph | Code Point   | Tengwa Name                 | Structural Description / Function                                                        |
+| ------------ | ------------ | --------------------------- | ---------------------------------------------------------------------------------------- |
+| ****        | `U+E020`     | _Rómen_                     | Trilled/prevocalic /r/ (used before vowels)                                              |
+| ****        | `U+E022`     | _Lamba_                     | Upward hooked liquid character (/l/)                                                     |
+| ****        | `U+E024`     | _Silme_                     | Upright S-curve sibilant (/s/)                                                           |
+| ****        | `U+E025`     | _Silme Nuquerna_            | Inverted S-curve (used when carrying top tehta)                                          |
+| ****        | `U+E026`     | _Esse_ / _Aze_              | Z-curve / inverted double loop (/z/)                                                     |
+| ****        | `U+E027`     | _Esse Nuquerna_             | Inverted Z-curve (used when carrying top tehta)                                          |
+| ****        | `U+E028`     | _Hyarmen_                   | Downward stem with left hook (/h/)                                                       |
+| ****        | **`U+E02C`** | **_Ára_ (Long Carrier)**    | Descending vertical stem (dotless 'j', drops below baseline) carrying long orphan vowels |
+| ****        | `U+E02D`     | _Extended Carrier_          | Ascending vertical stem (starts above x-height)                                          |
+| ****        | `U+E02E`     | **_Telco_ (Short Carrier)** | Neutral x-height vertical stem (dotless 'i') carrying short orphan vowels                |
 
 ---
 

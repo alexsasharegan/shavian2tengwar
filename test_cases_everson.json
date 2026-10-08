@@ -44,7 +44,7 @@
 		"category": "Word-Final Long Vowel Carrier",
 		"description": "he: Hyarmen (Everson U+E028) + Ara (Everson U+E02D)",
 		"input": "𐑣𐑰",
-		"expected_csur": "\uE028\uE02D\uE044",
+		"expected_csur": "\uE028\uE02C\uE044",
 		"expected_hex": "U+E028 U+E02D U+E044"
 	},
 	{
@@ -201,7 +201,7 @@
 		"description": "colon and semicolon convert to Ternary Stop (U+E062); free uses Ara + i-tehta (U+E02D U+E044)",
 		"input": "𐑛𐑱: 𐑓𐑮𐑰;",
 		"flags": "",
-		"expected_csur": "\uE004\uE016\uE046\uE062 \uE009\uE020\uE02D\uE044\uE062",
+		"expected_csur": "\uE004\uE016\uE046\uE062 \uE009\uE020\uE02C\uE044\uE062",
 		"expected_hex": "U+E004 U+E016 U+E046 U+E062 U+0020 U+E009 U+E020 U+E02D U+E044 U+E062"
 	},
 	{
