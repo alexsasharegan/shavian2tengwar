@@ -48,7 +48,7 @@ TEHTA_O_ABOVE = "\ue04a"  # Right curl above (o-tehta)
 TEHTA_U_ABOVE = "\ue04c"  # Left curl above (u-tehta)
 TEHTA_LONG_U_ABOVE = "\ue04c\ue04c"  # Double left curl above (long u-tehta)
 
-TEHTA_SCHWA_BELOW = "\ue045"  # Single dot below (unutixë / schwa-tehta)
+TEHTA_SCHWA = "\ue053"
 
 TEHTA_NASAL_BAR_ABOVE = "\ue050"  # Bar/tilde above (nasalizer)
 TEHTA_GEMINATION_BELOW = "\ue051"  # Bar below (geminator)
@@ -96,7 +96,7 @@ SHORT_VOWELS = {
     "𐑷": (TEHTA_O_ABOVE, "awe-tehta"),
     "𐑳": (TEHTA_U_ABOVE, "u-tehta"),
     "𐑫": (TEHTA_U_ABOVE, "foot-tehta"),
-    "𐑩": (TEHTA_SCHWA_BELOW, "schwa-tehta"),
+    "𐑩": (TEHTA_SCHWA, "schwa-tehta"),
 }
 
 DIPHTHONGS = {
@@ -216,7 +216,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         "𐑺": (TEHTA_E_ABOVE, "SQUARE (e-tehta)"),
         "𐑽": (TEHTA_I_ABOVE, "NEAR (i-tehta)"),
         "𐑻": (TEHTA_U_ABOVE, "NURSE (u-tehta)"),
-        "𐑼": (TEHTA_SCHWA_BELOW, "ARRAY/lettER (schwa-tehta)"),
+        "𐑼": (TEHTA_SCHWA, "ARRAY/lettER (schwa-tehta)"),
     }
 
     trace = []
