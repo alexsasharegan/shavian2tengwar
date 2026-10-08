@@ -6,6 +6,8 @@ A Unix-style CLI stream converter written in Python that translates UTF-8 Shavia
 
 Traditional English orthography is non-phonetic, making direct English-to-Tengwar transliteration complex and context-heavy. `shavian2tengwar` uses the Shavian alphabet's 40–48 character phonemic system as an Intermediate Representation (IR). By first converting English into Shavian (e.g., via tools like _Shave_), orthographic noise is stripped away, allowing a deterministic 5-pass state machine to map phonemes into Tengwar characters and _tehtar_ (vowel diacritics).
 
+For a note on transliteration philosophy, see [philosophy.md](./philosophy.md). Since font rendering of Tengwar is tricky, see the pdf version at [philosophy.pdf](./philosophy.pdf).
+
 ### Key Features
 
 - **Zero Dependencies:** Built exclusively using the Python standard library (`sys`, `re`, `argparse`).
