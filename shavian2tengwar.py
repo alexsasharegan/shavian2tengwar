@@ -7,66 +7,115 @@ import sys
 SHAVIAN_WORD_PATTERN = re.compile(r"([·𐑐-𐑿]+)")
 STREAM_PATTERN = re.compile(r"(\{\{.*?\}\}|[·𐑐-𐑿]+)", re.DOTALL)
 
-# Fixed static mappings across both CSUR and Everson standards
+# ==============================================================================
+# CENTRALIZED TENGWAR PUA CODE POINTS (Single Source of Truth)
+# ==============================================================================
+
+# --- Base Consonants (Fixed across CSUR & Everson) ---
+TENGWA_TINCO = "\ue000"
+TENGWA_PARMA = "\ue001"
+TENGWA_CALMA = "\ue002"
+TENGWA_QUESSE = "\ue003"
+TENGWA_ANDO = "\ue004"
+TENGWA_UMBAR = "\ue005"
+TENGWA_ANGA = "\ue006"
+TENGWA_UNGWE = "\ue007"
+TENGWA_THULE = "\ue008"
+TENGWA_FORMEN = "\ue009"
+TENGWA_HARMA = "\ue00a"
+TENGWA_HWESTA = "\ue00b"
+TENGWA_ANTA = "\ue00c"
+TENGWA_AMPA = "\ue00d"
+TENGWA_ANCA = "\ue00e"
+TENGWA_NUMEN = "\ue010"
+TENGWA_MALTA = "\ue011"
+TENGWA_NWALME = "\ue013"
+TENGWA_ORE = "\ue014"
+TENGWA_VALA = "\ue015"
+TENGWA_ANNA = "\ue016"
+
+# --- Standalone Appendix E Logograms ---
+LOGOGRAM_THE = "\ue01c"  # Extended Anta ("the")
+LOGOGRAM_OF = "\ue01d"  # Extended Ampa ("of")
+LOGOGRAM_AND = "\ue004\ue050"  # Ando + Nasal Bar Above ("and")
+
+# --- Tehtar (Vowel & Modifier Diacritics) ---
+TEHTA_A_ABOVE = "\ue040"  # Three dots above (a-tehta)
+TEHTA_I_ABOVE = "\ue044"  # Single dot above (i-tehta)
+TEHTA_E_ABOVE = "\ue046"  # Single acute above (e-tehta)
+TEHTA_LONG_E_ABOVE = "\ue048"  # Double acute above (long e-tehta)
+TEHTA_O_ABOVE = "\ue04a"  # Right curl above (o-tehta)
+TEHTA_U_ABOVE = "\ue04c"  # Left curl above (u-tehta)
+TEHTA_LONG_U_ABOVE = "\ue04c\ue04c"  # Double left curl above (long u-tehta)
+
+TEHTA_SCHWA_BELOW = "\ue045"  # Single dot below (unutixë / schwa-tehta)
+
+TEHTA_NASAL_BAR_ABOVE = "\ue050"  # Bar/tilde above (nasalizer)
+TEHTA_GEMINATION_BELOW = "\ue051"  # Bar below (geminator)
+
+# Dynamic grouping of all top-placed tehtar for Pass 5 Nuquerna flip checks
+TOP_TEHTAR = (
+    TEHTA_A_ABOVE,
+    TEHTA_I_ABOVE,
+    TEHTA_E_ABOVE,
+    TEHTA_LONG_E_ABOVE,
+    TEHTA_O_ABOVE,
+    TEHTA_U_ABOVE,
+    TEHTA_LONG_U_ABOVE,
+    TEHTA_NASAL_BAR_ABOVE,
+)
+
+# --- Mappings & Lookups ---
 TENGWAR_CONSONANTS_FIXED = {
-    "𐑐": ("\ue001", "Parma"),
-    "𐑚": ("\ue005", "Umbar"),
-    "𐑑": ("\ue000", "Tinco"),
-    "𐑛": ("\ue004", "Ando"),
-    "𐑒": ("\ue003", "Quesse"),
-    "𐑜": ("\ue007", "Ungwe"),
-    "𐑗": ("\ue002", "Calma"),
-    "𐑡": ("\ue006", "Anga"),
-    "𐑓": ("\ue009", "Formen"),
-    "𐑝": ("\ue00d", "Ampa"),
-    "𐑔": ("\ue008", "Thúle"),
-    "𐑞": ("\ue00c", "Anta"),
-    "𐑖": ("\ue00a", "Harma"),
-    "𐑠": ("\ue00e", "Anca"),
-    "𐑥": ("\ue011", "Malta"),
-    "𐑯": ("\ue010", "Númen"),
-    "𐑙": ("\ue013", "Nwalme"),
-    "𐑢": ("\ue015", "Vala"),
-    "𐑘": ("\ue016", "Anna"),
+    "𐑐": (TENGWA_PARMA, "Parma"),
+    "𐑚": (TENGWA_UMBAR, "Umbar"),
+    "𐑑": (TENGWA_TINCO, "Tinco"),
+    "𐑛": (TENGWA_ANDO, "Ando"),
+    "𐑒": (TENGWA_QUESSE, "Quesse"),
+    "𐑜": (TENGWA_UNGWE, "Ungwe"),
+    "𐑗": (TENGWA_CALMA, "Calma"),
+    "𐑡": (TENGWA_ANGA, "Anga"),
+    "𐑓": (TENGWA_FORMEN, "Formen"),
+    "𐑝": (TENGWA_AMPA, "Ampa"),
+    "𐑔": (TENGWA_THULE, "Thúle"),
+    "𐑞": (TENGWA_ANTA, "Anta"),
+    "𐑖": (TENGWA_HARMA, "Harma"),
+    "𐑠": (TENGWA_ANCA, "Anca"),
+    "𐑥": (TENGWA_MALTA, "Malta"),
+    "𐑯": (TENGWA_NUMEN, "Númen"),
+    "𐑙": (TENGWA_NWALME, "Nwalme"),
+    "𐑢": (TENGWA_VALA, "Vala"),
+    "𐑘": (TENGWA_ANNA, "Anna"),
 }
 
 SHORT_VOWELS = {
-    "𐑦": ("\ue044", "i-tehta"),
-    "𐑧": ("\ue046", "e-tehta"),
-    "𐑨": ("\ue040", "a-tehta"),
-    "𐑪": ("\ue04a", "o-tehta"),
-    "𐑷": ("\ue04a", "awe-tehta"),
-    "𐑳": ("\ue04c", "u-tehta"),
-    "𐑫": ("\ue04c", "foot-tehta"),
-    "𐑩": ("\ue045", "schwa-tehta"),
+    "𐑦": (TEHTA_I_ABOVE, "i-tehta"),
+    "𐑧": (TEHTA_E_ABOVE, "e-tehta"),
+    "𐑨": (TEHTA_A_ABOVE, "a-tehta"),
+    "𐑪": (TEHTA_O_ABOVE, "o-tehta"),
+    "𐑷": (TEHTA_O_ABOVE, "awe-tehta"),
+    "𐑳": (TEHTA_U_ABOVE, "u-tehta"),
+    "𐑫": (TEHTA_U_ABOVE, "foot-tehta"),
+    "𐑩": (TEHTA_SCHWA_BELOW, "schwa-tehta"),
 }
 
 DIPHTHONGS = {
-    "𐑲": ("\ue016", "\ue040", "PRICE (Anna + a-tehta)"),
-    "𐑶": ("\ue016", "\ue04a", "CHOICE (Anna + o-tehta)"),
-    "𐑱": ("\ue016", "\ue046", "FACE (Anna + e-tehta)"),
-    "𐑬": ("\ue015", "\ue040", "MOUTH (Vala + a-tehta)"),
-    "𐑴": ("\ue015", "\ue04a", "GOAT (Vala + o-tehta)"),
-    "𐑾": ("\ue016", "\ue044", "IAN (Anna + i-tehta)"),
-    "𐑿": ("\ue016", "\ue04c", "YEW (Anna + u-tehta)"),
+    "𐑲": (TENGWA_ANNA, TEHTA_A_ABOVE, "PRICE (Anna + a-tehta)"),
+    "𐑶": (TENGWA_ANNA, TEHTA_O_ABOVE, "CHOICE (Anna + o-tehta)"),
+    "𐑱": (TENGWA_ANNA, TEHTA_E_ABOVE, "FACE (Anna + e-tehta)"),
+    "𐑬": (TENGWA_VALA, TEHTA_A_ABOVE, "MOUTH (Vala + a-tehta)"),
+    "𐑴": (TENGWA_VALA, TEHTA_O_ABOVE, "GOAT (Vala + o-tehta)"),
+    "𐑾": (TENGWA_ANNA, TEHTA_I_ABOVE, "IAN (Anna + i-tehta)"),
+    "𐑿": (TENGWA_ANNA, TEHTA_U_ABOVE, "YEW (Anna + u-tehta)"),
 }
 
-NASAL_BAR_ABOVE = "\ue050"  # Tengwar Sign Nasalizer (Bar Above)
-GEMINATION_BAR_BELOW = "\ue051"  # Tengwar Sign Geminator (Bar Below)
-ORE = "\ue014"
-EXTENDED_ANTA_LOGOGRAM = "\ue01c"  # Appendix E standalone "the" logogram
-EXTENDED_AMPA_LOGOGRAM = "\ue01d"  # Appendix E standalone "of" logogram
-AND_SHORTHAND_LOGOGRAM = (
-    "\ue004\ue050"  # Appendix E standalone "and" shorthand (Ando + Nasal Bar Above)
-)
-
 NASAL_PAIRS = {
-    "𐑯𐑑": ("\ue010", "𐑑", "Númen + Tinco"),
-    "𐑯𐑛": ("\ue010", "𐑛", "Númen + Ando"),
-    "𐑙𐑒": ("\ue010", "𐑒", "Númen + Quesse"),
-    "𐑙𐑜": ("\ue010", "𐑜", "Númen + Ungwe"),
-    "𐑥𐑐": ("\ue011", "𐑐", "Malta + Parma"),
-    "𐑥𐑚": ("\ue011", "𐑚", "Malta + Umbar"),
+    "𐑯𐑑": (TENGWA_NUMEN, "𐑑", "Númen + Tinco"),
+    "𐑯𐑛": (TENGWA_NUMEN, "𐑛", "Númen + Ando"),
+    "𐑙𐑒": (TENGWA_NUMEN, "𐑒", "Númen + Quesse"),
+    "𐑙𐑜": (TENGWA_NUMEN, "𐑜", "Númen + Ungwe"),
+    "𐑥𐑐": (TENGWA_MALTA, "𐑐", "Malta + Parma"),
+    "𐑥𐑚": (TENGWA_MALTA, "𐑚", "Malta + Umbar"),
 }
 
 ALL_VOWEL_CHARS = (
@@ -134,22 +183,24 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     if clean_word == "𐑞":
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
-            print("Step 0: Standalone 'the' (𐑞) -> Extended Tinco Logogram (U+E02C)")
-        return EXTENDED_ANTA_LOGOGRAM
+            print(
+                f"Step 0: Standalone 'the' (𐑞) -> Extended Anta Logogram (U+{ord(LOGOGRAM_THE):04X})"
+            )
+        return LOGOGRAM_THE
 
     if clean_word == "𐑝":
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
-            print("Step 0: Standalone 'of' (𐑝) -> Extended Ampa Logogram (U+E01D)")
-        return EXTENDED_AMPA_LOGOGRAM
+            print(
+                f"Step 0: Standalone 'of' (𐑝) -> Extended Ampa Logogram (U+{ord(LOGOGRAM_OF):04X})"
+            )
+        return LOGOGRAM_OF
 
     if clean_word == "𐑯":
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
-            print(
-                "Step 0: Standalone 'and' (𐑯) -> Ando + Nasal Bar Shorthand (U+E004 U+E04E)"
-            )
-        return AND_SHORTHAND_LOGOGRAM
+            print("Step 0: Standalone 'and' (𐑯) -> Ando + Nasal Bar Shorthand")
+        return LOGOGRAM_AND
 
     cfg = get_encoding_config(use_csur)
 
@@ -160,12 +211,12 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
     consonants["𐑟"] = (cfg["esse"], "Esse")
 
     r_vowels = {
-        "𐑸": ("\ue040", "START (a-tehta)"),
-        "𐑹": ("\ue04a", "NORTH (o-tehta)"),
-        "𐑺": ("\ue046", "SQUARE (e-tehta)"),
-        "𐑽": ("\ue044", "NEAR (i-tehta)"),
-        "𐑻": ("\ue04c", "NURSE (u-tehta)"),
-        "𐑼": ("\ue045", "ARRAY/lettER (schwa-tehta)"),
+        "𐑸": (TEHTA_A_ABOVE, "START (a-tehta)"),
+        "𐑹": (TEHTA_O_ABOVE, "NORTH (o-tehta)"),
+        "𐑺": (TEHTA_E_ABOVE, "SQUARE (e-tehta)"),
+        "𐑽": (TEHTA_I_ABOVE, "NEAR (i-tehta)"),
+        "𐑻": (TEHTA_U_ABOVE, "NURSE (u-tehta)"),
+        "𐑼": (TEHTA_SCHWA_BELOW, "ARRAY/lettER (schwa-tehta)"),
     }
 
     trace = []
@@ -176,10 +227,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         trace.append(f"Pass 1 (Namer Dot Strip): '{clean_word}'")
 
     output = []
-    pending_vowel: tuple[str, str, str] | None = (
-        None  # Uniform structure: (vtype, tehta_hex, tehta_name)
-    )
-    i = 0
+    pending_vowel: tuple[str, str, str] | None = None
 
     def flush_pending_vowel():
         nonlocal pending_vowel
@@ -188,17 +236,17 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         vtype, tehta, name = pending_vowel
         if vtype == "LONG_E":
             output.append(cfg["long_carrier"])
-            output.append("\ue044")
+            output.append(TEHTA_I_ABOVE)
             if inspect:
                 trace.append(
-                    f"  [Flush Vowel] Long E -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + i-tehta (U+E044)"
+                    f"  [Flush Vowel] Long E -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + i-tehta (U+{ord(TEHTA_I_ABOVE):04X})"
                 )
         elif vtype == "LONG_U":
             output.append(cfg["long_carrier"])
-            output.append("\ue04c")
+            output.append(TEHTA_U_ABOVE)
             if inspect:
                 trace.append(
-                    f"  [Flush Vowel] Long U -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + u-tehta (U+E04C)"
+                    f"  [Flush Vowel] Long U -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + u-tehta (U+{ord(TEHTA_U_ABOVE):04X})"
                 )
         elif vtype == "SHORT":
             output.append(cfg["short_carrier"])
@@ -222,28 +270,33 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if pending_vowel is not None:
             vtype, tehta, name = pending_vowel
             if vtype == "LONG_E":
-                output.append("\ue048")
+                output.append(TEHTA_LONG_E_ABOVE)
                 if inspect:
-                    trace.append("    └─ Attached: Double Acute (U+E047)")
+                    trace.append(
+                        f"    └─ Attached: Double Acute (U+{ord(TEHTA_LONG_E_ABOVE):04X})"
+                    )
             elif vtype == "LONG_U":
-                output.append("\ue04c")
+                output.append(TEHTA_LONG_U_ABOVE)
                 if inspect:
-                    trace.append("    └─ Attached: Double Left Curl (U+E04D)")
+                    trace.append(
+                        f"    └─ Attached: Double Left Curl (U+{ord(TEHTA_LONG_U_ABOVE):04X})"
+                    )
             elif vtype == "SHORT":
                 output.append(tehta)
                 if inspect:
                     trace.append(f"    └─ Attached: {name} (U+{ord(tehta):04X})")
             pending_vowel = None
 
+    i = 0
     while i < len(clean_word):
         c = clean_word[i]
 
         # Pass 2a: Aspirated Wh Cluster (𐑣𐑢 -> Hwesta U+E00B)
         if i < len(clean_word) - 1 and clean_word[i : i + 2] == "𐑣𐑢":
-            emit_consonant("\ue00b", "Hwesta")
+            emit_consonant(TENGWA_HWESTA, "Hwesta")
             if inspect:
                 trace.append(
-                    f"Step {i}: Detected Aspirated Wh Cluster '𐑣𐑢' -> Hwesta (U+E00B)"
+                    f"Step {i}: Detected Aspirated Wh Cluster '𐑣𐑢' -> Hwesta (U+{ord(TENGWA_HWESTA):04X})"
                 )
             i += 2
             continue
@@ -255,7 +308,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                 _, stop_char, pair_name = NASAL_PAIRS[pair]
                 stop_hex, stop_name = consonants[stop_char]
                 output.append(stop_hex)
-                output.append(NASAL_BAR_ABOVE)
+                output.append(TEHTA_NASAL_BAR_ABOVE)
                 if inspect:
                     trace.append(
                         f"Step {i}: Detected Universal Nasal Pair '{pair}' ({pair_name}) -> Stop {stop_name} + Nasal Bar Above"
@@ -280,7 +333,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                     trace.append(
                         f"Step {i}: Detected Phonetic Gemination '{c_gem}{c_gem}' -> {base_name} + Gemination Bar Below"
                     )
-                emit_consonant(base_hex, base_name, modifier_hex=GEMINATION_BAR_BELOW)
+                emit_consonant(base_hex, base_name, modifier_hex=TEHTA_GEMINATION_BELOW)
                 i += 2
                 continue
 
@@ -289,7 +342,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
             is_vowel_next = (
                 i + 1 < len(clean_word) and clean_word[i + 1] in ALL_VOWEL_CHARS
             )
-            r_hex = cfg["romen"] if is_vowel_next else ORE
+            r_hex = cfg["romen"] if is_vowel_next else TENGWA_ORE
             r_name = "Rómen" if is_vowel_next else "Óre"
             if inspect:
                 trace.append(
@@ -324,7 +377,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑭":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("SHORT", "\ue040", "a-tehta")
+            pending_vowel = ("SHORT", TEHTA_A_ABOVE, "a-tehta")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑭' (PALM) -> Queue Pending a-tehta")
             i += 1
@@ -334,7 +387,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑰":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("LONG_E", "\ue048", "Double Acute")
+            pending_vowel = ("LONG_E", TEHTA_LONG_E_ABOVE, "Double Acute")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑰' (FLEECE) -> Queue Pending Long E")
             i += 1
@@ -343,7 +396,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑵":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("LONG_U", "\ue04c", "Double Left Curl")
+            pending_vowel = ("LONG_U", TEHTA_LONG_U_ABOVE, "Double Left Curl")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑵' (GOOSE) -> Queue Pending Long U")
             i += 1
@@ -369,7 +422,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
             is_vowel_next = (
                 i + 1 < len(clean_word) and clean_word[i + 1] in ALL_VOWEL_CHARS
             )
-            r_hex = cfg["romen"] if is_vowel_next else ORE
+            r_hex = cfg["romen"] if is_vowel_next else TENGWA_ORE
             r_name = "Rómen" if is_vowel_next else "Óre"
             output.append(r_hex)
             if tehta:
@@ -389,14 +442,13 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
 
     raw_result = "".join(output)
 
-    # Pass 5: Nuquerna Flips
-    # Note: uses explicit hex escape ranges for PUA safety (do not rewrite)
-    top_tehtar_all = r"([\uE040\uE044\uE046\ue048\uE04A\uE04C\uE04C\uE04E\uE050])"
+    # Pass 5: Nuquerna Flips (Built dynamically from TOP_TEHTAR)
+    top_tehtar_pattern = "(" + "|".join(re.escape(t) for t in TOP_TEHTAR) + ")"
     flipped_result = re.sub(
-        f"{cfg['silme']}{top_tehtar_all}", f"{cfg['silme_nuq']}\\1", raw_result
+        cfg["silme"] + top_tehtar_pattern, cfg["silme_nuq"] + r"\1", raw_result
     )
     flipped_result = re.sub(
-        f"{cfg['esse']}{top_tehtar_all}", f"{cfg['esse_nuq']}\\1", flipped_result
+        cfg["esse"] + top_tehtar_pattern, cfg["esse_nuq"] + r"\1", flipped_result
     )
 
     if inspect and raw_result != flipped_result:

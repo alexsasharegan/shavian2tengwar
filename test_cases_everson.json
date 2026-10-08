@@ -28,8 +28,8 @@
 		"category": "Nuquerna Positional Inversion",
 		"description": "bruised: Romen (Everson U+E020) + Esse Nuquerna (Everson U+E027)",
 		"input": "𐑚𐑮𐑵𐑟𐑛",
-		"expected_csur": "\uE005\uE020\uE027\uE04C\uE004",
-		"expected_hex": "U+E005 U+E020 U+E027 U+E04C U+E004"
+		"expected_csur": "\uE005\uE020\uE027\uE04C\uE04C\uE004",
+		"expected_hex": "U+E005 U+E020 U+E027 U+E04C U+E04C U+E004"
 	},
 	{
 		"id": "TC05",
@@ -289,5 +289,41 @@
 		"flags": "",
 		"expected_csur": "\uE024\uE011\uE048",
 		"expected_hex": "U+E024 U+E011 U+E048"
+	},
+	{
+		"id": "TC37",
+		"category": "Carrier Flushing - Terminal Long E (see)",
+		"description": "see: Silme (U+E024) + Long Carrier (U+E02C) + i-tehta (U+E044)",
+		"input": "𐑕𐑰",
+		"flags": "",
+		"expected_csur": "\uE024\uE02C\uE044",
+		"expected_hex": "U+E024 U+E02C U+E044"
+	},
+	{
+		"id": "TC38",
+		"category": "Carrier Flushing - Terminal Long U (too)",
+		"description": "too: Tinco (U+E000) + Long Carrier (U+E02C) + u-tehta (U+E04C)",
+		"input": "𐑑𐑵",
+		"flags": "",
+		"expected_csur": "\uE000\uE02C\uE04C",
+		"expected_hex": "U+E000 U+E02C U+E04C"
+	},
+	{
+		"id": "TC39",
+		"category": "Carrier Flushing - Standalone Short Vowel (a)",
+		"description": "a: Short Carrier (U+E02E) + a-tehta (U+E040)",
+		"input": "𐑨",
+		"flags": "",
+		"expected_csur": "\uE02E\uE040",
+		"expected_hex": "U+E02E U+E040"
+	},
+	{
+		"id": "TC40",
+		"category": "Carrier Flushing - Terminal Short Vowel (echo)",
+		"description": "echo: Quesse (U+E003) + e-tehta (U+E046) + Short Carrier (U+E02E) + o-tehta (U+E04A)",
+		"input": "𐑧𐑒𐑪",
+		"flags": "",
+		"expected_csur": "\uE003\uE046\uE02E\uE04A",
+		"expected_hex": "U+E003 U+E046 U+E02E U+E04A"
 	}
 ]
