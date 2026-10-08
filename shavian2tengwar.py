@@ -222,11 +222,11 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if pending_vowel is not None:
             vtype, tehta, name = pending_vowel
             if vtype == "LONG_E":
-                output.append("\ue047")
+                output.append("\ue048")
                 if inspect:
                     trace.append("    └─ Attached: Double Acute (U+E047)")
             elif vtype == "LONG_U":
-                output.append("\ue04d")
+                output.append("\ue04c")
                 if inspect:
                     trace.append("    └─ Attached: Double Left Curl (U+E04D)")
             elif vtype == "SHORT":
@@ -334,7 +334,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑰":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("LONG_E", "\ue047", "Double Acute")
+            pending_vowel = ("LONG_E", "\ue048", "Double Acute")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑰' (FLEECE) -> Queue Pending Long E")
             i += 1
@@ -343,7 +343,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if c == "𐑵":
             if pending_vowel is not None:
                 flush_pending_vowel()
-            pending_vowel = ("LONG_U", "\ue04d", "Double Left Curl")
+            pending_vowel = ("LONG_U", "\ue04c", "Double Left Curl")
             if inspect:
                 trace.append(f"Step {i}: Char '𐑵' (GOOSE) -> Queue Pending Long U")
             i += 1
@@ -391,7 +391,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
 
     # Pass 5: Nuquerna Flips
     # Note: uses explicit hex escape ranges for PUA safety (do not rewrite)
-    top_tehtar_all = r"([\uE040\uE044\uE046\uE047\uE04A\uE04C\uE04D\uE04E\uE050])"
+    top_tehtar_all = r"([\uE040\uE044\uE046\ue048\uE04A\uE04C\uE04C\uE04E\uE050])"
     flipped_result = re.sub(
         f"{cfg['silme']}{top_tehtar_all}", f"{cfg['silme_nuq']}\\1", raw_result
     )
