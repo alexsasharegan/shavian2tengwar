@@ -244,5 +244,32 @@
 		"input": "𐑼𐑴𐑟",
 		"expected_csur": "\uE020\uE045\uE015\uE04A\uE026",
 		"expected_hex": "U+E020 U+E045 U+E015 U+E04A U+E026"
+	},
+	{
+		"id": "TC31",
+		"category": "Phonetic Gemination - Nasal (unnamed)",
+		"description": "unnamed: Númen + Bar Below (U+E051) with attached u-tehta (U+E04C), FACE diphthong, Malta, Ando",
+		"input": "𐑳𐑯𐑯𐑱𐑥𐑛",
+		"flags": "",
+		"expected_csur": "\uE010\uE051\uE04C\uE016\uE046\uE011\uE004",
+		"expected_hex": "U+E010 U+E051 U+E04C U+E016 U+E046 U+E011 U+E004"
+	},
+	{
+		"id": "TC32",
+		"category": "Phonetic Gemination - Liquid (solely)",
+		"description": "solely: Silme + GOAT diphthong, Lamba + Bar Below (U+E051), Telco carrier + i-tehta",
+		"input": "𐑕𐑴𐑤𐑤𐑦",
+		"flags": "",
+		"expected_csur": "\uE024\uE015\uE04A\uE022\uE051\uE02E\uE044",
+		"expected_hex": "U+E024 U+E015 U+E04A U+E022 U+E051 U+E02E U+E044"
+	},
+	{
+		"id": "TC33",
+		"category": "Phonetic Gemination - Stop (midday)",
+		"description": "midday: Malta + Ando + Bar Below (U+E051) with attached i-tehta (U+E044), FACE diphthong",
+		"input": "𐑥𐑦𐑛𐑛𐑱",
+		"flags": "",
+		"expected_csur": "\uE011\uE004\uE051\uE044\uE016\uE046",
+		"expected_hex": "U+E011 U+E004 U+E051 U+E044 U+E016 U+E046"
 	}
 ]

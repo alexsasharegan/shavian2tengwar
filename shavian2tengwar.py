@@ -52,6 +52,7 @@ DIPHTHONGS = {
 }
 
 NASAL_BAR_ABOVE = "\ue050"  # Tengwar Sign Nasalizer (Bar Above)
+GEMINATION_BAR_BELOW = "\ue051"  # Tengwar Sign Geminator (Bar Below)
 ORE = "\ue014"
 EXTENDED_ANTA_LOGOGRAM = "\ue01c"  # Appendix E standalone "the" logogram
 EXTENDED_AMPA_LOGOGRAM = "\ue01d"  # Appendix E standalone "of" logogram
@@ -208,11 +209,16 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                 )
         pending_vowel = None
 
-    def emit_consonant(base_hex, base_name):
+    def emit_consonant(base_hex, base_name, modifier_hex=None):
         nonlocal pending_vowel
         output.append(base_hex)
+        if modifier_hex:
+            output.append(modifier_hex)
         if inspect:
-            trace.append(f"  [Emit Consonant] {base_name} (U+{ord(base_hex):04X})")
+            mod_str = f" + Modifier (U+{ord(modifier_hex):04X})" if modifier_hex else ""
+            trace.append(
+                f"  [Emit Consonant] {base_name} (U+{ord(base_hex):04X}){mod_str}"
+            )
         if pending_vowel is not None:
             vtype, tehta, name = pending_vowel
             if vtype == "LONG_E":
@@ -262,6 +268,19 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                             f"    └─ Attached Preceding Vowel Tehta: {name} (U+{ord(tehta):04X})"
                         )
                     pending_vowel = None
+                i += 2
+                continue
+
+        # Pass 2c: Phonetic Gemination Intercept
+        if i < len(clean_word) - 1 and clean_word[i] == clean_word[i + 1]:
+            c_gem = clean_word[i]
+            if c_gem in consonants:
+                base_hex, base_name = consonants[c_gem]
+                if inspect:
+                    trace.append(
+                        f"Step {i}: Detected Phonetic Gemination '{c_gem}{c_gem}' -> {base_name} + Gemination Bar Below"
+                    )
+                emit_consonant(base_hex, base_name, modifier_hex=GEMINATION_BAR_BELOW)
                 i += 2
                 continue
 
