@@ -212,5 +212,37 @@
 		"flags": "",
 		"expected_csur": "\uE020\uE045\uE015\uE04A\uE026",
 		"expected_hex": "U+E020 U+E045 U+E015 U+E04A U+E026"
+	},
+	{
+		"id": "TC27",
+		"category": "Rhotic Boundary Isolation",
+		"description": "winter is: Word-final R in 'winter' stays Óre (U+E014); 'is' (𐑦𐑟) attaches i-tehta directly onto Esse Nuquerna (U+E027 U+E044)",
+		"input": "𐑢𐑦𐑯𐑑𐑼 𐑦𐑟",
+		"expected_csur": "\uE015\uE000\uE050\uE044\uE014\uE045 \uE027\uE044",
+		"expected_hex": "U+E015 U+E000 U+E050 U+E044 U+E014 U+E045 U+0020 U+E027 U+E044"
+	},
+	{
+		"id": "TC28",
+		"category": "Word-Initial Rhotic Onset",
+		"description": "red: Word-initial /r/ preceding a vowel maps to Rómen (U+E020)",
+		"input": "𐑮𐑧𐑛",
+		"expected_csur": "\uE020\uE004\uE046",
+		"expected_hex": "U+E020 U+E004 U+E046"
+	},
+	{
+		"id": "TC29",
+		"category": "Vowel-Initial Preconsonantal Rhotic Coda",
+		"description": "art: 𐑸 decomposes into Óre + a-tehta (U+E014 U+E040), followed by Tinco (U+E000)",
+		"input": "𐑸𐑑",
+		"expected_csur": "\uE014\uE040\uE000",
+		"expected_hex": "U+E014 U+E040 U+E000"
+	},
+	{
+		"id": "TC30",
+		"category": "Vowel-Initial Prevocalic Rhotic Onset",
+		"description": "arose: First consonant is R, followed by vowel /oʊ/ -> Rómen (U+E020) with schwa underdot",
+		"input": "𐑼𐑴𐑟",
+		"expected_csur": "\uE020\uE045\uE015\uE04A\uE026",
+		"expected_hex": "U+E020 U+E045 U+E015 U+E04A U+E026"
 	}
 ]

@@ -155,7 +155,7 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 | /n/         | **𐑯**         | ****           | _Númen_                         | `U+E010`               | Direct 1:1 Consonant Base                                       |
 | /r/         | **𐑮**         | **** / ****   | _Rómen_ / _Óre_                 | `U+E020` / `U+E014`    | Contextual: _Rómen_ before vowels; _Óre_ word-final/consonantal |
 | /ɪ/         | **𐑦**         | ****          | _i-tehta_                       | `U+E044`               | Attach dot above next available consonant                       |
-| /iː/        | **𐑰**         | ****          | _Ára_ + _i-tehta_               | `U+E02D U+E044`        | FLEECE vowel: Attach to Long Carrier or double acute on base    |
+| /iː/        | **𐑰**         | ****          | _Ára_ + _i-tehta_               | `U+E02C U+E044`        | FLEECE vowel: Attach to Long Carrier or double acute on base    |
 | /ɛ/         | **𐑧**         | ****          | _e-tehta_                       | `U+E046`               | Attach acute stroke above next available consonant              |
 | /eɪ/        | **𐑱**         | ****          | _Anna_ + _e-tehta_              | `U+E016 U+E046`        | FACE diphthong: Offglide _Anna_ base + _e-tehta_                |
 | /æ/         | **𐑨**         | ****          | _a-tehta_                       | `U+E040`               | Attach three dots above next available consonant                |
@@ -165,7 +165,7 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 | /ɒ/         | **𐑪**         | ****          | _o-tehta_                       | `U+E04A`               | LOT vowel: Attach right curl above next available consonant     |
 | /oʊ/        | **𐑴**         | ****          | _Vala_ + _o-tehta_              | `U+E015 U+E04A`        | GOAT diphthong: Offglide _Vala_ base + _o-tehta_                |
 | /ʊ/         | **𐑫**         | ****          | _foot-tehta_                    | `U+E04C`               | FOOT vowel: Attach left curl above next available consonant     |
-| /uː/        | **𐑵**         | ****          | _Ára_ + _u-tehta_               | `U+E02D U+E04C`        | GOOSE vowel: Attach to Long Carrier or double curl on base      |
+| /uː/        | **𐑵**         | ****          | _Ára_ + _u-tehta_               | `U+E02C U+E04C`        | GOOSE vowel: Attach to Long Carrier or double curl on base      |
 | /aʊ/        | **𐑬**         | ****          | _Vala_ + _a-tehta_              | `U+E015 U+E040`        | MOUTH diphthong: Offglide _Vala_ base + _a-tehta_               |
 | /ɔɪ/        | **𐑶**         | ****          | _Anna_ + _o-tehta_              | `U+E016 U+E04A`        | CHOICE diphthong: Offglide _Anna_ base + _o-tehta_              |
 | /ɑː/        | **𐑭**         | ****          | _a-tehta_                       | `U+E040`               | PALM vowel: Attach three dots above next available consonant    |
@@ -190,21 +190,3 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 | _and_       | **𐑯**      | ****         | _Ando_ + _Nasal Bar_ | `U+E004 U+E050`   | Standalone shorthand for "and"     |
 | _to_        | **𐑑**      | ****          | _Tinco_ Base         | `U+E000`          | Unadorned base shorthand for "to"  |
 | _for_       | **𐑓**      | ****          | _Formen_ Base        | `U+E009`          | Unadorned base shorthand for "for" |
-
----
-
-### 3. Verified Test Cases & Output Comparison
-
-To verify visual output in Obsidian or PDF export, install **[Alcarin Tengwar](https://github.com/Tosche/Alcarin-Tengwar)**. The table below lists the exact Shavian input, rendered Tengwar output, Everson hex bytes, and feature rules applied:
-
-| Word      | Shavian Input | Tengwar Output | Everson 2001 Hex Stream                            | Applied Rule / Logic                                                                                        |
-| :-------- | :------------ | :------------- | :------------------------------------------------- | :---------------------------------------------------------------------------------------------------------- |
-| _winter_  | `𐑢𐑦𐑯𐑑𐑼`       | ****     | `U+E015 U+E000 U+E050 U+E044 U+E014 U+E045`        | Universal Nasal Bar over _Tinco_ (``); _i-tehta_ attaches above bar; ends in _Óre_ + _schwa-tehta_.        |
-| _chamber_ | `𐑗𐑱𐑥𐑚𐑼`       | ****    | `U+E002 U+E016 U+E046 U+E005 U+E050 U+E014 U+E045` | Preconsonantal nasal pair `𐑥𐑚` emits _Umbar_ + _Nasal Bar Above_ (`U+E050`); ends in _Óre_ + _schwa-tehta_. |
-| _the_     | `𐑞`           | ****          | `U+E01C`                                           | Big Five abbreviation: Standalone character maps directly to _Extended Anta_ logogram.                      |
-| _of_      | `𐑝`           | ****          | `U+E01D`                                           | Big Five abbreviation: Standalone character maps directly to _Extended Ampa_ logogram.                      |
-| _and_     | `𐑯`           | ****         | `U+E004 U+E050`                                    | Big Five abbreviation: Standalone character maps directly to _Ando_ + _Nasal Bar Above_.                    |
-| _to_      | `𐑑`           | ****          | `U+E000`                                           | Big Five abbreviation: Standalone character maps directly to _Tinco_ base.                                  |
-| _for_     | `𐑓`           | ****          | `U+E009`                                           | Big Five abbreviation: Standalone character maps directly to _Formen_ base.                                 |
-| _land_    | `𐑤𐑨𐑯𐑛`        | ****       | `U+E022 U+E004 U+E050 U+E040`                      | _Lamba_ (`U+E022`); Universal Nasal Bar over _Ando_ (``) with top _a-tehta_.                               |
-| _wind_    | `𐑢𐑦𐑯𐑛`        | ****       | `U+E015 U+E004 U+E050 U+E044`                      | _Vala_ (`U+E015`); Universal Nasal Bar over _Ando_ (``) with top _i-tehta_.                                |
