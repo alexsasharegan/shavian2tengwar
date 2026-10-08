@@ -76,8 +76,8 @@
 		"category": "Big Five Abbreviation - and",
 		"description": "and: single character maps directly to Ando + Nasal Bar Above shorthand (U+E004 U+E050)",
 		"input": "𐑯",
-		"expected_csur": "\uE004\uE050",
-		"expected_hex": "U+E004 U+E050"
+		"expected_csur": "\uE004\uE050\uE045",
+		"expected_hex": "U+E004 U+E050 U+E045"
 	},
 	{
 		"id": "TC11",

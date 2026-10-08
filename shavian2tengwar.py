@@ -37,7 +37,7 @@ TENGWA_ANNA = "\ue016"
 # --- Standalone Appendix E Logograms ---
 LOGOGRAM_THE = "\ue01c"  # Extended Anta ("the")
 LOGOGRAM_OF = "\ue01d"  # Extended Ampa ("of")
-LOGOGRAM_AND = "\ue004\ue050"  # Ando + Nasal Bar Above ("and")
+LOGOGRAM_AND = "\ue004\ue050\ue045"  # Ando + Nasal Bar Above ("and")
 
 # --- Tehtar (Vowel & Modifier Diacritics) ---
 TEHTA_A_ABOVE = "\ue040"  # Three dots above (a-tehta)
