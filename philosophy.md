@@ -26,10 +26,10 @@ This architectural choice necessitates several deliberate deviations from the co
 **The Community Norm:** Traditional modes map vowel combinations based on their Latin pairings, requiring a complex web of _tengwa/tehta_ combinations (such as _Yanta_ vs. _Anna_ or _Úre_ vs. _Vala_) depending on whether the word is spelled with an 'ai', 'ea', 'ay', or 'ou'.
 **Our Engine:** We treat diphthongs purely as phonetic movements, bypassing historical Latin spelling entirely. We map them uniformly by placing the primary vowel _tehta_ directly onto the appropriate phonetic offglide carrier: _Anna_ for front-closing `/j/` glides (e.g., PRICE `/aɪ/`, FACE `/eɪ/`) and _Vala_ for back-closing `/w/` glides (e.g., MOUTH `/aʊ/`, GOAT `/oʊ/`).
 
-### 4. Rejecting the Terminal S-Hook (`sa-rince`)
+### 4. Rejecting the Terminal S-Hook (`sa-rincë`)
 
-**The Community Norm:** Trailing `-s` appears constantly in written English due to plurals and possessives. Orthographic modes routinely apply the `sa-rince` terminal hook for brevity, regardless of whether the suffix is pronounced as an unvoiced `/s/` (_cats_) or a voiced `/z/` (_dogs_).
-**Our Engine:** ReadLex Rule 2 enforces strict phonetic voicing assimilation for suffixes. To preserve this critical acoustic distinction, we reject the generic `sa-rince`. Instead, our engine outputs explicit _Silmë_ bases ( or ) for terminal `/s/` and explicit _Essë_ bases ( or ) for terminal `/z/`.
+**The Community Norm:** Trailing `-s` appears constantly in written English due to plurals and possessives. Orthographic modes routinely apply the `sa-rincë` terminal hook for brevity, regardless of whether the suffix is pronounced as an unvoiced `/s/` (_cats_) or a voiced `/z/` (_dogs_).
+**Our Engine:** ReadLex Rule 2 enforces strict phonetic voicing assimilation for suffixes. To preserve this critical acoustic distinction, we reject the generic `sa-rincë`. Instead, our engine outputs explicit _Silmë_ bases ( or ) for terminal `/s/` and explicit _Essë_ bases ( or ) for terminal `/z/`.
 
 ### 5. Unadorned Logograms
 
