@@ -2,7 +2,7 @@
 
 import sys
 
-if sys.version_info < (3, 14):
+if sys.version_info < (3, 14):  # noqa: UP036 - deliberate: a clear message instead of a SyntaxError later
     raise RuntimeError(
         f"shavian2tengwar needs Python 3.14 or newer; this is {sys.version.split()[0]} ({sys.executable}). "
         "Install 3.14 and run the commands with it (see README)."
