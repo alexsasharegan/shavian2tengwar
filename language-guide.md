@@ -80,7 +80,7 @@ In Tolkien's standard layout, primary consonants are organized into **4 Series**
 | **Grade 3: Voiceless Fricatives** _(Stem Up, Single Loop)_<br>    | ****<br> <br>`U+E008`<br> <br>_Thúle_ (/θ/)     | ****<br> <br>`U+E009`<br> <br>_Formen_ (/f/) | ****<br> <br>`U+E00A`<br> <br>_Harma_ (/ʃ/) | ****<br> <br>`U+E00B`<br> <br>_Hwesta_ (/hw/) |
 | **Grade 4: Voiced Fricatives** _(Stem Up, Double Loop)_<br>       | ****<br> <br>`U+E00C`<br> <br>_Anta_ (/ð/)      | ****<br> <br>`U+E00D`<br> <br>_Ampa_ (/v/)   | ****<br> <br>`U+E00E`<br> <br>_Anca_ (/ʒ/)  | ****<br> <br>`U+E00F`<br> <br>_Unque_ (/gh/)  |
 | **Grade 5: Nasals** _(Short Stem, Double Loop)_<br>               | ****<br> <br>`U+E010`<br> <br>_Númen_ (/n/)     | ****<br> <br>`U+E011`<br> <br>_Malta_ (/m/)  | ****<br> <br>`U+E012`<br> <br>_Noldo_ (/ŋ/) | ****<br> <br>`U+E013`<br> <br>_Nwalme_ (/ŋ/)  |
-| **Grade 6: Glides / Semi-vowels** _(Short Stem, Single Loop)_<br> | ****<br> <br>`U+E014`<br> <br>_Óre_ (/r/ final) | ****<br> <br>`U+E015`<br> <br>_Vala_ (/w/)   | ****<br> <br>`U+E016`<br> <br>_Anna_ (/j/)  | ****<br> <br>`U+E017`<br> <br>_Vilya_<br>     |
+| **Grade 6: Glides / Semi-vowels** _(Short Stem, Single Loop)_<br> | ****<br> <br>`U+E014`<br> <br>_Óre_ (not used by this mode) | ****<br> <br>`U+E015`<br> <br>_Vala_ (/w/)   | ****<br> <br>`U+E016`<br> <br>_Anna_ (/j/)  | ****<br> <br>`U+E017`<br> <br>_Vilya_<br>     |
 
 ---
 
@@ -90,7 +90,7 @@ Beyond the standard 24-tengwa grid, specialized base characters handle liquids, 
 
 | Tengwa Glyph | Code Point   | Tengwa Name                 | Structural Description / Function                                                        |
 | ------------ | ------------ | --------------------------- | ---------------------------------------------------------------------------------------- |
-| ****        | `U+E020`     | _Rómen_                     | Trilled/prevocalic /r/ (used before vowels)                                              |
+| ****        | `U+E020`     | _Rómen_                     | /r/ in every position (R-01)                                              |
 | ****        | `U+E022`     | _Lamba_                     | Upward hooked liquid character (/l/)                                                     |
 | ****        | `U+E024`     | _Silme_                     | Upright S-curve sibilant (/s/)                                                           |
 | ****        | `U+E025`     | _Silme Nuquerna_            | Inverted S-curve (used when carrying top tehta)                                          |
@@ -105,88 +105,128 @@ Beyond the standard 24-tengwa grid, specialized base characters handle liquids, 
 
 ### 3. Vowel Tehtar & Diacritic Marks
 
-In English General Mode, vowel diacritics (_tehtar_) sit directly above or below the following consonant base glyph:
+Vowel marks (*tehtar*) sit above the *following* consonant and are read before it. Every vowel has its own mark, and long vowels never reuse a short mark: they sit on the long carrier `{aara}` instead.
 
-| Tehta Mark | Code Point | Tehta Name     | Phonetic Mapping     | Visual Placement                    |
-| :--------: | :--------- | :------------- | :------------------- | :---------------------------------- |
-|   ****    | `U+E040`   | _a-tehta_      | /æ/, /ɑː/, /aɪ/      | Three dots in a triangle above base |
-|   ****    | `U+E044`   | _i-tehta_      | /ɪ/, /iː/            | Single dot above base               |
-|   ****    | `U+E053`   | _schwa-tehta_  | /ə/ (schwa)          | Breve above base                    |
-|   ****    | `U+E046`   | _e-tehta_      | /ɛ/, /eɪ/            | Single acute stroke above base      |
-|   ****    | `U+E048`   | _long e-tehta_ | /iː/ (FLEECE)        | Double acute stroke above base      |
-|   ****    | `U+E04A`   | _o-tehta_      | /ɒ/, /ɔː/, /oʊ/      | Right-facing curl above base        |
-|   ****    | `U+E04C`   | _u-tehta_      | /ʌ/, /ʊ/, /uː/       | Left-facing curl above base         |
-|   ****    | `U+E04C` ×2 | _long u-tehta_ | /uː/ (GOOSE)       | Doubled left-facing curl above base |
-|   ****    | `U+E050`   | _nasal bar_    | Preconsonantal nasal | Horizontal tilde above base stop    |
+| Mark | Code point | Name | Used for | Placement |
+| :--: | :--------- | :--- | :------- | :-------- |
+|  | `U+E040` | _a-tehta_ | PALM, and the first half of PRICE/MOUTH | three dots in a triangle above |
+|  | `U+E044` | _i-tehta_ | KIT, FLEECE | single dot above |
+|  | `U+E046` | _e-tehta_ | DRESS, FACE | single acute stroke above |
+|  | `U+E04A` | _o-tehta_ | LOT, THOUGHT, CHOICE, GOAT | right-facing curl above |
+|  | `U+E04C` | _u-tehta_ | FOOT, GOOSE | left-facing curl above |
+|  | `U+E053` | _schwa-tehta_ | the schwa /ə/ | breve above |
+|  | `U+E054` | _grave_ | STRUT | grave stroke above |
+|  | `U+E056` | _inverted dots_ | TRAP | three inverted dots above |
+|  | `U+E050` | _nasal bar_ | nasal plus stop (𐑯𐑑, 𐑥𐑐 …), 𐑙𐑒, 𐑙𐑜 | bar above the stop |
+|  | `U+E051` | _doubler_ | two identical consonants | bar below the consonant |
+|  | `U+E045` | _under-dot_ | only inside the *and* shorthand | dot below |
+
+The double acute (`U+E048`) and a doubled left curl are no longer used. When a mark lands on Silmë or Essë, the nuquerna form is used instead (S-02). Mark order on a base is vowel, then nasal bar, then doubler (K-01).
 
 ---
 
 ## Part 3: The Shavian-to-Tengwar Transliteration Bridge
 
-By using Shavian as an Intermediate Representation (IR), transliteration bypasses non-phonetic English orthography entirely, converting text through a 5-pass state machine.
+By using Shavian as an Intermediate Representation (IR), transliteration bypasses non-phonetic English orthography entirely. Each Shavian word becomes a list of cells (one base glyph plus its marks), which an encoding then turns into code points.
 
-### 1. Direct Phoneme Mapping Matrix
+**The rules themselves live in [`spec/mode.md`](./spec/mode.md); this part is a reader's summary.** The tables below were generated from the engine, so they show what the converter actually writes. If they disagree with the spec, the spec wins.
 
-| IPA Phoneme | Shavian Glyph | Tengwa          | Target Tengwa / Tehta           | Code Point Stream      | State Machine Transformation Rule                               |
-| ----------- | ------------- | --------------- | ------------------------------- | ---------------------- | --------------------------------------------------------------- |
-| /p/         | **𐑐**         | ****           | _Parma_                         | `U+E001`               | Direct 1:1 Consonant Base                                       |
-| /b/         | **𐑚**         | ****           | _Umbar_                         | `U+E005`               | Direct 1:1 Consonant Base                                       |
-| /t/         | **𐑑**         | ****           | _Tinco_                         | `U+E000`               | Direct 1:1 Consonant Base                                       |
-| /d/         | **𐑛**         | ****           | _Ando_                          | `U+E004`               | Direct 1:1 Consonant Base                                       |
-| /k/         | **𐑒**         | ****           | _Quesse_                        | `U+E003`               | Direct 1:1 Consonant Base                                       |
-| /ɡ/         | **𐑜**         | ****           | _Ungwe_                         | `U+E007`               | Direct 1:1 Consonant Base                                       |
-| /f/         | **𐑓**         | ****           | _Formen_                        | `U+E009`               | Direct 1:1 Consonant Base                                       |
-| /v/         | **𐑝**         | ****           | _Ampa_                          | `U+E00D`               | Direct 1:1 Consonant Base                                       |
-| /θ/         | **𐑔**         | ****           | _Thúle_                         | `U+E008`               | Direct 1:1 Consonant Base                                       |
-| /ð/         | **𐑞**         | ****           | _Anta_                          | `U+E00C`               | Direct 1:1 Consonant Base                                       |
-| /s/         | **𐑕**         | ****           | _Silme_ / _Nuquerna_            | `U+E024` / `U+E025`    | Flips to _Silme Nuquerna_ (`U+E025`) if top tehta present       |
-| /z/         | **𐑟**         | ****           | _Esse_ / _Nuquerna_             | `U+E026` / `U+E027`    | Flips to _Esse Nuquerna_ (`U+E027`) if top tehta present        |
-| /ʃ/         | **𐑖**         | ****           | _Harma_                         | `U+E00A`               | Direct 1:1 Consonant Base                                       |
-| /ʒ/         | **𐑠**         | ****           | _Anca_                          | `U+E00E`               | Direct 1:1 Consonant Base                                       |
-| /tʃ/        | **𐑗**         | ****           | _Calma_                         | `U+E002`               | Direct 1:1 Consonant Base                                       |
-| /dʒ/        | **𐑡**         | ****           | _Anga_                          | `U+E006`               | Direct 1:1 Consonant Base                                       |
-| /j/         | **𐑘**         | ****           | _Anna_                          | `U+E016`               | Direct 1:1 Consonant Base                                       |
-| /w/         | **𐑢**         | ****           | _Vala_                          | `U+E015`               | Direct 1:1 Consonant Base                                       |
-| /hw/        | **𐑣𐑢**        | ****           | _Hwesta_                        | `U+E00B`               | Lookahead intercept: Aspirated Wh cluster to _Hwesta_           |
-| /ŋ/         | **𐑙**         | ****           | _Nwalme_                        | `U+E013`               | Direct 1:1 Consonant Base                                       |
-| /h/         | **𐑣**         | ****           | _Hyarmen_                       | `U+E028`               | Direct 1:1 Consonant Base                                       |
-| /l/         | **𐑤**         | ****           | _Lamba_                         | `U+E022`               | Direct 1:1 Consonant Base                                       |
-| /m/         | **𐑥**         | ****           | _Malta_                         | `U+E011`               | Direct 1:1 Consonant Base                                       |
-| /n/         | **𐑯**         | ****           | _Númen_                         | `U+E010`               | Direct 1:1 Consonant Base                                       |
-| /r/         | **𐑮**         | **** / ****   | _Rómen_ / _Óre_                 | `U+E020` / `U+E014`    | Contextual: _Rómen_ before vowels; _Óre_ word-final/consonantal |
-| /ɪ/         | **𐑦**         | ****          | _i-tehta_                       | `U+E044`               | Attach dot above next available consonant                       |
-| /iː/        | **𐑰**         | ****          | _Ára_ + _i-tehta_               | `U+E02C U+E044`        | FLEECE vowel: Attach to Long Carrier or double acute on base    |
-| /ɛ/         | **𐑧**         | ****          | _e-tehta_                       | `U+E046`               | Attach acute stroke above next available consonant              |
-| /eɪ/        | **𐑱**         | ****          | _Anna_ + _e-tehta_              | `U+E016 U+E046`        | FACE diphthong: Offglide _Anna_ base + _e-tehta_                |
-| /æ/         | **𐑨**         | ****          | _a-tehta_                       | `U+E040`               | Attach three dots above next available consonant                |
-| /aɪ/        | **𐑲**         | ****          | _Anna_ + _a-tehta_              | `U+E016 U+E040`        | PRICE diphthong: Offglide _Anna_ base + _a-tehta_               |
-| /ə/         | **𐑩**         | ****          | _schwa-tehta_                   | `U+E053`               | Attach breve above next available consonant                     |
-| /ʌ/         | **𐑳**         | ****          | _u-tehta_                       | `U+E04C`               | STRUT vowel: Attach left curl above next available consonant    |
-| /ɒ/         | **𐑪**         | ****          | _o-tehta_                       | `U+E04A`               | LOT vowel: Attach right curl above next available consonant     |
-| /oʊ/        | **𐑴**         | ****          | _Vala_ + _o-tehta_              | `U+E015 U+E04A`        | GOAT diphthong: Offglide _Vala_ base + _o-tehta_                |
-| /ʊ/         | **𐑫**         | ****          | _foot-tehta_                    | `U+E04C`               | FOOT vowel: Attach left curl above next available consonant     |
-| /uː/        | **𐑵**         | ****          | _Ára_ + _u-tehta_               | `U+E02C U+E04C`        | GOOSE vowel: Attach to Long Carrier or double curl on base      |
-| /aʊ/        | **𐑬**         | ****          | _Vala_ + _a-tehta_              | `U+E015 U+E040`        | MOUTH diphthong: Offglide _Vala_ base + _a-tehta_               |
-| /ɔɪ/        | **𐑶**         | ****          | _Anna_ + _o-tehta_              | `U+E016 U+E04A`        | CHOICE diphthong: Offglide _Anna_ base + _o-tehta_              |
-| /ɑː/        | **𐑭**         | ****          | _a-tehta_                       | `U+E040`               | PALM vowel: three dots above next consonant; orphan: _Ára_ + a-tehta (`U+E02C U+E040`) |
-| /ɔː/        | **𐑷**         | ****          | _awe-tehta_                     | `U+E04A`               | THOUGHT vowel: right curl above next consonant; orphan: _Ára_ + o-tehta (`U+E02C U+E04A`) |
-| /iə/        | **𐑾**         | ****          | _Anna_ + _i-tehta_              | `U+E016 U+E044`        | IAN ligature: Offglide _Anna_ base + _i-tehta_                  |
-| /juː/       | **𐑿**         | ****          | _Anna_ + _long u-tehta_         | `U+E016 U+E04C U+E04C` | YEW ligature: Offglide _Anna_ base + doubled u-tehta            |
-| /ɑːr/       | **𐑸**         | **** / **** | _Rómen_ / _Óre_ + _a-tehta_     | `U+E020/U+E014 U+E040` | START vowel: Decomposes into R-base + _a-tehta_                 |
-| /ɔːr/       | **𐑹**         | **** / **** | _Rómen_ / _Óre_ + _o-tehta_     | `U+E020/U+E014 U+E04A` | NORTH vowel: Decomposes into R-base + _o-tehta_                 |
-| /ər/        | **𐑼**         | **** / **** | _Rómen_ / _Óre_ + _schwa-tehta_ | `U+E020/U+E014 U+E053` | lettER vowel: Decomposes into R-base + _schwa-tehta_            |
-| /ɪər/       | **𐑽**         | **** / **** | _Rómen_ / _Óre_ + _i-tehta_     | `U+E020/U+E014 U+E044` | NEAR vowel: Decomposes into R-base + _i-tehta_                  |
-| /ɛər/       | **𐑺**         | **** / **** | _Rómen_ / _Óre_ + _e-tehta_     | `U+E020/U+E014 U+E046` | SQUARE vowel: Decomposes into R-base + _e-tehta_                |
-| /ɜːr/       | **𐑻**         | **** / **** | _Rómen_ / _Óre_ + _u-tehta_     | `U+E020/U+E014 U+E04C` | NURSE vowel: Decomposes into R-base + _u-tehta_                 |
+### 1. Consonants
 
----
+Each consonant letter has one fixed glyph (C-01). The Rules column lists the spec rules that fired.
 
-### 2. The Big Five: Shorthand Logograms
+| Sound | Shavian | Tengwar | Glyph names | Code points | Rules |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| /p/ | **𐑐** |  | `{parma}` | `U+E001` | C-01 |
+| /b/ | **𐑚** |  | `{umbar}` | `U+E005` | C-01 |
+| /t/ | **𐑑** |  | `{tinco}` | `U+E000` | C-01 |
+| /d/ | **𐑛** |  | `{ando}` | `U+E004` | C-01 |
+| /k/ | **𐑒** |  | `{quesse}` | `U+E003` | C-01 |
+| /ɡ/ | **𐑜** |  | `{ungwe}` | `U+E007` | C-01 |
+| /tʃ/ | **𐑗** |  | `{calma}` | `U+E002` | C-01 |
+| /dʒ/ | **𐑡** |  | `{anga}` | `U+E006` | C-01 |
+| /f/ | **𐑓** |  | `{formen}` | `U+E009` | C-01 |
+| /v/ | **𐑝** |  | `{ampa}` | `U+E00D` | C-01 |
+| /θ/ | **𐑔** |  | `{thuule}` | `U+E008` | C-01 |
+| /ð/ | **𐑞** |  | `{anto}` | `U+E00C` | C-01 |
+| /ʃ/ | **𐑖** |  | `{harma}` | `U+E00A` | C-01 |
+| /ʒ/ | **𐑠** |  | `{anca}` | `U+E00E` | C-01 |
+| /s/ | **𐑕** |  | `{silme}` | `U+E024` | C-01 |
+| /z/ | **𐑟** |  | `{esse}` | `U+E026` | C-01 |
+| /m/ | **𐑥** |  | `{malta}` | `U+E011` | C-01 |
+| /n/ | **𐑯** |  | `{nuumen}` | `U+E010` | C-01 |
+| /ŋ/ | **𐑙** |  | `{nwalme}` | `U+E013` | C-01 |
+| /l/ | **𐑤** |  | `{lambe}` | `U+E022` | C-01 |
+| /r/ | **𐑮** |  | `{roomen}` | `U+E020` | C-01 |
+| /w/ | **𐑢** |  | `{vala}` | `U+E015` | C-01 |
+| /j/ | **𐑘** |  | `{anna}` | `U+E016` | C-01 |
+| /h/ | **𐑣** |  | `{hyarmen}` | `U+E028` | C-01 |
 
-| Target Word | Shavian IR | Tengwar Output | Glyph Name           | Code Point Stream | State Machine Rule                 |
-| :---------- | :--------- | :------------- | :------------------- | :---------------- | :--------------------------------- |
-| _the_       | **𐑞**      | ****          | _Extended Ando_      | `U+E01C`          | Standalone logogram for "the"      |
-| _of_        | **𐑝**      | ****          | _Extended Umbar_     | `U+E01D`          | Standalone logogram for "of"       |
-| _and_       | **𐑯**      | ****         | _Ando_ + _Nasal Bar_ + _Under-dot_ | `U+E004 U+E050 U+E045` | Standalone shorthand for "and" |
-| _to_        | **𐑑**      | ****          | _Tinco_ Base         | `U+E000`          | Unadorned base shorthand for "to"  |
-| _for_       | **𐑓**      | ****          | _Formen_ Base        | `U+E009`          | Unadorned base shorthand for "for" |
+Special cases: 𐑣𐑢 is the one glyph `{hwesta}` (C-02). 𐑯𐑑, 𐑯𐑛, 𐑥𐑐, 𐑥𐑚, 𐑙𐑒 and 𐑙𐑜 are the stop plus a nasal bar (N-01, N-02). Two identical consonants take the doubling bar below (G-01). Silmë and Essë flip to their nuquerna forms when a mark lands on them (S-02).
+
+### 2. Vowels
+
+A short vowel is a mark on the *next* consonant, read before it. A short vowel with no consonant after it sits on the short carrier `{telco}`. A long vowel always sits on the long carrier `{aara}` (V-21..V-24). The "alone" forms below show that orphan case.
+
+| Sound | Shavian | Tengwar | Glyph names | Code points | Rules |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| /ɪ/ | **𐑦** |  | `{telco}[dot-above]` | `U+E02E U+E044` | V-11, V-02 |
+| /ɛ/ | **𐑧** |  | `{telco}[acute]` | `U+E02E U+E046` | V-12, V-02 |
+| /æ/ | **𐑨** |  | `{telco}[reversed-triple-dot-above]` | `U+E02E U+E056` | V-13, V-02 |
+| /ə/ | **𐑩** |  | `{telco}[breve]` | `U+E02E U+E053` | V-14, V-02 |
+| /ɒ/ | **𐑪** |  | `{telco}[right-curl]` | `U+E02E U+E04A` | V-15, V-02 |
+| /ʌ/ | **𐑳** |  | `{telco}[grave]` | `U+E02E U+E054` | V-16, V-02 |
+| /ʊ/ | **𐑫** |  | `{telco}[left-curl]` | `U+E02E U+E04C` | V-17, V-02 |
+| /iː/ | **𐑰** |  | `{aara}[dot-above]` | `U+E02C U+E044` | V-21, V-03 |
+| /ɑː/ | **𐑭** |  | `{aara}[triple-dot-above]` | `U+E02C U+E040` | V-22, V-03 |
+| /ɔː/ | **𐑷** |  | `{aara}[right-curl]` | `U+E02C U+E04A` | V-23, V-03 |
+| /uː/ | **𐑵** |  | `{aara}[left-curl]` | `U+E02C U+E04C` | V-24, V-03 |
+
+### 3. Diphthongs and R-vowels
+
+The glide is written last and the vowel mark first. R-vowels are not separate glyphs: they expand to a vowel plus 𐑮 (rómen). 𐑾 is 𐑦𐑩 and 𐑿 is 𐑘𐑵.
+
+| Sound | Shavian | Tengwar | Glyph names | Code points | Rules |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| /aɪ/ | **𐑲** |  | `{anna}[triple-dot-above]` | `U+E016 U+E040` | D-01 |
+| /aʊ/ | **𐑬** |  | `{vala}[triple-dot-above]` | `U+E015 U+E040` | D-02 |
+| /eɪ/ | **𐑱** |  | `{anna}[acute]` | `U+E016 U+E046` | D-03 |
+| /oʊ/ | **𐑴** |  | `{vala}[right-curl]` | `U+E015 U+E04A` | D-04 |
+| /ɔɪ/ | **𐑶** |  | `{anna}[right-curl]` | `U+E016 U+E04A` | D-05 |
+| /juː/ | **𐑿** |  | `{anna}{aara}[left-curl]` | `U+E016 U+E02C U+E04C` | L-07, C-01, V-24, V-03 |
+| /ɪə/ | **𐑾** |  | `{telco}[dot-above]{telco}[breve]` | `U+E02E U+E044 U+E02E U+E053` | L-08, V-11, V-02, V-14 |
+| /ɑːr/ | **𐑸** |  | `{aara}[triple-dot-above]{roomen}` | `U+E02C U+E040 U+E020` | L-01, V-22, V-03, R-01 |
+| /ɔːr/ | **𐑹** |  | `{aara}[right-curl]{roomen}` | `U+E02C U+E04A U+E020` | L-02, V-23, V-03, R-01 |
+| /ɛər/ | **𐑺** |  | `{roomen}[acute]` | `U+E020 U+E046` | L-03, R-01, V-12, V-01 |
+| /ɪər/ | **𐑽** |  | `{roomen}[dot-above]` | `U+E020 U+E044` | L-04, R-01, V-11, V-01 |
+| /ɜːr/ | **𐑻** |  | `{roomen}[grave]` | `U+E020 U+E054` | L-05, R-01, V-16, V-01 |
+| /ər/ | **𐑼** |  | `{roomen}[breve]` | `U+E020 U+E053` | L-06, R-01, V-14, V-01 |
+
+### 4. The Big Five: Shorthand Logograms
+
+Shavian writes five very common words as a single letter. *the*, *of* and *and* have Tengwar shorthands. *to* and *for* do not: they are written as their weak forms /tə/ and /fər/, which keeps them distinct from *too/two* and *four*. This replaces an older version of this guide that gave *to* and *for* as the bare letters Tinco and Formen (see `DECISIONS.md`, D-01).
+
+| Target word | Shavian | Tengwar | Glyph names | Code points | Rules |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| *the* | **𐑞** |  | `{the-shorthand}` | `U+E01C` | W-01 |
+| *of* | **𐑝** |  | `{of-shorthand}` | `U+E01D` | W-02 |
+| *and* | **𐑯** |  | `{and-shorthand}` | `U+E004 U+E050 U+E045` | W-03 |
+| *to* | **𐑑** |  | `{tinco}{telco}[breve]` | `U+E000 U+E02E U+E053` | W-04, L-09, C-01, V-14, V-02 |
+| *for* | **𐑓** |  | `{formen}{roomen}[breve]` | `U+E009 U+E020 U+E053` | W-04, L-10, C-01, L-06, R-01, V-14, V-01 |
+
+### 5. Punctuation
+
+| Input | Glyph names | Code point | Rule |
+| :--- | :--- | :--- | :--- |
+| `,` | `{pusta}` | `U+E060` | U-01 |
+| `.` | `{double-pusta}` | `U+E061` | U-01 |
+| `;` | `{double-section-mark}` | `U+E069` | U-02 |
+| `:` | `{triple-pusta}` | `U+E062` | U-03 |
+| `-` | `{section-mark}` | `U+E068` | U-04 |
+| `!` | `{exclamation-mark}` | `U+E065` | U-05 |
+| `?` | `{question-mark}` | `U+E066` | U-05 |
+| `(` | `{parenthesis-mark}` | `U+E067` | U-05 |
+| `)` | `{parenthesis-mark}` | `U+E067` | U-05 |
+| `“` | `{left-quotation-mark}` | `U+E06A` | U-05 |
+| `”` | `{right-quotation-mark}` | `U+E06B` | U-05 |
+| `"` (ASCII) | alternates the two quotation marks | | U-05 |
