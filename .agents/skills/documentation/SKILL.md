@@ -97,9 +97,16 @@ ADR to the index there.
 
 Beyond Context / Decision / Consequences, each ADR has:
 
-- **Review:** whether Alex approved it. Decisions made without Alex are `Unreviewed` and the ADR's
-  status is `Proposed` if the rule is provisional.
+- **Review:** how it was approved: "Approved by merging PR #N", or "Requested by Alex".
 - **Revert:** the commits that back it out, and what else (spec rows, corpus rows) must go with them.
+
+### The pull request is the approval gate
+
+- Write every new ADR as `Proposed`, and every new or changed spec rule as `PROVISIONAL`.
+- When Alex says the PR is approved, add a final commit that sets them to `Active` / `ADOPTED`,
+  fills in **Review**, updates the ADR index and the project docs, and closes the project.
+  Merging the PR is the approval. `main` holds no `Proposed` ADR and no `PROVISIONAL` rule.
+- Merge with a merge commit, never squash or rebase: ADRs and logs cite the branch's commit hashes.
 
 ### When to write an ADR
 

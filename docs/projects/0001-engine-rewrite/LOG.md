@@ -234,3 +234,18 @@ gh pr view 1 --json state,mergeCommit    # MERGED 193cca5
 - **Thread purpose:** Close the project after the merge.
 - **Key findings / Blockers resolved:** None outstanding.
 - **Context state for next thread:** Complete. Moved to Done in the roadmap.
+
+## 2026-10-11 — Agent instructions follow the PR approval gate
+
+### Context & Decisions
+
+- The edits to `AGENTS.md` and `.agents/skills/documentation/SKILL.md` that the auto-mode classifier
+  blocked on 2026-10-11 were made after Alex approved the exact wording. Both now describe the PR as
+  the approval gate (ADR-0001) instead of the old "Unreviewed" flow.
+- Alex asked for this to be committed directly on `main`, without a PR: it only aligns the agent
+  instructions with ADR-0001, which PR #1 already approved.
+
+### LLM Session Summary
+
+- **Thread purpose:** Finish the follow-up that the classifier had blocked.
+- **Context state for next thread:** Nothing outstanding from projects 0001 or 0002.

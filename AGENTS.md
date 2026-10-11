@@ -59,7 +59,8 @@ Load [`.agents/skills/documentation/SKILL.md`](.agents/skills/documentation/SKIL
 
 - `spec/mode.md` defines what the engine does. **When the spec and the code disagree, the code is wrong.**
 - To change behaviour: **spec first, then engine, then corpus**, then record why in an ADR.
-- Statuses are `ADOPTED`, `PROVISIONAL` and `OPEN`. Do not promote a rule to `ADOPTED` yourself: that is Alex's call. Open questions are in spec section 12.
+- Statuses are `ADOPTED`, `PROVISIONAL` and `OPEN`. Open questions are in spec section 12.
+- **The pull request is the approval gate.** A new or changed rule is `PROVISIONAL`, and its ADR `Proposed`, while its PR is open. Only when Alex says the PR is approved, add a last commit that sets them to `ADOPTED` / `Active` with **Review:** "Approved by merging PR #N". Merging is the approval, so `main` never holds a provisional rule. Never promote anything on your own judgment.
 - Rule IDs look like `C-01`, `V-13`, `D-02`, `L-09`, `U-05`. Decisions are `ADR-NNNN`. Never number a decision `D-NN`; that is a diphthong rule.
 
 ### The corpus is the test suite
