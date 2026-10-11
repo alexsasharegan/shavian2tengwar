@@ -60,7 +60,6 @@ The font names its glyphs `uniXXXX`, so the names in the last column come from t
 | `[bar-below]` | `U+E051` | DOUBLER |
 | `[breve]` | `U+E053` | BREVE |
 | `[grave]` | `U+E054` | GRAVE |
-| `[reversed-triple-dot-above]` | `U+E056` | THREE INVERTED DOTS ABOVE |
 
 ## 3. Shorthands and punctuation
 
@@ -89,10 +88,10 @@ Alcarin has no hyphen glyph, so `-` uses `{section-mark}` (U-04).
 | AE-01 | A cluster is written as its base code point followed by its mark code points in K-01 order. The font positions the marks with its own OpenType features. |
 | AE-02 | The mode's nuquerna choice (S-02) is implemented by swapping `E024`/`E026` for `E025`/`E027`. |
 | AE-03 | Mark stacking was verified with HarfBuzz through Raqm. Other renderers have not been checked. |
-| AE-04 | The mode never emits `U+E014` (óre, R-02), `U+E048` (double acute, V-21), or a doubled `U+E04C` (V-24). They stay in the font but are reserved. |
+| AE-04 | The mode never emits `U+E014` (óre, R-02), `U+E048` (double acute, V-21), a doubled `U+E04C` (V-24), or `U+E056` (three inverted dots, formerly TRAP; see DECISIONS.md D-12). They stay in the font but are reserved. |
 
 ## 5. Alcarin glyphs the mode does not use
 
 These are in the font and may matter later: `E00F` unque, `E012` noldo, `E017` vilya, `E021` arda,
 `E023` alda, `E029` hwesta sindarinwa, `E02A` yanta, `E02B` uure, `E02D` halla, the extended series
-`E018`–`E01F` (other than the two shorthands), and the "below" marks `E047`, `E049`, `E04B`, `E04D`.
+`E018`–`E01F` (other than the two shorthands), and the "below" marks `E047`, `E049`, `E04B`, `E04D`, and `E056` (three inverted dots above).

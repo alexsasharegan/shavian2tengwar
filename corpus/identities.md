@@ -21,10 +21,12 @@ Each ligature is expanded to its components before any other rule runs (section 
 
 ## Diphthongs equal nucleus + glide
 
-A diphthong is its nucleus followed by its glide, so these are the same sounds written the same way (I-01 to I-03).
+A diphthong is its nucleus followed by its glide, so these are the same sounds written the same way (I-01 to I-05).
 
 | A | B | Rules | Note |
 |---|---|---|---|
 | 𐑱 | 𐑧𐑘 | I-01 | FACE = DRESS + j |
 | 𐑴 | 𐑪𐑢 | I-02 | GOAT = LOT + w |
 | 𐑶 | 𐑪𐑘 | I-03 | CHOICE = LOT + j |
+| 𐑲 | 𐑨𐑘 | I-04 | PRICE = TRAP + j |
+| 𐑬 | 𐑨𐑢 | I-05 | MOUTH = TRAP + w |

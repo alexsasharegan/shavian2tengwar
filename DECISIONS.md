@@ -22,6 +22,7 @@ spec, corpus and engine out of step; the "Revert" lines say what else has to go 
 | D-09 | Replacing the old guide's "Big Five" rows for *to* and *for* | provisional | with D-01, plus the docs commit |
 | D-10 | Documentation approach (README, guide, philosophy, PDFs) | adopted | docs commits |
 | D-11 | Commit author | adopted | not revertible; see below |
+| D-12 | TRAP uses `[triple-dot-above]`; `E056` retired | **approved by you** | the "TRAP shares PALM's mark" commit |
 
 ---
 
@@ -187,6 +188,22 @@ standing instruction, so `language-guide.pdf` and `philosophy.pdf` are stale unt
 not under your identity, so you can tell at a glance which commits to review. The rewrite did not touch
 your earlier commits. To re-author them as yourself: `git rebase -r d729c2c --exec 'git commit
 --amend --no-edit --reset-author'`. Run this on a machine where the rebase can delete files.
+
+## D-12. TRAP shares PALM's triple dot
+
+**Decided (approved by you, 2026-10-11).** 𐑨 TRAP is `[triple-dot-above]` on a consonant, and 𐑭 PALM stays
+`{aara}[triple-dot-above]`. `[reversed-triple-dot-above]` (`U+E056`) is removed from the mode and the
+Alcarin table, and listed as reserved.
+
+**Why.** Shavian has no short /ɑ/, so the short slot of the triple dot was empty, and TRAP's separate mark
+broke the pattern that a long vowel is its short partner's mark on the long carrier.
+
+**Consequence.** 𐑲 PRICE = 𐑨𐑘 and 𐑬 MOUTH = 𐑨𐑢 become declared identities (I-04, I-05), because a
+diphthong is its nucleus plus its glide. I scanned all 111,214 ReadLex entries: only the TrapBath variant of
+*Malawian* (32 occurrences by frequency) and a one-off name, *iau*, contain 𐑨 followed by 𐑘, 𐑢 or 𐑿 (𐑿
+expands to 𐑘𐑵). You said *Malawian* is fine as it comes out.
+
+**Revert.** The commit of this name. It also reverts I-04 and I-05 and restores `E056`.
 
 ---
 

@@ -17,7 +17,7 @@ One word per consonant letter (C-01), plus aspirated *wh* (C-02) and R (R-01).
 | 𐑗𐑦𐑯 | chin | /tʃɪn/ | `{calma}{nuumen}[dot-above]` | C-01 |
 | 𐑡𐑦𐑯 | gin | /dʒɪn/ | `{anga}{nuumen}[dot-above]` | C-01 |
 | 𐑓𐑰 | fee | /fiː/ | `{formen}{aara}[dot-above]` | C-01 |
-| 𐑝𐑨𐑯 | van | /væn/ | `{ampa}{nuumen}[reversed-triple-dot-above]` | C-01 |
+| 𐑝𐑨𐑯 | van | /væn/ | `{ampa}{nuumen}[triple-dot-above]` | C-01 |
 | 𐑔𐑦𐑯 | thin | /θɪn/ | `{thuule}{nuumen}[dot-above]` | C-01 |
 | 𐑞𐑧𐑯 | then | /ðɛn/ | `{anto}{nuumen}[acute]` | C-01 |
 | 𐑖𐑲 | shy | /ʃaɪ/ | `{harma}{anna}[triple-dot-above]` | C-01 |
@@ -42,7 +42,7 @@ One word per consonant letter (C-01), plus aspirated *wh* (C-02) and R (R-01).
 | 𐑟𐑵 𐑟𐑵𐑟 | zoo zoos | /zuː zuːz/ | `{esse}{aara}[left-curl] {esse}{aara}[left-curl]{esse}` | S-01 |
 | 𐑦𐑟 | is | /ɪz/ | `{esse-nuquerna}[dot-above]` | S-02 |
 | 𐑳𐑕 | us | /ʌs/ | `{silme-nuquerna}[grave]` | S-02 |
-| 𐑨𐑕𐑒 | ask | /æsk/ | `{silme-nuquerna}[reversed-triple-dot-above]{quesse}` | S-02 V-01 |
+| 𐑨𐑕𐑒 | ask | /æsk/ | `{silme-nuquerna}[triple-dot-above]{quesse}` | S-02 V-01 |
 | 𐑕𐑦𐑑 | sit | /sɪt/ | `{silme}{tinco}[dot-above]` | S-01 |
 
 ## Nasals before stops
@@ -51,7 +51,7 @@ A nasal plus its homorganic stop is the stop with a nasal bar (N-01). 𐑙𐑒 a
 
 | Shavian | English | IPA | Glyphs | Rules |
 |---|---|---|---|---|
-| 𐑣𐑨𐑯𐑛 | hand | /hænd/ | `{hyarmen}{ando}[reversed-triple-dot-above][bar-above]` | N-01 |
+| 𐑣𐑨𐑯𐑛 | hand | /hænd/ | `{hyarmen}{ando}[triple-dot-above][bar-above]` | N-01 |
 | 𐑕𐑧𐑯𐑑 | sent | /sɛnt/ | `{silme}{tinco}[acute][bar-above]` | N-01 |
 | 𐑡𐑳𐑥𐑐 | jump | /dʒʌmp/ | `{anga}{parma}[grave][bar-above]` | N-01 |
 | 𐑯𐑳𐑥𐑚𐑼 | number | /nʌmbər/ | `{nuumen}{umbar}[grave][bar-above]{roomen}[breve]` | N-01 |

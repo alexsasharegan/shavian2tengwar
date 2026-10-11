@@ -13,6 +13,7 @@ CANONICAL = {
     "𐑿": "𐑘𐑵",  # L-07
     "𐑾": "𐑦𐑩",  # L-08
     "𐑱": "𐑧𐑘", "𐑴": "𐑪𐑢", "𐑶": "𐑪𐑘",  # I-01..I-03
+    "𐑲": "𐑨𐑘", "𐑬": "𐑨𐑢",  # I-04, I-05
 }
 
 
@@ -53,9 +54,9 @@ class Lossless(unittest.TestCase):
                 for a, b in ((ch + ctx, expansion + ctx), (ctx + ch, ctx + expansion)):
                     if a in ("𐑑", "𐑓") or b in ("𐑑", "𐑓"):
                         continue
-                    # I-01..I-03 note: next to the same glide letter, the plain sequence is a
+                    # I-01..I-05 note: next to the same glide letter, the plain sequence is a
                     # geminate (𐑪𐑘𐑘), so the identity does not hold. English never has this.
-                    if ch in "𐑱𐑴𐑶" and (
+                    if ch in "𐑱𐑴𐑶𐑲𐑬" and (
                         (a == ch + ctx and ctx[:1] == expansion[-1]) or (a == ctx + ch and ctx[-1:] == expansion[0])
                     ):
                         continue

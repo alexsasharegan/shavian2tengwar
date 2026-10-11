@@ -120,7 +120,7 @@ Both keep óre only for the vowel-r of NURSE; we don't, because section 8 builds
 |---|---|---|---|---|---|
 | V-11 | 𐑦 | /ɪ/ | KIT | `[dot-above]` | ADOPTED |
 | V-12 | 𐑧 | /ɛ/ | DRESS | `[acute]` | ADOPTED |
-| V-13 | 𐑨 | /æ/ | TRAP | `[reversed-triple-dot-above]` | ADOPTED |
+| V-13 | 𐑨 | /æ/ | TRAP | `[triple-dot-above]` | ADOPTED |
 | V-14 | 𐑩 | /ə/ | commA | `[breve]` | ADOPTED |
 | V-15 | 𐑪 | /ɒ/ | LOT | `[right-curl]` | ADOPTED |
 | V-16 | 𐑳 | /ʌ/ | STRUT | `[grave]` | ADOPTED |
@@ -132,7 +132,7 @@ Both keep óre only for the vowel-r of NURSE; we don't, because section 8 builds
 
 Notes:
 - FLEECE always uses `[dot-above]` (the i-mark), never a doubled e-mark.
-- TRAP uses the inverted triple dot (points down) and PALM the upright one (points up).
+- TRAP and PALM share the triple dot, as KIT/FLEECE, LOT/THOUGHT and FOOT/GOOSE share theirs: the short vowel is the mark on a consonant, the long vowel is the same mark on `{aara}` (V-03). Shavian has no short /ɑ/, so the short slot of this mark was free.
 - The schwa is a breve (V-14), written everywhere it is pronounced (P-03).
 
 ## 6. Diphthongs
@@ -153,7 +153,7 @@ Because every vowel mark is read before its base (V-01), a diphthong is exactly 
 𐑾 IAN /ɪə/ is not a diphthong of this kind: it ends in a schwa, not a glide, so it is expanded as a
 ligature (L-08).
 
-**Declared identities.** Because a diphthong *is* its nucleus followed by its glide, three of these
+**Declared identities.** Because a diphthong *is* its nucleus followed by its glide, five of these
 letters are written the same as the plain sequence. They are intended, not collisions:
 
 | ID | Letter | IPA | Same as | IPA | Glyphs |
@@ -161,12 +161,18 @@ letters are written the same as the plain sequence. They are intended, not colli
 | I-01 | 𐑱 FACE | /eɪ/ | 𐑧𐑘 | /ɛj/ | `{anna}[acute]` |
 | I-02 | 𐑴 GOAT | /oʊ/ | 𐑪𐑢 | /ɒw/ | `{vala}[right-curl]` |
 | I-03 | 𐑶 CHOICE | /ɔɪ/ | 𐑪𐑘 | /ɒj/ | `{anna}[right-curl]` |
+| I-04 | 𐑲 PRICE | /aɪ/ | 𐑨𐑘 | /æj/ | `{anna}[triple-dot-above]` |
+| I-05 | 𐑬 MOUTH | /aʊ/ | 𐑨𐑢 | /æw/ | `{vala}[triple-dot-above]` |
 
 These identities do not hold next to the same glide letter: 𐑪𐑘𐑘 is a geminate, but 𐑶𐑘 is not. English
 never has either sequence.
 
-PRICE and MOUTH have no such twin. Their nucleus is the upright dots, and the plain-sequence forms
-(𐑭𐑘, 𐑨𐑘, 𐑭𐑢, 𐑨𐑢) use the long carrier or the inverted dots, so they stay distinct.
+I-04 and I-05 follow from TRAP sharing PALM's mark (V-13). They are accepted because the sequences 𐑨𐑘 and
+𐑨𐑢 are not found in ReadLex's baseline pronunciations: of 111,214 entries, only the TrapBath variant of
+*Malawian* (and a one-off name, *iau*) contain them. Should one ever occur, it can be told apart by writing
+the TRAP on `{telco}`.
+
+The plain sequences with PALM (𐑭𐑘, 𐑭𐑢) use the long carrier, so they stay distinct from PRICE and MOUTH.
 
 ## 7. Whole-word shorthands and punctuation
 
@@ -271,9 +277,9 @@ replaced, for anyone reading old commits:
 
 - CSUR output and `--csur` were dropped.
 - FLEECE, PALM, THOUGHT and GOOSE became forced carriers (V-21 to V-24).
-- TRAP uses `E056` and STRUT uses `E054`; the doubled curl and the double acute no longer appear.
+- STRUT uses `E054`; the doubled curl and the double acute no longer appear.
 - The r-rule and `{oore}` were removed; the R-vowels are ligature expansions (section 8).
-- The nuquerna trigger list gained the breve, grave and inverted dots (S-02).
+- The nuquerna trigger list gained the breve and grave (S-02).
 - Mark order follows K-01 (vowel, then nasal bar, then gemination bar).
 - 𐑾 is 𐑦𐑩 (L-08); whole-word 𐑑 and 𐑓 are weak forms (L-09, L-10).
 - `test_collisions.py` became `tests/test_identities.py`, which allows only the declared identities.

@@ -44,7 +44,7 @@ This architectural choice necessitates several deliberate deviations from the co
 ### 7. Every Vowel Gets Its Own Mark; Length Has Its Own Carrier
 
 **The Community Norm:** Orthographic modes reuse a few tehtar for many vowels and show length by doubling a mark or a spelling convention.
-**Our Engine:** Shavian distinguishes eleven monophthongs, so the output does too. TRAP, STRUT and the schwa each have a mark of their own, and no two vowels share one. Long vowels (FLEECE, PALM, THOUGHT, GOOSE) always sit on the long carrier, _Ára_, with the same mark as the nearest short vowel where one exists. A vowel's length is therefore never signalled by doubling a mark, and a short vowel can never be mistaken for a long one.
+**Our Engine:** Shavian distinguishes eleven monophthongs, so the output does too. STRUT and the schwa each have a mark of their own. Every long vowel (FLEECE, PALM, THOUGHT, GOOSE) always sits on the long carrier, _Ára_, with the same mark as its short partner (KIT, TRAP, LOT, FOOT); Shavian has no short /ɑ/, so PALM shares TRAP's triple dot. A vowel's length is therefore never signalled by doubling a mark, and a short vowel can never be mistaken for a long one.
 
 ---
 

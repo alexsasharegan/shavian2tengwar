@@ -10,7 +10,7 @@ Each short vowel sits on the next consonant (V-01). A short vowel with no conson
 |---|---|---|---|---|
 | 𐑩 𐑚𐑦𐑜 𐑓𐑦𐑖 | a big fish | /ə bɪɡ fɪʃ/ | `{telco}[breve] {umbar}{ungwe}[dot-above] {formen}{harma}[dot-above]` | V-11 V-14 V-01 V-02 |
 | 𐑜𐑧𐑑 𐑢𐑧𐑤 | get well | /ɡɛt wɛl/ | `{ungwe}{tinco}[acute] {vala}{lambe}[acute]` | V-12 V-01 |
-| 𐑞 𐑚𐑤𐑨𐑒 𐑒𐑨𐑑 | the black cat | /ðə blæk kæt/ | `{the-shorthand} {umbar}{lambe}{quesse}[reversed-triple-dot-above] {quesse}{tinco}[reversed-triple-dot-above]` | V-13 V-01 W-01 |
+| 𐑞 𐑚𐑤𐑨𐑒 𐑒𐑨𐑑 | the black cat | /ðə blæk kæt/ | `{the-shorthand} {umbar}{lambe}{quesse}[triple-dot-above] {quesse}{tinco}[triple-dot-above]` | V-13 V-01 W-01 |
 | 𐑣𐑪𐑑 𐑐𐑪𐑑 | hot pot | /hɒt pɒt/ | `{hyarmen}{tinco}[right-curl] {parma}{tinco}[right-curl]` | V-15 V-01 |
 | 𐑥𐑳𐑗 𐑓𐑳𐑯 | much fun | /mʌtʃ fʌn/ | `{malta}{calma}[grave] {formen}{nuumen}[grave]` | V-16 V-01 |
 | 𐑜𐑫𐑛 𐑚𐑫𐑒 | good book | /ɡʊd bʊk/ | `{ungwe}{ando}[left-curl] {umbar}{quesse}[left-curl]` | V-17 V-01 |

@@ -105,23 +105,22 @@ Beyond the standard 24-tengwa grid, specialized base characters handle liquids, 
 
 ### 3. Vowel Tehtar & Diacritic Marks
 
-Vowel marks (*tehtar*) sit above the *following* consonant and are read before it. Every vowel has its own mark, and long vowels never reuse a short mark: they sit on the long carrier `{aara}` instead.
+Vowel marks (*tehtar*) sit above the *following* consonant and are read before it. A long vowel is the same mark as its short partner (KIT/FLEECE, TRAP/PALM, LOT/THOUGHT, FOOT/GOOSE) but written on the long carrier `{aara}` instead of on a consonant. STRUT and the schwa have marks of their own.
 
 | Mark | Code point | Name | Used for | Placement |
 | :--: | :--------- | :--- | :------- | :-------- |
-|  | `U+E040` | _a-tehta_ | PALM, and the first half of PRICE/MOUTH | three dots in a triangle above |
+|  | `U+E040` | _a-tehta_ | TRAP; PALM; the first half of PRICE and MOUTH | three dots in a triangle above |
 |  | `U+E044` | _i-tehta_ | KIT, FLEECE | single dot above |
 |  | `U+E046` | _e-tehta_ | DRESS, FACE | single acute stroke above |
 |  | `U+E04A` | _o-tehta_ | LOT, THOUGHT, CHOICE, GOAT | right-facing curl above |
 |  | `U+E04C` | _u-tehta_ | FOOT, GOOSE | left-facing curl above |
 |  | `U+E053` | _schwa-tehta_ | the schwa /ə/ | breve above |
 |  | `U+E054` | _grave_ | STRUT | grave stroke above |
-|  | `U+E056` | _inverted dots_ | TRAP | three inverted dots above |
 |  | `U+E050` | _nasal bar_ | nasal plus stop (𐑯𐑑, 𐑥𐑐 …), 𐑙𐑒, 𐑙𐑜 | bar above the stop |
 |  | `U+E051` | _doubler_ | two identical consonants | bar below the consonant |
 |  | `U+E045` | _under-dot_ | only inside the *and* shorthand | dot below |
 
-The double acute (`U+E048`) and a doubled left curl are no longer used. When a mark lands on Silmë or Essë, the nuquerna form is used instead (S-02). Mark order on a base is vowel, then nasal bar, then doubler (K-01).
+The double acute (`U+E048`), a doubled left curl and the three inverted dots (`U+E056`) are not used. When a mark lands on Silmë or Essë, the nuquerna form is used instead (S-02). Mark order on a base is vowel, then nasal bar, then doubler (K-01).
 
 ---
 
@@ -172,7 +171,7 @@ A short vowel is a mark on the *next* consonant, read before it. A short vowel w
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | /ɪ/ | **𐑦** |  | `{telco}[dot-above]` | `U+E02E U+E044` | V-11, V-02 |
 | /ɛ/ | **𐑧** |  | `{telco}[acute]` | `U+E02E U+E046` | V-12, V-02 |
-| /æ/ | **𐑨** |  | `{telco}[reversed-triple-dot-above]` | `U+E02E U+E056` | V-13, V-02 |
+| /æ/ | **𐑨** |  | `{telco}[triple-dot-above]` | `U+E02E U+E040` | V-13, V-02 |
 | /ə/ | **𐑩** |  | `{telco}[breve]` | `U+E02E U+E053` | V-14, V-02 |
 | /ɒ/ | **𐑪** |  | `{telco}[right-curl]` | `U+E02E U+E04A` | V-15, V-02 |
 | /ʌ/ | **𐑳** |  | `{telco}[grave]` | `U+E02E U+E054` | V-16, V-02 |

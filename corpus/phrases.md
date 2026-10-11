@@ -6,7 +6,7 @@ Every row is a test: `tests/test_corpus.py` translates the Shavian and compares 
 
 | Shavian | English | IPA | Glyphs | Rules |
 |---|---|---|---|---|
-| 𐑞 𐑒𐑨𐑑 𐑕𐑨𐑑 𐑪𐑯 𐑞 𐑥𐑨𐑑. | The cat sat on the mat. | /ðə kæt sæt ɒn ðə mæt/ | `{the-shorthand} {quesse}{tinco}[reversed-triple-dot-above] {silme}{tinco}[reversed-triple-dot-above] {nuumen}[right-curl] {the-shorthand} {malta}{tinco}[reversed-triple-dot-above]{double-pusta}` | W-01 V-13 U-01 |
+| 𐑞 𐑒𐑨𐑑 𐑕𐑨𐑑 𐑪𐑯 𐑞 𐑥𐑨𐑑. | The cat sat on the mat. | /ðə kæt sæt ɒn ðə mæt/ | `{the-shorthand} {quesse}{tinco}[triple-dot-above] {silme}{tinco}[triple-dot-above] {nuumen}[right-curl] {the-shorthand} {malta}{tinco}[triple-dot-above]{double-pusta}` | W-01 V-13 U-01 |
 | 𐑲 𐑔𐑦𐑙𐑒 𐑦𐑑 𐑦𐑟 𐑜𐑫𐑛. | I think it is good. | /aɪ θɪŋk ɪt ɪz ɡʊd/ | `{anna}[triple-dot-above] {thuule}{quesse}[dot-above][bar-above] {tinco}[dot-above] {esse-nuquerna}[dot-above] {ungwe}{ando}[left-curl]{double-pusta}` | D-01 N-02 S-02 V-17 U-01 |
 | 𐑦𐑑 𐑢𐑪𐑟 𐑩 𐑤𐑪𐑙 𐑢𐑷𐑒 𐑣𐑴𐑥. | It was a long walk home. | /ɪt wɒz ə lɒŋ wɔːk hoʊm/ | `{tinco}[dot-above] {vala}{esse-nuquerna}[right-curl] {telco}[breve] {lambe}{nwalme}[right-curl] {vala}{aara}[right-curl]{quesse} {hyarmen}{vala}[right-curl]{malta}{double-pusta}` | V-23 V-15 D-04 U-01 |
 | 𐑿 𐑸 𐑯𐑪𐑑 𐑩𐑤𐑴𐑯. | You are not alone. | /juː ɑːr nɒt əloʊn/ | `{anna}{aara}[left-curl] {aara}[triple-dot-above]{roomen} {nuumen}{tinco}[right-curl] {lambe}[breve]{vala}[right-curl]{nuumen}{double-pusta}` | L-07 L-01 D-04 U-01 |

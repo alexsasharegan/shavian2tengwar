@@ -62,7 +62,6 @@ MARKS = {
     "bar-below": "\ue051",
     "breve": "\ue053",
     "grave": "\ue054",
-    "reversed-triple-dot-above": "\ue056",
 }
 
 ALCARIN = Encoding("alcarin", LETTERS, MARKS)

@@ -35,7 +35,7 @@ NASAL_PAIRS = {
 SHORT_VOWELS = {
     "𐑦": ("dot-above", "V-11"),
     "𐑧": ("acute", "V-12"),
-    "𐑨": ("reversed-triple-dot-above", "V-13"),
+    "𐑨": ("triple-dot-above", "V-13"),
     "𐑩": ("breve", "V-14"),
     "𐑪": ("right-curl", "V-15"),
     "𐑳": ("grave", "V-16"),

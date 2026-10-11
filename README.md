@@ -60,7 +60,7 @@ A word becomes a list of _cells_, each one base glyph with its marks. The mode f
 
 - **Vowel marks sit above, and are read first.** A short vowel is a mark on the _next_ consonant; a vowel with no consonant after it sits on a short carrier (`{telco}`).
 - **Long vowels always use the long carrier.** FLEECE, PALM, THOUGHT and GOOSE are `{aara}` plus a mark. Length is never written by doubling a mark.
-- **The vowels are all kept apart.** TRAP, PALM, LOT, THOUGHT, STRUT, FOOT and the schwa each have their own mark (the schwa is a breve, `U+E053`).
+- **Short and long vowels share a mark.** KIT/FLEECE, TRAP/PALM, LOT/THOUGHT and FOOT/GOOSE use the same mark; the long one sits on the long carrier. STRUT (grave) and the schwa (breve, `U+E053`) have marks of their own.
 - **R is always rómen.** The R-vowels (𐑸 𐑹 𐑺 𐑽 𐑻 𐑼) are expanded to vowel + 𐑮, and óre is not used.
 - **Diphthongs put the glide last.** `{anna}[acute]` reads /e/ then /j/. 𐑾 is 𐑦𐑩 and 𐑿 is 𐑘𐑵.
 - **A schwa is always written**, so a consonant cluster is never mistaken for a schwa between consonants.
