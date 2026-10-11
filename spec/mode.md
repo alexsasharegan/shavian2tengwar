@@ -197,11 +197,12 @@ we do, in every place they occur. For *to* and *for* the evidence is thin:
   vowel mark below and breaks P-04. Aranoss writes *to* out in full as `{tinco}{aara}[left-curl]`.
 
 So the Tengwar community has no settled shorthand for *to*, and one Tolkien-based form for *for*. We
-adopt none. Their signs exist in Shavian to tell homophones apart (𐑑 *to* from 𐑑𐑵 *too*/*two*, and
-𐑓 *for* from 𐑓𐑹 *four*), so the output must still keep them distinct. A bare 𐑑 or 𐑓 is the **weak
-form**, which for a rhotic RP baseline ends in a schwa. They are expanded as spellings, as the ligatures
-are (L-09, L-10). That needs no community precedent, because it is only the phonemic spelling of the
-weak form. The engine had no rule, so today it emits a lone `{tinco}` and a lone `{formen}`.
+adopt none. (The earlier `language-guide.md` listed *to* as a bare Tinco and *for* as a bare Formen,
+as deliberate "unadorned base" shorthands. This mode replaces them; see DECISIONS.md.) Their signs
+exist in Shavian to tell homophones apart (𐑑 *to* from 𐑑𐑵 *too*/*two*, and 𐑓 *for* from 𐑓𐑹 *four*),
+so the output must still keep them distinct. A bare 𐑑 or 𐑓 is the **weak form**, which for a rhotic RP
+baseline ends in a schwa. They are expanded as spellings, as the ligatures are (L-09, L-10). That needs
+no community precedent, because it is only the phonemic spelling of the weak form.
 
 The ReadLex spelling-principles page confirms the five signs but does not state their vowels. The weak
 forms rest on usual English weak forms, and *for* is the less certain of the two.
@@ -263,18 +264,20 @@ same sound.
 
 *plight* and *polite* differ only by the breve. That is P-03 at work.
 
-## 11. Changes needed in the current engine
+## 11. History: changes made to the old engine
 
-- Drop CSUR and the `--csur` flag.
-- FLEECE, PALM, THOUGHT and GOOSE become forced carriers (V-21 to V-24).
-- TRAP uses `E056`, STRUT uses `E054`; the doubled curl and the double acute leave engine output.
-- Remove the r-rule and `{oore}`; expand the ligatures (section 8) instead of special-casing the R-vowels.
-- `TOP_TEHTAR` (the nuquerna trigger list) is missing the breve `E053` today, so a schwa on silme is never flipped (S-02). It must also gain `E054` and `E056`, and lose `E048` and the doubled curl.
-- Mark order (K-01) is vowel, then nasal bar, then gemination bar. The engine currently emits the bars before the vowel mark.
-- 𐑾 is expanded to 𐑦𐑩 (L-08) instead of being written as Anna plus a dot.
-- Whole-word 𐑑 and 𐑓 are expanded (L-09, L-10) instead of falling through as bare letters.
-- `test_collisions.py` changes from an accepted-merges list to the identities in section 8 and I-01 to I-03.
-- Map the rest of the punctuation (U-02, U-03, U-05).
+The engine was rewritten to this spec on the `dev/refactor` branch. The old behaviour that this
+replaced, for anyone reading old commits:
+
+- CSUR output and `--csur` were dropped.
+- FLEECE, PALM, THOUGHT and GOOSE became forced carriers (V-21 to V-24).
+- TRAP uses `E056` and STRUT uses `E054`; the doubled curl and the double acute no longer appear.
+- The r-rule and `{oore}` were removed; the R-vowels are ligature expansions (section 8).
+- The nuquerna trigger list gained the breve, grave and inverted dots (S-02).
+- Mark order follows K-01 (vowel, then nasal bar, then gemination bar).
+- 𐑾 is 𐑦𐑩 (L-08); whole-word 𐑑 and 𐑓 are weak forms (L-09, L-10).
+- `test_collisions.py` became `tests/test_identities.py`, which allows only the declared identities.
+- All punctuation in U-01 to U-05 is mapped.
 
 ## 12. Open questions
 
