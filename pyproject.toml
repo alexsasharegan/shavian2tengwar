@@ -20,3 +20,8 @@ line-length = 120
 # Ruff's defaults (pycodestyle E4/E7/E9 and pyflakes F) plus pyupgrade, which flags
 # deprecated typing aliases and syntax that newer Pythons make unnecessary.
 select = ["E4", "E7", "E9", "F", "UP"]
+
+[dependency-groups]
+# Development tools only; the engine has no dependencies. Install with `npm run setup:dev`
+# (pip >= 25.1). CI installs the same pinned version.
+dev = ["ruff==0.17.0"]

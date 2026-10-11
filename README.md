@@ -144,7 +144,19 @@ python3 -m unittest discover -s tests -t .      # or: npm test
 - `tests/test_cli.py`: the command line, including stdin, exit codes, the UTF-8 guarantee and a closed pipe.
 - `tests/test_review_sheet.py`: `corpus/review.html` must be current. Regenerate it with `npm run corpus`.
 
-The tests need Python 3.14. GitHub Actions runs them on every push (`.github/workflows/test.yml`).
+The tests need Python 3.14. GitHub Actions runs them, and the lint and format checks below, on every push (`.github/workflows/test.yml`).
+
+### Formatting and lint
+
+The Python is formatted with `ruff format` and linted with `ruff check`, using the settings in `pyproject.toml`. CI fails on either.
+
+```bash
+npm run setup:dev     # once: makes .venv and installs ruff (the pinned "dev" group in pyproject.toml)
+npm run fmt           # format
+npm run lint          # what CI checks
+```
+
+`.git-blame-ignore-revs` lists the reformatting commits. Run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once so `git blame` skips them.
 
 To change a rule, edit `spec/mode.md`, then the engine, then add or update corpus rows, and record why in an ADR (`docs/adr/`).
 

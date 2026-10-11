@@ -16,6 +16,9 @@
 		"test": "python3 -m unittest discover -s tests -t .",
 		"corpus": "python3 tools/render_corpus.py",
 		"corpus:view": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf -o .tmp/review.html",
+		"setup:dev": "python3 -m venv .venv && .venv/bin/pip install --group dev",
+		"lint": ".venv/bin/ruff check . && .venv/bin/ruff format --check .",
+		"fmt": ".venv/bin/ruff format .",
 		"setup:docs": "python3 -m venv .venv && .venv/bin/pip install -r tools/requirements-docs.txt",
 		"pdf": ".venv/bin/python tools/build_pdfs.py"
 	},

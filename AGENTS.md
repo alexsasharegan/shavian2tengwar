@@ -94,18 +94,20 @@ python3 shavian2tengwar.py "𐑢𐑦𐑯𐑑𐑼"         # convert (also reads 
 python3 shavian2tengwar.py --format literal "𐑞 𐑚𐑸𐑛"   # glyph names, for tecendil.com
 python3 shavian2tengwar.py --inspect "𐑢𐑦𐑯𐑑𐑼"         # each step and the rules that fired
 npm run corpus                             # regenerate corpus/review.html
+npm run fmt                                # ruff format (run before every commit)
+npm run lint                               # ruff check + format check, as CI runs them
 npm run setup:docs && npm run pdf          # PDFs (Alex only; needs Chrome and the fonts)
 ```
 
 `python3` must be 3.14 or newer (`python3 --version`). Older versions stop with a one-line message. On macOS: `/opt/homebrew/bin/python3.14`.
 
-Ruff is configured in `pyproject.toml` but has never been run, and CI does not run it. Don't claim lint passes unless you ran it.
+Run `npm run setup:dev` once to get ruff (pinned in `pyproject.toml`, dependency group `dev`). CI runs the tests, `ruff check` and `ruff format --check`; all three must pass. Don't claim they pass unless you ran them.
 
 ---
 
 ## Conventions
 
-- **Python:** 3.14 idioms (`type` aliases, `X | None`, builtin generics, slotted frozen dataclasses). Standard library only in `s2t/`, `tests/` and the CLI. Line length 120.
+- **Python:** formatted by `ruff format`, no exceptions and no hand alignment. 3.14 idioms (`type` aliases, `X | None`, builtin generics, slotted frozen dataclasses). Standard library only in `s2t/`, `tests/` and the CLI. Line length 120. A pure reformatting commit goes in `.git-blame-ignore-revs`.
 - **Formatting:** `.prettierrc` uses tabs and width 120 for JSON and Markdown.
 - **Prose:** plain, short sentences. Name glyphs as `{tinco}` and marks as `[dot-above]` (Tecendil literals). Cite rule IDs.
 - **Commits:** one logical change per commit, message in the imperative. Each commit leaves `npm test` passing. A commit that changes a rule names the rule ID.
