@@ -27,13 +27,16 @@ def _rules(cell):
 
 
 def load(path):
-    """Return (cases, identities, distincts); each entry carries its file and line number."""
+    """Return (cases, identities, distincts); each entry carries its file, heading and line number."""
     cases, identities, distincts = [], [], []
     heading = ""
+    section = ""
     kind = None
     for no, line in enumerate(Path(path).read_text(encoding="utf8").split("\n"), 1):
         if line.startswith("#"):
             heading = line
+            if line.startswith("## "):
+                section = line[3:].strip()
             kind = None
             continue
         if not line.startswith("|"):
@@ -51,9 +54,9 @@ def load(path):
         where = f"{Path(path).name}:{no}"
         if kind == "case":
             shavian, english, ipa, glyphs, rules = cells[:5]
-            cases.append(dict(where=where, shavian=shavian, english=english, ipa=ipa, glyphs=glyphs, rules=_rules(rules)))
+            cases.append(dict(where=where, section=section, shavian=shavian, english=english, ipa=ipa, glyphs=glyphs, rules=_rules(rules)))
         elif kind in ("same", "distinct"):
-            row = dict(where=where, a=cells[0], b=cells[1], rules=_rules(cells[2]))
+            row = dict(where=where, section=section, a=cells[0], b=cells[1], rules=_rules(cells[2]), note=cells[3] if len(cells) > 3 else "")
             (identities if kind == "same" else distincts).append(row)
     return cases, identities, distincts
 
