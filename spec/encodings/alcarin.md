@@ -74,11 +74,13 @@ The font names its glyphs `uniXXXX`, so the names in the last column come from t
 | `{triple-pusta}` | `U+E062` | TRIPLE PUSTA (three stacked dots) |
 | `{section-mark}` | `U+E068` | SECTION MARK (renders as a tilde) |
 | `{double-section-mark}` | `U+E069` | DOUBLE SECTION MARK |
+| `{exclamation-mark}` | `U+E065` | EXCLAMATION MARK |
+| `{question-mark}` | `U+E066` | QUESTION MARK |
+| `{parenthesis-mark}` | `U+E067` | PARENTHESIS MARK (one glyph, used for both sides) |
+| `{left-quotation-mark}` | `U+E06A` | LEFT QUOTATION MARK (sits high) |
+| `{right-quotation-mark}` | `U+E06B` | RIGHT QUOTATION MARK (sits low) |
 
 Alcarin has no hyphen glyph, so `-` uses `{section-mark}` (U-04).
-
-Available for U-05 (open): `U+E065` exclamation mark, `U+E066` question mark, `U+E067`
-parenthesis mark, `U+E06A` left quotation mark, `U+E06B` right quotation mark.
 
 ## 4. Encoding rules
 

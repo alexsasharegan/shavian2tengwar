@@ -44,6 +44,11 @@ LETTERS = {
     "triple-pusta": "\ue062",
     "section-mark": "\ue068",
     "double-section-mark": "\ue069",
+    "exclamation-mark": "\ue065",
+    "question-mark": "\ue066",
+    "parenthesis-mark": "\ue067",
+    "left-quotation-mark": "\ue06a",
+    "right-quotation-mark": "\ue06b",
 }
 
 MARKS = {

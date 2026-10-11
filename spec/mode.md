@@ -21,7 +21,8 @@ literal-input box.
 
 All names below were found in Tecendil's mode files (`modes/*.jsonc`) except those flagged †:
 
-- `{triple-pusta}`, `{section-mark}` and `{double-section-mark}` are not found. `{double-pusta}` appears once.
+- `{triple-pusta}`, `{section-mark}`, `{double-section-mark}`, `{exclamation-mark}`, `{question-mark}`,
+  `{parenthesis-mark}`, `{left-quotation-mark}` and `{right-quotation-mark}` are not found. `{double-pusta}` appears once.
   Tecendil's mode files carry no punctuation table, so these names follow Alcarin's glyph names.
 - `{the-shorthand}`, `{of-shorthand}` and `{and-shorthand}` are shorthand names, not glyph names.
   The first two are Tecendil's literals. `{and-shorthand}` is expanded in rule W-03.
@@ -161,6 +162,9 @@ letters are written the same as the plain sequence. They are intended, not colli
 | I-02 | 𐑴 GOAT | /oʊ/ | 𐑪𐑢 | /ɒw/ | `{vala}[right-curl]` |
 | I-03 | 𐑶 CHOICE | /ɔɪ/ | 𐑪𐑘 | /ɒj/ | `{anna}[right-curl]` |
 
+These identities do not hold next to the same glide letter: 𐑪𐑘𐑘 is a geminate, but 𐑶𐑘 is not. English
+never has either sequence.
+
 PRICE and MOUTH have no such twin. Their nucleus is the upright dots, and the plain-sequence forms
 (𐑭𐑘, 𐑨𐑘, 𐑭𐑢, 𐑨𐑢) use the long carrier or the inverted dots, so they stay distinct.
 
@@ -176,7 +180,7 @@ PRICE and MOUTH have no such twin. Their nucleus is the upright dots, and the pl
 | U-02 | `;` is `{double-section-mark}`† (a stronger pause than a comma, distinct from `:`). Aranoss writes it the same way. | PROVISIONAL |
 | U-03 | `:` is `{triple-pusta}`†. | PROVISIONAL |
 | U-04 | `-` is `{section-mark}`†, because Alcarin has no hyphen glyph. | PROVISIONAL |
-| U-05 | `!`, `?`, parentheses and quotation marks. Alcarin has glyphs for them (`E065` to `E067`, `E06A`, `E06B`) but the engine passes the ASCII characters through. | **OPEN** |
+| U-05 | `!` is `{exclamation-mark}`†, `?` is `{question-mark}`†, and both parentheses are `{parenthesis-mark}`† (Alcarin has one glyph for both sides). Curly double quotes are `{left-quotation-mark}`† and `{right-quotation-mark}`†, and an ASCII `"` alternates between them. Single quotes and apostrophes pass through. | PROVISIONAL |
 
 Other punctuation passes through unchanged.
 
@@ -277,5 +281,4 @@ same sound.
 | Where | Question |
 |---|---|
 | W-04, L-09, L-10 | Confirm that 𐑑 *to* and 𐑓 *for* are written as weak-form spellings with no shorthand. |
-| U-05 | Glyphs for `!`, `?`, parentheses and quotation marks. |
-| U-02 to U-04 | Provisional punctuation choices to confirm. |
+| U-02 to U-05 | Provisional punctuation choices to confirm. |

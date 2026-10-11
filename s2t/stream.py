@@ -19,13 +19,26 @@ PUNCTUATION = {
     ";": ("double-section-mark", "U-02"),
     ":": ("triple-pusta", "U-03"),
     "-": ("section-mark", "U-04"),
+    # U-05
+    "!": ("exclamation-mark", "U-05"),
+    "?": ("question-mark", "U-05"),
+    "(": ("parenthesis-mark", "U-05"),
+    ")": ("parenthesis-mark", "U-05"),
+    "\u201c": ("left-quotation-mark", "U-05"),
+    "\u201d": ("right-quotation-mark", "U-05"),
 }
 
 
-def translate_punctuation(text: str) -> List[Item]:
+def translate_punctuation(text: str, quote_state: List[bool]) -> List[Item]:
+    """Map punctuation. ``quote_state`` is a one-item list holding whether the next
+    ASCII double quote opens (False) or closes (True) a quotation."""
     out: List[Item] = []
     for ch in text:
-        if ch in PUNCTUATION:
+        if ch == '"':
+            base = "right-quotation-mark" if quote_state[0] else "left-quotation-mark"
+            quote_state[0] = not quote_state[0]
+            out.append(Cell(base, (), ("U-05",)))
+        elif ch in PUNCTUATION:
             base, rule = PUNCTUATION[ch]
             out.append(Cell(base, (), (rule,)))
         else:
@@ -40,6 +53,7 @@ def translate(text: str, strip_escapes: bool = False) -> List[Item]:
     everything else (spaces, other punctuation, {{...}} blocks) passes through.
     """
     out: List[Item] = []
+    quote_state = [False]
     for part in STREAM_RE.split(text):
         if not part:
             continue
@@ -48,5 +62,5 @@ def translate(text: str, strip_escapes: bool = False) -> List[Item]:
         elif WORD_RE.fullmatch(part):
             out.extend(translate_word(part))
         else:
-            out.extend(translate_punctuation(part))
+            out.extend(translate_punctuation(part, quote_state))
     return out
