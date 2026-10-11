@@ -21,21 +21,25 @@ literal-input box.
 
 All names below were found in Tecendil's mode files (`modes/*.jsonc`) except those flagged †:
 
-- `{triple-pusta}` and `{section-mark}` are not found. `{double-pusta}` appears once.
+- `{triple-pusta}`, `{section-mark}` and `{double-section-mark}` are not found. `{double-pusta}` appears once.
+  Tecendil's mode files carry no punctuation table, so these names follow Alcarin's glyph names.
 - `{the-shorthand}`, `{of-shorthand}` and `{and-shorthand}` are shorthand names, not glyph names.
   The first two are Tecendil's literals. `{and-shorthand}` is expanded in rule W-03.
 
 **Keyword sets** are John Wells' lexical sets (TRAP, PALM, LOT, THOUGHT, STRUT, FOOT, FLEECE,
 GOOSE, NURSE, and so on). They name vowels in rules and anchor the corpus.
-The base dialect is the rhotic one that Shavian's ReadLex assumes.
+
+**IPA.** Each table gives the sound in IPA, as a fallback for readers who don't know Shavian. It is a
+broad transcription of the rhotic RP that Shavian's ReadLex assumes. If an IPA value and a Shavian
+letter ever seem to disagree, the Shavian letter is the definition.
 
 ## 1. Principles
 
 | ID | Rule | Status |
 |---|---|---|
 | P-01 | The input is Shavian phonemes. English spelling is never consulted. | ADOPTED |
-| P-02 | **Lossless.** Two different Shavian strings give different glyph strings, except the identities declared in section 8. A test enforces this. | ADOPTED |
-| P-03 | **Every vowel letter is written, including 𐑩.** So the absence of a vowel mark between two consonants always means the consonants are adjacent in speech. | ADOPTED |
+| P-02 | **Lossless.** Two different Shavian strings give different glyph strings, except the identities declared in sections 6 and 8. A test enforces this. | ADOPTED |
+| P-03 | **Every vowel letter is written, including 𐑩 /ə/.** So the absence of a vowel mark between two consonants always means the consonants are adjacent in speech. | ADOPTED |
 | P-04 | **Vowel marks sit above the base.** The only marks below are gemination (G-01) and the `and` shorthand (W-03). | ADOPTED |
 | P-05 | **Length is written with the long carrier.** It is never written by doubling a mark. | ADOPTED |
 
@@ -43,27 +47,34 @@ The base dialect is the rhotic one that Shavian's ReadLex assumes.
 
 | ID | Rule | Status |
 |---|---|---|
-| K-01 | A consonant's marks follow its base glyph in this order: `[bar-below]` (gemination), then `[bar-above]` (nasal), then the vowel mark. | PROVISIONAL |
+| K-01 | A consonant's marks follow its base glyph in **reading order**: the vowel mark first, then `[bar-above]` (nasal), then `[bar-below]` (gemination). | ADOPTED |
 
 The order only matters for string identity. A shaping font stacks the marks the same way in any order.
+Reading order is the order a reader sounds them: the vowel comes before the consonant, the nasal is
+sounded on the way into the consonant, and the gemination holds it last.
+Example: 𐑔𐑦𐑙𐑒 *think* /θɪŋk/ is `{thuule}{quesse}[dot-above][bar-above]`, read /θ/, /ɪ/, then /ŋk/.
 
 ## 3. Consonants
 
 | ID | Rule | Status |
 |---|---|---|
 | C-01 | Each consonant letter maps to one fixed glyph, per the table below. | ADOPTED |
-| C-02 | The sequence 𐑣𐑢 (aspirated *wh*) is written as one glyph, `{hwesta}`. | ADOPTED |
+| C-02 | The sequence 𐑣𐑢 (aspirated *wh*, /ʍ/) is written as one glyph, `{hwesta}`. | ADOPTED |
 
-| Shavian | Glyph | Shavian | Glyph | Shavian | Glyph |
+| Shavian | IPA | Glyph | Shavian | IPA | Glyph |
 |---|---|---|---|---|---|
-| 𐑐 | `{parma}` | 𐑚 | `{umbar}` | 𐑑 | `{tinco}` |
-| 𐑛 | `{ando}` | 𐑒 | `{quesse}` | 𐑜 | `{ungwe}` |
-| 𐑗 | `{calma}` | 𐑡 | `{anga}` | 𐑓 | `{formen}` |
-| 𐑝 | `{ampa}` | 𐑔 | `{thuule}` | 𐑞 | `{anto}` |
-| 𐑖 | `{harma}` | 𐑠 | `{anca}` | 𐑕 | `{silme}` |
-| 𐑟 | `{esse}` | 𐑥 | `{malta}` | 𐑯 | `{nuumen}` |
-| 𐑙 | `{nwalme}` | 𐑤 | `{lambe}` | 𐑮 | `{roomen}` |
-| 𐑢 | `{vala}` | 𐑘 | `{anna}` | 𐑣 | `{hyarmen}` |
+| 𐑐 | /p/ | `{parma}` | 𐑚 | /b/ | `{umbar}` |
+| 𐑑 | /t/ | `{tinco}` | 𐑛 | /d/ | `{ando}` |
+| 𐑒 | /k/ | `{quesse}` | 𐑜 | /ɡ/ | `{ungwe}` |
+| 𐑗 | /tʃ/ | `{calma}` | 𐑡 | /dʒ/ | `{anga}` |
+| 𐑓 | /f/ | `{formen}` | 𐑝 | /v/ | `{ampa}` |
+| 𐑔 | /θ/ | `{thuule}` | 𐑞 | /ð/ | `{anto}` |
+| 𐑖 | /ʃ/ | `{harma}` | 𐑠 | /ʒ/ | `{anca}` |
+| 𐑕 | /s/ | `{silme}` | 𐑟 | /z/ | `{esse}` |
+| 𐑥 | /m/ | `{malta}` | 𐑯 | /n/ | `{nuumen}` |
+| 𐑙 | /ŋ/ | `{nwalme}` | 𐑤 | /l/ | `{lambe}` |
+| 𐑮 | /r/ | `{roomen}` | 𐑢 | /w/ | `{vala}` |
+| 𐑘 | /j/ | `{anna}` | 𐑣 | /h/ | `{hyarmen}` |
 
 ### 3.1 Silmë and Essë
 
@@ -76,19 +87,19 @@ The order only matters for string identity. A shaping font stacks the marks the 
 
 | ID | Rule | Status |
 |---|---|---|
-| N-01 | A nasal followed by a homorganic stop is written as the stop plus `[bar-above]`: 𐑯𐑑 → `{tinco}[bar-above]`, 𐑯𐑛 → `{ando}[bar-above]`, 𐑥𐑐 → `{parma}[bar-above]`, 𐑥𐑚 → `{umbar}[bar-above]`. | ADOPTED |
-| N-02 | 𐑙𐑒 and 𐑙𐑜 are written the same way. | **OPEN** |
-| G-01 | Two identical adjacent consonant letters are written as the base plus `[bar-below]`. Shavian only doubles a consonant when it is really articulated twice (*unnamed*, *midday*). | ADOPTED |
+| N-01 | A nasal followed by a homorganic stop is written as the stop plus `[bar-above]`: 𐑯𐑑 /nt/ → `{tinco}[bar-above]`, 𐑯𐑛 /nd/ → `{ando}[bar-above]`, 𐑥𐑐 /mp/ → `{parma}[bar-above]`, 𐑥𐑚 /mb/ → `{umbar}[bar-above]`. | ADOPTED |
+| N-02 | 𐑙𐑒 /ŋk/ → `{quesse}[bar-above]` (*think*) and 𐑙𐑜 /ŋɡ/ → `{ungwe}[bar-above]` (*finger*). A lone 𐑙 /ŋ/ (*sing*, *-ing*) is `{nwalme}` (C-01). A /ɡ/ is written only where the Shavian has 𐑜. | ADOPTED |
+| G-01 | Two identical adjacent consonant letters are written as the base plus `[bar-below]`. Shavian only doubles a consonant when it is really articulated twice (*unnamed* /ʌnneɪmd/, *midday* /mɪddeɪ/). | ADOPTED |
 
-N-02 candidates:
-- **Current:** 𐑙𐑒 → `{quesse}[bar-above]` and 𐑙𐑜 → `{ungwe}[bar-above]`.
-- **Alternative:** Aranoss and Tecendil write 𐑙𐑒 as `{ungwe}[bar-above]`. That is the usual convention (the velar nasal is /ŋ/ plus the stop's place), but it merges 𐑙𐑒 with 𐑙𐑜.
+N-02 follows Tolkien: the nasal bar over a stop means a homorganic nasal came first. Aranoss and
+Tecendil write 𐑙𐑒 as `{ungwe}[bar-above]`, which merges *think*'s cluster with *finger*'s; we keep
+them apart.
 
 ## 4. R
 
 | ID | Rule | Status |
 |---|---|---|
-| R-01 | 𐑮 is always `{roomen}`. | ADOPTED |
+| R-01 | 𐑮 /r/ is always `{roomen}`. | ADOPTED |
 | R-02 | `{oore}` is never used. | ADOPTED |
 
 The Quenya rule (rómen before a vowel, óre otherwise) records whether an r is pronounced.
@@ -104,19 +115,19 @@ Both keep óre only for the vowel-r of NURSE; we don't, because section 8 builds
 | V-02 | A short vowel with no consonant after it (word-final, or before another vowel) is written on a short carrier: `{telco}[mark]`. | ADOPTED |
 | V-03 | A long vowel is always written as `{aara}[mark]`. It is never placed on a consonant, whatever follows. A short vowel waiting for a consonant is flushed first (V-02). | ADOPTED |
 
-| ID | Shavian | Keyword | Glyphs | Status |
-|---|---|---|---|---|
-| V-11 | 𐑦 | KIT | `[dot-above]` | ADOPTED |
-| V-12 | 𐑧 | DRESS | `[acute]` | ADOPTED |
-| V-13 | 𐑨 | TRAP | `[reversed-triple-dot-above]` | ADOPTED |
-| V-14 | 𐑩 | commA | `[breve]` | ADOPTED |
-| V-15 | 𐑪 | LOT | `[right-curl]` | ADOPTED |
-| V-16 | 𐑳 | STRUT | `[grave]` | ADOPTED |
-| V-17 | 𐑫 | FOOT | `[left-curl]` | ADOPTED |
-| V-21 | 𐑰 | FLEECE | `{aara}[dot-above]` | ADOPTED |
-| V-22 | 𐑭 | PALM | `{aara}[triple-dot-above]` | ADOPTED |
-| V-23 | 𐑷 | THOUGHT | `{aara}[right-curl]` | ADOPTED |
-| V-24 | 𐑵 | GOOSE | `{aara}[left-curl]` | ADOPTED |
+| ID | Shavian | IPA | Keyword | Glyphs | Status |
+|---|---|---|---|---|---|
+| V-11 | 𐑦 | /ɪ/ | KIT | `[dot-above]` | ADOPTED |
+| V-12 | 𐑧 | /ɛ/ | DRESS | `[acute]` | ADOPTED |
+| V-13 | 𐑨 | /æ/ | TRAP | `[reversed-triple-dot-above]` | ADOPTED |
+| V-14 | 𐑩 | /ə/ | commA | `[breve]` | ADOPTED |
+| V-15 | 𐑪 | /ɒ/ | LOT | `[right-curl]` | ADOPTED |
+| V-16 | 𐑳 | /ʌ/ | STRUT | `[grave]` | ADOPTED |
+| V-17 | 𐑫 | /ʊ/ | FOOT | `[left-curl]` | ADOPTED |
+| V-21 | 𐑰 | /iː/ | FLEECE | `{aara}[dot-above]` | ADOPTED |
+| V-22 | 𐑭 | /ɑː/ | PALM | `{aara}[triple-dot-above]` | ADOPTED |
+| V-23 | 𐑷 | /ɔː/ | THOUGHT | `{aara}[right-curl]` | ADOPTED |
+| V-24 | 𐑵 | /uː/ | GOOSE | `{aara}[left-curl]` | ADOPTED |
 
 Notes:
 - FLEECE always uses `[dot-above]` (the i-mark), never a doubled e-mark.
@@ -127,81 +138,124 @@ Notes:
 
 A diphthong is one glide letter carrying the nucleus mark. No consonant takes the mark.
 
-| ID | Shavian | Keyword | Glyphs | Status |
-|---|---|---|---|---|
-| D-01 | 𐑲 | PRICE | `{anna}[triple-dot-above]` | PROVISIONAL |
-| D-02 | 𐑬 | MOUTH | `{vala}[triple-dot-above]` | PROVISIONAL |
-| D-03 | 𐑱 | FACE | `{anna}[acute]` | PROVISIONAL |
-| D-04 | 𐑴 | GOAT | `{vala}[right-curl]` | PROVISIONAL |
-| D-05 | 𐑶 | CHOICE | `{anna}[right-curl]` | PROVISIONAL |
-| D-06 | 𐑾 | IAN | `{anna}[dot-above]` | **OPEN** |
+| ID | Shavian | IPA | Keyword | Glyphs | Status |
+|---|---|---|---|---|---|
+| D-01 | 𐑲 | /aɪ/ | PRICE | `{anna}[triple-dot-above]` | ADOPTED |
+| D-02 | 𐑬 | /aʊ/ | MOUTH | `{vala}[triple-dot-above]` | ADOPTED |
+| D-03 | 𐑱 | /eɪ/ | FACE | `{anna}[acute]` | ADOPTED |
+| D-04 | 𐑴 | /oʊ/ | GOAT | `{vala}[right-curl]` | ADOPTED |
+| D-05 | 𐑶 | /ɔɪ/ | CHOICE | `{anna}[right-curl]` | ADOPTED |
 
-PRICE and MOUTH use the upright dots because their nucleus is an open vowel. I'll check this
-against Aranoss's text before locking it.
+The glide letter is the **last** sound and the mark is the first: `{anna}[acute]` reads /e/ then /j/.
+Because every vowel mark is read before its base (V-01), a diphthong is exactly "nucleus, then glide".
 
-**Residual collisions.** FACE, GOAT, CHOICE and IAN still equal a vowel plus glide written with the
-same marks: 𐑱 = 𐑧𐑘, 𐑴 = 𐑪𐑢, 𐑶 = 𐑪𐑘 and 𐑾 = 𐑦𐑘. The vowel splits in section 5 removed the others. Options:
+𐑾 IAN /ɪə/ is not a diphthong of this kind: it ends in a schwa, not a glide, so it is expanded as a
+ligature (L-08).
 
-1. Accept these four. The sequences are rare in English phonology.
-2. Give diphthongs their own glide letters (Tolkien's `{yanta}` and `{uure}`).
-3. Write the glide after the nucleus on a carrier.
+**Declared identities.** Because a diphthong *is* its nucleus followed by its glide, three of these
+letters are written the same as the plain sequence. They are intended, not collisions:
 
-For 𐑾 there is a further option: expand it to 𐑦𐑩 (section 8), as Unicode's description of the letter suggests.
+| ID | Letter | IPA | Same as | IPA | Glyphs |
+|---|---|---|---|---|---|
+| I-01 | 𐑱 FACE | /eɪ/ | 𐑧𐑘 | /ɛj/ | `{anna}[acute]` |
+| I-02 | 𐑴 GOAT | /oʊ/ | 𐑪𐑢 | /ɒw/ | `{vala}[right-curl]` |
+| I-03 | 𐑶 CHOICE | /ɔɪ/ | 𐑪𐑘 | /ɒj/ | `{anna}[right-curl]` |
+
+PRICE and MOUTH have no such twin. Their nucleus is the upright dots, and the plain-sequence forms
+(𐑭𐑘, 𐑨𐑘, 𐑭𐑢, 𐑨𐑢) use the long carrier or the inverted dots, so they stay distinct.
 
 ## 7. Whole-word shorthands and punctuation
 
 | ID | Rule | Status |
 |---|---|---|
-| W-01 | The word 𐑞 alone is `{the-shorthand}`. | ADOPTED |
-| W-02 | The word 𐑝 alone is `{of-shorthand}`. | ADOPTED |
-| W-03 | The word 𐑯 alone is `{ando}[bar-above][dot-below]` (*and*). It is the only place `[dot-below]` appears, and is exempt from P-04. | ADOPTED |
-| W-04 | Abbreviations for 𐑑 (*to*) and 𐑓 (*for*), as Aranoss uses. Not implemented. | **OPEN** |
+| W-01 | The word 𐑞 alone (*the*, /ðə/) is `{the-shorthand}`. | ADOPTED |
+| W-02 | The word 𐑝 alone (*of*, /əv/) is `{of-shorthand}`. | ADOPTED |
+| W-03 | The word 𐑯 alone (*and*, /ənd/) is `{ando}[bar-above][dot-below]`. It is the only place `[dot-below]` appears, and is exempt from P-04. | ADOPTED |
+| W-04 | The words 𐑑 (*to*) and 𐑓 (*for*) have **no** Tengwar shorthand. They are expanded to their weak forms by L-09 and L-10. | PROVISIONAL |
 | U-01 | `,` is `{pusta}`. `.` is `{double-pusta}`. | ADOPTED |
-| U-02 | `;` and `:` are both `{triple-pusta}`†. Aranoss writes `;` as the double section mark. | PROVISIONAL |
-| U-03 | `-` is `{section-mark}`†, because Alcarin has no hyphen glyph. | PROVISIONAL |
+| U-02 | `;` is `{double-section-mark}`† (a stronger pause than a comma, distinct from `:`). Aranoss writes it the same way. | PROVISIONAL |
+| U-03 | `:` is `{triple-pusta}`†. | PROVISIONAL |
+| U-04 | `-` is `{section-mark}`†, because Alcarin has no hyphen glyph. | PROVISIONAL |
+| U-05 | `!`, `?`, parentheses and quotation marks. Alcarin has glyphs for them (`E065` to `E067`, `E06A`, `E06B`) but the engine passes the ASCII characters through. | **OPEN** |
 
 Other punctuation passes through unchanged.
 
+**The five Shavian word signs.** Shavian abbreviates five words to one letter: 𐑞 *the*, 𐑝 *of*,
+𐑯 *and*, 𐑑 *to* and 𐑓 *for*. ReadLex uses them for standalone words and hyphenated terms, and spells
+them out inside longer words. The input arrives pre-normalized, so a bare 𐑑 or 𐑓 is always that word.
+
+Only *the*, *of* and *and* have Tengwar shorthands. Aranoss's *Nimrodel* text uses the same three glyphs
+we do, in every place they occur. For *to* and *for* the evidence is thin:
+
+- *for*: Tecendil's phonemic mode has `{formen}{roomen}`, noting that in Tolkien's DTS 39 the o in
+  *for* is ignored. Aranoss writes it the same way.
+- *to*: only Tecendil's classical mode has a special form, `{tinco}[right-curl-below]`, which puts a
+  vowel mark below and breaks P-04. Aranoss writes *to* out in full as `{tinco}{aara}[left-curl]`.
+
+So the Tengwar community has no settled shorthand for *to*, and one Tolkien-based form for *for*. We
+adopt none. Their signs exist in Shavian to tell homophones apart (𐑑 *to* from 𐑑𐑵 *too*/*two*, and
+𐑓 *for* from 𐑓𐑹 *four*), so the output must still keep them distinct. A bare 𐑑 or 𐑓 is the **weak
+form**, which for a rhotic RP baseline ends in a schwa. They are expanded as spellings, as the ligatures
+are (L-09, L-10). That needs no community precedent, because it is only the phonemic spelling of the
+weak form. The engine had no rule, so today it emits a lone `{tinco}` and a lone `{formen}`.
+
+The ReadLex spelling-principles page confirms the five signs but does not state their vowels. The weak
+forms rest on usual English weak forms, and *for* is the less certain of the two.
+
 ## 8. Ligatures and declared identities
 
-Shavian's ligature letters are expanded into their components before any other rule applies.
-Each pair below is therefore an intended identity: the two spellings give the same glyphs.
+Shavian's ligature letters, and the weak-form word signs, are expanded into their components before any
+other rule applies. Each pair below is therefore an intended identity: the two spellings give the same
+glyphs.
 
-| ID | Ligature | Expands to | Result for each |
-|---|---|---|---|
-| L-01 | 𐑸 START | 𐑭𐑮 | `{aara}[triple-dot-above]{roomen}` |
-| L-02 | 𐑹 NORTH | 𐑷𐑮 | `{aara}[right-curl]{roomen}` |
-| L-03 | 𐑺 SQUARE | 𐑧𐑮 | `{roomen}[acute]` |
-| L-04 | 𐑽 NEAR | 𐑦𐑮 | `{roomen}[dot-above]` |
-| L-05 | 𐑻 NURSE | 𐑳𐑮 | `{roomen}[grave]` |
-| L-06 | 𐑼 lettER | 𐑩𐑮 | `{roomen}[breve]` |
-| L-07 | 𐑿 YEW | 𐑘𐑵 | `{anna}{aara}[left-curl]` |
+| ID | Letter | IPA | Expands to | Result for each |
+|---|---|---|---|---|
+| L-01 | 𐑸 START | /ɑːr/ | 𐑭𐑮 | `{aara}[triple-dot-above]{roomen}` |
+| L-02 | 𐑹 NORTH | /ɔːr/ | 𐑷𐑮 | `{aara}[right-curl]{roomen}` |
+| L-03 | 𐑺 SQUARE | /ɛr/ | 𐑧𐑮 | `{roomen}[acute]` |
+| L-04 | 𐑽 NEAR | /ɪr/ | 𐑦𐑮 | `{roomen}[dot-above]` |
+| L-05 | 𐑻 NURSE | /ɜːr/ | 𐑳𐑮 | `{roomen}[grave]` |
+| L-06 | 𐑼 lettER | /ər/ | 𐑩𐑮 | `{roomen}[breve]` |
+| L-07 | 𐑿 YEW | /juː/ | 𐑘𐑵 | `{anna}{aara}[left-curl]` |
+| L-08 | 𐑾 IAN | /ɪə/ | 𐑦𐑩 | `{telco}[dot-above]` then the schwa: `{telco}[breve]`, or `[breve]` on the next consonant |
+| L-09 | 𐑑 (the word *to*) | /tə/ | 𐑑𐑩 | `{tinco}{telco}[breve]` |
+| L-10 | 𐑓 (the word *for*) | /fər/ | 𐑓𐑼 (= 𐑓𐑩𐑮) | `{formen}{roomen}[breve]` |
 
-All of L-01 to L-07 are ADOPTED.
+L-01 to L-08 are ADOPTED. L-09 and L-10 are PROVISIONAL, and apply only when the whole word is that one
+letter. L-09 stays distinct from *too*/*two* (𐑑𐑵, `{tinco}{aara}[left-curl]`), and L-10 from *four* (𐑓𐑹,
+`{formen}{aara}[right-curl]{roomen}`).
+
+𐑾 often spans a syllable break (*media*, *India*), so it is written as two vowels, each with its own
+mark. The hiatus stays visible, and the final sound is the schwa, not a glide.
 
 Because the R-vowels are compositional, they follow V-01: the vowel mark sits on `{roomen}`, as the
-short vowel before it would.
+short vowel before it would. NURSE /ɜːr/ is written as 𐑳𐑮 /ʌr/; in the rhotic baseline the two are the
+same sound.
 
 ## 9. Processing order
 
 1. Strip namer dots (`·`).
 2. Whole-word shorthands (W-01 to W-03).
-3. Ligature expansion (section 8).
+3. Ligature and weak-form expansion (section 8).
 4. Left to right: 𐑣𐑢 (C-02), nasal pairs (N-01, N-02), gemination (G-01), then single letters.
-5. Vowels (V-01 to V-03) and diphthongs (D-01 to D-06).
+5. Vowels (V-01 to V-03) and diphthongs (D-01 to D-05).
 6. Nuquerna selection (S-02).
 
 ## 10. Worked examples
 
-| Shavian | Word | Glyphs |
-|---|---|---|
-| 𐑕𐑰 | see | `{silme}{aara}[dot-above]` |
-| 𐑓𐑵𐑛 | food | `{formen}{aara}[left-curl]{ando}` |
-| 𐑚𐑸𐑛 | bard | `{umbar}{aara}[triple-dot-above]{roomen}{ando}` |
-| 𐑣𐑻 | her | `{hyarmen}{roomen}[grave]` |
-| 𐑐𐑤𐑲𐑑 | plight | `{parma}{lambe}{anna}[triple-dot-above]{tinco}` |
-| 𐑐𐑩𐑤𐑲𐑑 | polite | `{parma}{lambe}[breve]{anna}[triple-dot-above]{tinco}` |
-| 𐑦𐑟 | is | `{esse-nuquerna}[dot-above]` |
+| Shavian | Word | IPA | Glyphs |
+|---|---|---|---|
+| 𐑕𐑰 | see | /siː/ | `{silme}{aara}[dot-above]` |
+| 𐑓𐑵𐑛 | food | /fuːd/ | `{formen}{aara}[left-curl]{ando}` |
+| 𐑚𐑸𐑛 | bard | /bɑːrd/ | `{umbar}{aara}[triple-dot-above]{roomen}{ando}` |
+| 𐑣𐑻 | her | /hɜːr/ | `{hyarmen}{roomen}[grave]` |
+| 𐑐𐑤𐑲𐑑 | plight | /plaɪt/ | `{parma}{lambe}{anna}[triple-dot-above]{tinco}` |
+| 𐑐𐑩𐑤𐑲𐑑 | polite | /pəlaɪt/ | `{parma}{lambe}[breve]{anna}[triple-dot-above]{tinco}` |
+| 𐑦𐑟 | is | /ɪz/ | `{esse-nuquerna}[dot-above]` |
+| 𐑔𐑦𐑙𐑒 | think | /θɪŋk/ | `{thuule}{quesse}[dot-above][bar-above]` |
+| 𐑾𐑯 | Ian | /ɪən/ | `{telco}[dot-above]{nuumen}[breve]` |
+| 𐑥𐑰𐑛𐑾 | media | /miːdɪə/ | `{malta}{aara}[dot-above]{ando}{telco}[dot-above]{telco}[breve]` |
+| 𐑑 | to | /tə/ | `{tinco}{telco}[breve]` |
 
 *plight* and *polite* differ only by the breve. That is P-03 at work.
 
@@ -212,14 +266,16 @@ short vowel before it would.
 - TRAP uses `E056`, STRUT uses `E054`; the doubled curl and the double acute leave engine output.
 - Remove the r-rule and `{oore}`; expand the ligatures (section 8) instead of special-casing the R-vowels.
 - `TOP_TEHTAR` (the nuquerna trigger list) is missing the breve `E053` today, so a schwa on silme is never flipped (S-02). It must also gain `E054` and `E056`, and lose `E048` and the doubled curl.
-- `test_collisions.py` changes from an accepted-merges list to the identities in section 8, plus whatever remains open in section 6.
+- Mark order (K-01) is vowel, then nasal bar, then gemination bar. The engine currently emits the bars before the vowel mark.
+- 𐑾 is expanded to 𐑦𐑩 (L-08) instead of being written as Anna plus a dot.
+- Whole-word 𐑑 and 𐑓 are expanded (L-09, L-10) instead of falling through as bare letters.
+- `test_collisions.py` changes from an accepted-merges list to the identities in section 8 and I-01 to I-03.
+- Map the rest of the punctuation (U-02, U-03, U-05).
 
 ## 12. Open questions
 
 | Where | Question |
 |---|---|
-| N-02 | How to write 𐑙𐑒 and 𐑙𐑜. |
-| D-01 to D-06 | Nucleus marks for PRICE and MOUTH; how to separate the four residual collisions. |
-| W-04 | Whether to adopt abbreviations for *to* and *for*. |
-| U-02 | The semicolon glyph. |
-| K-01 | Canonical mark order. |
+| W-04, L-09, L-10 | Confirm that 𐑑 *to* and 𐑓 *for* are written as weak-form spellings with no shorthand. |
+| U-05 | Glyphs for `!`, `?`, parentheses and quotation marks. |
+| U-02 to U-04 | Provisional punctuation choices to confirm. |
