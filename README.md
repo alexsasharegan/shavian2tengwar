@@ -111,7 +111,7 @@ python3 shavian2tengwar.py --inspect "𐑢𐑦𐑯𐑑𐑼"
   𐑩  queued: a vowel mark waits for the next consonant (V-01)
   𐑮  ->  {roomen}[breve]   [L-06, R-01, V-14, V-01]
 Glyphs:      {vala}{tinco}[dot-above][bar-above]{roomen}[breve]
-Code points: U+E015 U+E000 U+E044 U+E050 U+E020 U+E053
+Code points: U+E015 U+E000 U+E050 U+E044 U+E020 U+E053
 ```
 
 The inspector also prints the converted word itself, as the "Output" line.

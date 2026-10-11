@@ -8,17 +8,23 @@ from ..glyphs import Cell, Item
 
 
 class Encoding:
-    def __init__(self, name: str, letters: dict, marks: dict):
+    def __init__(self, name: str, letters: dict, marks: dict, below: frozenset = frozenset()):
         self.name = name
         self.letters = letters
         self.marks = marks
+        self.below = below  # mark names that sit below the base
 
     def encode_cell(self, cell: Cell) -> str:
         try:
             out = self.letters[cell.base]
         except KeyError:
             raise KeyError(f"{self.name}: no code point for glyph {{{cell.base}}}") from None
-        for m in cell.marks:
+        # A cell's marks are in K-01 order, which is top to bottom (vowel, nasal bar, then
+        # the marks below). A font stacks marks outward from the base in code point order,
+        # so the marks above go in reversed: the one nearest the base comes first.
+        above = [m for m in cell.marks if m not in self.below]
+        below = [m for m in cell.marks if m in self.below]
+        for m in above[::-1] + below:
             try:
                 out += self.marks[m]
             except KeyError:

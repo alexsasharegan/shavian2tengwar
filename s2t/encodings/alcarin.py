@@ -64,4 +64,7 @@ MARKS = {
     "grave": "\ue054",
 }
 
-ALCARIN = Encoding("alcarin", LETTERS, MARKS)
+# Marks drawn below the base (AE-01).
+BELOW = frozenset({"bar-below", "dot-below"})
+
+ALCARIN = Encoding("alcarin", LETTERS, MARKS, BELOW)

@@ -48,11 +48,12 @@ letter ever seem to disagree, the Shavian letter is the definition.
 
 | ID | Rule | Status |
 |---|---|---|
-| K-01 | A consonant's marks follow its base glyph in **reading order**: the vowel mark first, then `[bar-above]` (nasal), then `[bar-below]` (gemination). | ADOPTED |
+| K-01 | A consonant's marks are listed **top to bottom**, which is also reading order: the vowel mark, then `[bar-above]` (nasal), then the base, then `[bar-below]` (gemination). In the glyph notation they follow the base: `{tinco}[dot-above][bar-above][bar-below]`. | ADOPTED |
 
-The order only matters for string identity. A shaping font stacks the marks the same way in any order.
-Reading order is the order a reader sounds them: the vowel comes before the consonant, the nasal is
-sounded on the way into the consonant, and the gemination holds it last.
+On the page the vowel mark is highest, the nasal bar sits between it and the base, and the gemination bar
+is below the base. This is also reading order: the vowel comes before the consonant, the nasal is
+sounded on the way into the consonant, and the gemination holds it last. How the marks are ordered in
+a font's code points is an encoding matter (AE-01), because fonts stack marks outward from the base.
 Example: 𐑔𐑦𐑙𐑒 *think* /θɪŋk/ is `{thuule}{quesse}[dot-above][bar-above]`, read /θ/, /ɪ/, then /ŋk/.
 
 ## 3. Consonants

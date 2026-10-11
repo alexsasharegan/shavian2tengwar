@@ -24,6 +24,7 @@ spec, corpus and engine out of step; the "Revert" lines say what else has to go 
 | D-11 | Commit author | adopted | not revertible; see below |
 | D-12 | TRAP uses `[triple-dot-above]`; `E056` retired | **approved by you** | the "TRAP shares PALM's mark" commit |
 | D-13 | Scripted PDF build (`tools/build_pdfs.py`) | adopted | the "scripted PDF build" commit |
+| D-14 | Alcarin emits marks outward from the base (fixes nasal bar stacking) | fix, at your request | the "nasal bar stacking" commit |
 
 ---
 
@@ -223,6 +224,19 @@ committed PDFs. The first run on your machine is the real check on fonts and pag
 cloud; or `pandoc` plus LaTeX, which handles these fonts badly.
 
 **Revert.** The commit of this name. Nothing else depends on it.
+
+## D-14. Mark stacking in the Alcarin encoding
+
+**Decided (your correction).** On the page, top to bottom, a cluster is: vowel mark, nasal bar, base,
+gemination bar. The IR keeps that order (K-01). The Alcarin encoding now writes the marks above the
+base nearest-first, so the nasalizer's code point comes before the vowel mark's: `{tinco}[dot-above][bar-above]`
+is `E000 E050 E044`. Before, it was `E000 E044 E050`, which the font stacks with the bar on top.
+
+**My error.** The spec said a font stacks marks the same way in any order, and AE-03 said stacking was
+verified. I had not checked orders with more than one mark above. Both statements are corrected, and
+`tests/test_encoding.py` now pins the order. I checked the new order by rendering it in Chromium.
+
+**Revert.** The commit of this name restores the old order, and the review sheet with it.
 
 ---
 

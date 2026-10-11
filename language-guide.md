@@ -120,7 +120,7 @@ Vowel marks (*tehtar*) sit above the *following* consonant and are read before i
 |  | `U+E051` | _doubler_ | two identical consonants | bar below the consonant |
 |  | `U+E045` | _under-dot_ | only inside the *and* shorthand | dot below |
 
-The double acute (`U+E048`), a doubled left curl and the three inverted dots (`U+E056`) are not used. When a mark lands on Silmë or Essë, the nuquerna form is used instead (S-02). Mark order on a base is vowel, then nasal bar, then doubler (K-01).
+The double acute (`U+E048`), a doubled left curl and the three inverted dots (`U+E056`) are not used. When a mark lands on Silmë or Essë, the nuquerna form is used instead (S-02). Top to bottom, a base carries its vowel mark, then the nasal bar, then the base itself, then the doubler (K-01).
 
 ---
 
