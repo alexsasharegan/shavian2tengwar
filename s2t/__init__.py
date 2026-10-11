@@ -1,6 +1,6 @@
 """shavian2tengwar: Shavian text to Tengwar, via a font-independent glyph IR."""
 
-from .encodings import get_encoding
+from .encodings import ENCODINGS, get_encoding
 from .glyphs import Cell, parse_literal, to_literal
 from .mode import translate_word
 from .stream import translate
@@ -16,4 +16,4 @@ def render(text: str, fmt: str = "pua", encoding: str = "alcarin", strip_escapes
     raise ValueError(f"unknown format {fmt!r}")
 
 
-__all__ = ["Cell", "get_encoding", "parse_literal", "render", "to_literal", "translate", "translate_word"]
+__all__ = ["ENCODINGS", "Cell", "get_encoding", "parse_literal", "render", "to_literal", "translate", "translate_word"]

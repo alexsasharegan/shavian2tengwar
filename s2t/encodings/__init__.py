@@ -33,9 +33,12 @@ class Encoding:
         return "".join(self.encode_cell(i) if isinstance(i, Cell) else i for i in items)
 
 
+ENCODINGS = ("alcarin",)
+
+
 def get_encoding(name: str) -> Encoding:
     if name == "alcarin":
         from .alcarin import ALCARIN
 
         return ALCARIN
-    raise ValueError(f"unknown encoding {name!r} (available: alcarin)")
+    raise ValueError(f"unknown encoding {name!r} (available: {', '.join(ENCODINGS)})")
