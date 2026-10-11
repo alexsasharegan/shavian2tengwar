@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import re
-from typing import List
 
 from .glyphs import Cell, Item
 from .mode import translate_word
@@ -29,10 +28,10 @@ PUNCTUATION = {
 }
 
 
-def translate_punctuation(text: str, quote_state: List[bool]) -> List[Item]:
+def translate_punctuation(text: str, quote_state: list[bool]) -> list[Item]:
     """Map punctuation. ``quote_state`` is a one-item list holding whether the next
     ASCII double quote opens (False) or closes (True) a quotation."""
-    out: List[Item] = []
+    out: list[Item] = []
     for ch in text:
         if ch == '"':
             base = "right-quotation-mark" if quote_state[0] else "left-quotation-mark"
@@ -46,13 +45,13 @@ def translate_punctuation(text: str, quote_state: List[bool]) -> List[Item]:
     return out
 
 
-def translate(text: str, strip_escapes: bool = False) -> List[Item]:
+def translate(text: str, strip_escapes: bool = False) -> list[Item]:
     """Translate a text stream to glyph items.
 
     Shavian words become cells, mapped punctuation becomes cells, and
     everything else (spaces, other punctuation, {{...}} blocks) passes through.
     """
-    out: List[Item] = []
+    out: list[Item] = []
     quote_state = [False]
     for part in STREAM_RE.split(text):
         if not part:

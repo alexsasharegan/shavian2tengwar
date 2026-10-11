@@ -7,7 +7,7 @@ really fire.
 
 from __future__ import annotations
 
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from .glyphs import Cell
 
@@ -84,11 +84,11 @@ WEAK_FORMS = {
     "𐑓": ("𐑓𐑼", "L-10"),
 }
 
-Letter = Tuple[str, Tuple[str, ...]]  # (Shavian letter, rules that produced it)
+Letter = tuple[str, tuple[str, ...]]  # (Shavian letter, rules that produced it)
 
 
-def _expand(word: str, extra: Tuple[str, ...] = ()) -> List[Letter]:
-    out: List[Letter] = []
+def _expand(word: str, extra: tuple[str, ...] = ()) -> list[Letter]:
+    out: list[Letter] = []
     for ch in word:
         if ch in LIGATURES:
             components, rule = LIGATURES[ch]
@@ -98,8 +98,8 @@ def _expand(word: str, extra: Tuple[str, ...] = ()) -> List[Letter]:
     return out
 
 
-def _uniq(*groups) -> Tuple[str, ...]:
-    seen: List[str] = []
+def _uniq(*groups) -> tuple[str, ...]:
+    seen: list[str] = []
     for g in groups:
         for r in g:
             if r not in seen:
@@ -130,7 +130,7 @@ def translate_word(word: str, trace: Optional[list] = None) -> list:
     else:
         letters = _expand(word)
     cells: list = []
-    pending: Optional[Tuple[str, Tuple[str, ...]]] = None  # (mark, rules)
+    pending: Optional[tuple[str, tuple[str, ...]]] = None  # (mark, rules)
 
     def step(consumed: str, *emitted):
         cells.extend(emitted)
@@ -148,7 +148,7 @@ def translate_word(word: str, trace: Optional[list] = None) -> list:
     def cluster(base: str, consumed: str, rules, nasal=False, geminate=False):
         """Emit a consonant cluster in K-01 order: vowel, nasal, gemination."""
         nonlocal pending
-        marks: List[str] = []
+        marks: list[str] = []
         fired = list(rules)
         if pending is not None:
             marks.append(pending[0])

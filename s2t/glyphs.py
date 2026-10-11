@@ -8,8 +8,9 @@ spec/mode.md; spec/encodings/*.md maps them to code points.
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable, List, Union
+from typing import Union
 
 CELL_RE = re.compile(r"\{([a-z-]+)\}((?:\[[a-z-]+\])*)")
 MARK_RE = re.compile(r"\[([a-z-]+)\]")
@@ -36,9 +37,9 @@ def to_literal(items: Iterable[Item]) -> str:
     return "".join(i.literal() if isinstance(i, Cell) else i for i in items)
 
 
-def parse_literal(text: str) -> List[Item]:
+def parse_literal(text: str) -> list[Item]:
     """Parse literal notation back into cells and raw text."""
-    out: List[Item] = []
+    out: list[Item] = []
     pos = 0
     for m in CELL_RE.finditer(text):
         if m.start() > pos:
