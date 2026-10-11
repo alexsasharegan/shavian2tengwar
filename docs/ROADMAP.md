@@ -4,7 +4,7 @@
 
 ## 🟢 Now (In Progress)
 
-* Nothing in progress.
+* **[0003-second-encoding](projects/0003-second-encoding/README.md):** A second PUA font encoding next to Alcarin. Survey and macOS gate first; Tengwar Formal CSUR passes a Core Text render so far.
 
 ## 🟡 Next (Queued)
 
