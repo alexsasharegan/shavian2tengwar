@@ -6,7 +6,9 @@ from ..glyphs import Cell, Item
 
 
 class Encoding:
-    def __init__(self, name: str, letters: dict[str, str], marks: dict[str, str], below: frozenset[str] = frozenset()) -> None:
+    def __init__(
+        self, name: str, letters: dict[str, str], marks: dict[str, str], below: frozenset[str] = frozenset()
+    ) -> None:
         self.name = name
         self.letters = letters
         self.marks = marks

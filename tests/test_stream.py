@@ -40,10 +40,17 @@ class Escapes(unittest.TestCase):
 class Punctuation(unittest.TestCase):
     def test_every_mapped_mark(self):
         expected = {
-            ",": "{pusta}", ".": "{double-pusta}", ";": "{double-section-mark}", ":": "{triple-pusta}",
-            "-": "{section-mark}", "!": "{exclamation-mark}", "?": "{question-mark}",
-            "(": "{parenthesis-mark}", ")": "{parenthesis-mark}",
-            "“": "{left-quotation-mark}", "”": "{right-quotation-mark}",
+            ",": "{pusta}",
+            ".": "{double-pusta}",
+            ";": "{double-section-mark}",
+            ":": "{triple-pusta}",
+            "-": "{section-mark}",
+            "!": "{exclamation-mark}",
+            "?": "{question-mark}",
+            "(": "{parenthesis-mark}",
+            ")": "{parenthesis-mark}",
+            "“": "{left-quotation-mark}",
+            "”": "{right-quotation-mark}",
         }
         for mark, glyph in expected.items():
             with self.subTest(mark=mark):
@@ -101,11 +108,12 @@ class LiteralRoundTrip(unittest.TestCase):
         self.assertGreater(checked, 50)
 
     def test_parse_separates_cells_from_text(self):
-        self.assertEqual(parse_literal("a{tinco}[dot-above] {anna}"),
-                         ["a", Cell("tinco", ("dot-above",)), " ", Cell("anna")])
+        self.assertEqual(
+            parse_literal("a{tinco}[dot-above] {anna}"), ["a", Cell("tinco", ("dot-above",)), " ", Cell("anna")]
+        )
 
     def test_engine_output_round_trips_through_the_literal(self):
-        for text in ("𐑞 𐑒𐑨𐑑 𐑕𐑨𐑑, 𐑯 𐑦𐑑 𐑕𐑰𐑯!", "𐑥𐑦𐑕𐑑𐑼 \"𐑐𐑤𐑰𐑟\" (𐑜𐑴)"):
+        for text in ("𐑞 𐑒𐑨𐑑 𐑕𐑨𐑑, 𐑯 𐑦𐑑 𐑕𐑰𐑯!", '𐑥𐑦𐑕𐑑𐑼 "𐑐𐑤𐑰𐑟" (𐑜𐑴)'):
             with self.subTest(text):
                 items = translate(text)
                 self.assertEqual(parse_literal(to_literal(items)), items)

@@ -12,7 +12,11 @@ ROW = re.compile(r"^\| `([\{\[])([a-z-]+)[\}\]]` \| ((?:`?U\+[0-9A-F]{4}`?\s*)+)
 
 # Names that appear in mode.md but are not meant to be encoded.
 NOT_ENCODED = {
-    "{name}", "[name]", "{base}", "[mark]", "[marks]",  # notation placeholders
+    "{name}",
+    "[name]",
+    "{base}",
+    "[mark]",
+    "[marks]",  # notation placeholders
     "{oore}",  # R-02: never emitted
     "[right-curl-below]",  # rejected candidate for 'to'
 }
@@ -39,9 +43,7 @@ class MarkOrder(unittest.TestCase):
         self.assertEqual(self.encode("{tinco}[dot-above][bar-above]"), "\ue000\ue050\ue044")
 
     def test_marks_below_follow_the_marks_above(self):
-        self.assertEqual(
-            self.encode("{tinco}[dot-above][bar-above][bar-below]"), "\ue000\ue050\ue044\ue051"
-        )
+        self.assertEqual(self.encode("{tinco}[dot-above][bar-above][bar-below]"), "\ue000\ue050\ue044\ue051")
 
     def test_single_marks_are_unchanged(self):
         self.assertEqual(self.encode("{tinco}[dot-above]"), "\ue000\ue044")
@@ -57,9 +59,7 @@ class EncodingDrift(unittest.TestCase):
     def test_every_mode_name_is_encoded(self):
         mode = (ROOT / "spec/mode.md").read_text(encoding="utf8")
         names = set(re.findall(r"[\{\[][a-z-]+[\}\]]", mode)) - NOT_ENCODED
-        missing = sorted(
-            n for n in names if (LETTERS if n[0] == "{" else MARKS).get(n[1:-1]) is None
-        )
+        missing = sorted(n for n in names if (LETTERS if n[0] == "{" else MARKS).get(n[1:-1]) is None)
         self.assertEqual(missing, [], "glyph names used in mode.md but not encoded")
 
     def test_no_reserved_glyphs_in_use_by_accident(self):

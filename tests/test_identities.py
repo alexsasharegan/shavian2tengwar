@@ -9,11 +9,19 @@ from s2t import to_literal, translate
 
 # The declared identities, as rewrites to a canonical spelling.
 CANONICAL = {
-    "𐑸": "𐑭𐑮", "𐑹": "𐑷𐑮", "𐑺": "𐑧𐑮", "𐑽": "𐑦𐑮", "𐑻": "𐑳𐑮", "𐑼": "𐑩𐑮",  # L-01..L-06
+    "𐑸": "𐑭𐑮",
+    "𐑹": "𐑷𐑮",
+    "𐑺": "𐑧𐑮",
+    "𐑽": "𐑦𐑮",
+    "𐑻": "𐑳𐑮",
+    "𐑼": "𐑩𐑮",  # L-01..L-06
     "𐑿": "𐑘𐑵",  # L-07
     "𐑾": "𐑦𐑩",  # L-08
-    "𐑱": "𐑧𐑘", "𐑴": "𐑪𐑢", "𐑶": "𐑪𐑘",  # I-01..I-03
-    "𐑲": "𐑨𐑘", "𐑬": "𐑨𐑢",  # I-04, I-05
+    "𐑱": "𐑧𐑘",
+    "𐑴": "𐑪𐑢",
+    "𐑶": "𐑪𐑘",  # I-01..I-03
+    "𐑲": "𐑨𐑘",
+    "𐑬": "𐑨𐑢",  # I-04, I-05
 }
 
 
@@ -44,9 +52,7 @@ class Lossless(unittest.TestCase):
             groups[to_literal(translate(s))].add(s)
         for glyphs, group in groups.items():
             with self.subTest(glyphs=glyphs):
-                self.assertEqual(
-                    len({canonical(s) for s in group}), 1, f"undeclared collision: {sorted(group)}"
-                )
+                self.assertEqual(len({canonical(s) for s in group}), 1, f"undeclared collision: {sorted(group)}")
 
     def test_declared_identities_hold(self):
         for ch, expansion in CANONICAL.items():

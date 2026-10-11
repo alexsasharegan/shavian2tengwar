@@ -59,9 +59,26 @@ def load(path):
         where = f"{Path(path).name}:{no}"
         if kind == "case":
             shavian, english, ipa, glyphs, rules = cells[:5]
-            cases.append(dict(where=where, section=section, shavian=shavian, english=english, ipa=ipa, glyphs=glyphs, rules=_rules(rules)))
+            cases.append(
+                dict(
+                    where=where,
+                    section=section,
+                    shavian=shavian,
+                    english=english,
+                    ipa=ipa,
+                    glyphs=glyphs,
+                    rules=_rules(rules),
+                )
+            )
         elif kind in ("same", "distinct"):
-            row = dict(where=where, section=section, a=cells[0], b=cells[1], rules=_rules(cells[2]), note=cells[3] if len(cells) > 3 else "")
+            row = dict(
+                where=where,
+                section=section,
+                a=cells[0],
+                b=cells[1],
+                rules=_rules(cells[2]),
+                note=cells[3] if len(cells) > 3 else "",
+            )
             (identities if kind == "same" else distincts).append(row)
     return cases, identities, distincts
 

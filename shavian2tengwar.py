@@ -36,9 +36,7 @@ def inspect_word(word: str, encoding_name: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Convert Shavian text to Tengwar. Reads stdin if no text is given."
-    )
+    parser = argparse.ArgumentParser(description="Convert Shavian text to Tengwar. Reads stdin if no text is given.")
     parser.add_argument("text", nargs="?", help="Text to convert.")
     parser.add_argument("--inspect", metavar="WORD", help="Show how one Shavian word is converted, rule by rule.")
     parser.add_argument(

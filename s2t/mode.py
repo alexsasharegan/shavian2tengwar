@@ -11,12 +11,30 @@ from .glyphs import Cell, Item
 
 # --- C-01: consonants -------------------------------------------------------
 CONSONANTS = {
-    "𐑐": "parma", "𐑚": "umbar", "𐑑": "tinco", "𐑛": "ando",
-    "𐑒": "quesse", "𐑜": "ungwe", "𐑗": "calma", "𐑡": "anga",
-    "𐑓": "formen", "𐑝": "ampa", "𐑔": "thuule", "𐑞": "anto",
-    "𐑖": "harma", "𐑠": "anca", "𐑕": "silme", "𐑟": "esse",
-    "𐑥": "malta", "𐑯": "nuumen", "𐑙": "nwalme", "𐑤": "lambe",
-    "𐑮": "roomen", "𐑢": "vala", "𐑘": "anna", "𐑣": "hyarmen",
+    "𐑐": "parma",
+    "𐑚": "umbar",
+    "𐑑": "tinco",
+    "𐑛": "ando",
+    "𐑒": "quesse",
+    "𐑜": "ungwe",
+    "𐑗": "calma",
+    "𐑡": "anga",
+    "𐑓": "formen",
+    "𐑝": "ampa",
+    "𐑔": "thuule",
+    "𐑞": "anto",
+    "𐑖": "harma",
+    "𐑠": "anca",
+    "𐑕": "silme",
+    "𐑟": "esse",
+    "𐑥": "malta",
+    "𐑯": "nuumen",
+    "𐑙": "nwalme",
+    "𐑤": "lambe",
+    "𐑮": "roomen",
+    "𐑢": "vala",
+    "𐑘": "anna",
+    "𐑣": "hyarmen",
 }
 
 # --- N-01, N-02: nasal + homorganic stop -> stop + [bar-above] --------------

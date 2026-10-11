@@ -92,14 +92,14 @@ def build_sheet(face: str = "", encoding: str = "alcarin", shareable: bool = Fal
                         f'<div class="row"><div class="tw">{tengwar(enc, r["shavian"])}</div>'
                         f'<div class="meta"><div class="shav">{html.escape(r["shavian"])}</div>'
                         f'<div>{html.escape(r["english"])} <span class="ipa">{html.escape(r["ipa"])}</span></div>'
-                        f'<code>{html.escape(r["glyphs"])}</code><div>{chips(r["rules"])}</div></div></div>'
+                        f"<code>{html.escape(r['glyphs'])}</code><div>{chips(r['rules'])}</div></div></div>"
                     )
                 else:
                     verb = "=" if kind == "same" else "≠"
                     body.append(
                         f'<div class="row pair"><div class="tw">{tengwar(enc, r["a"])} {verb} {tengwar(enc, r["b"])}</div>'
                         f'<div class="meta"><div class="shav">{html.escape(r["a"])} {verb} {html.escape(r["b"])}</div>'
-                        f'<div>{html.escape(r["note"])}</div><div>{chips(r["rules"])}</div></div></div>'
+                        f"<div>{html.escape(r['note'])}</div><div>{chips(r['rules'])}</div></div></div>"
                     )
     return (
         "<!doctype html><html lang=en><meta charset=utf-8>"

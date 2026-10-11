@@ -155,7 +155,9 @@ def main(argv: list[str] | None = None) -> int:
     except ImportError:
         sys.exit("playwright is missing: npm run setup:docs")
 
-    sources = [d if d == CORPUS else (Path(d) if Path(d).is_absolute() else ROOT / d) for d in (args.docs or DEFAULT_DOCS)]
+    sources = [
+        d if d == CORPUS else (Path(d) if Path(d).is_absolute() else ROOT / d) for d in (args.docs or DEFAULT_DOCS)
+    ]
     for src in sources:
         if src != CORPUS and not src.is_file():
             sys.exit(f"not found: {src}")
@@ -181,7 +183,9 @@ def main(argv: list[str] | None = None) -> int:
                 out = (args.out_dir or src.parent) / (src.stem + ".pdf")
             page.set_content(doc, wait_until="load")
             for name, _ in font_faces:  # @font-face files load lazily; force them
-                page.evaluate("([n, s]) => document.fonts.load('16px \"' + n + '\"', s)", [name, FONT_SAMPLES.get(name, "A")])
+                page.evaluate(
+                    "([n, s]) => document.fonts.load('16px \"' + n + '\"', s)", [name, FONT_SAMPLES.get(name, "A")]
+                )
             page.evaluate("document.fonts.ready")
             for family, sample in FONT_SAMPLES.items():
                 if not page.evaluate(FONT_PROBE, [family, sample]):

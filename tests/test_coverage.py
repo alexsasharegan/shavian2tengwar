@@ -19,8 +19,7 @@ class Coverage(unittest.TestCase):
         for row in cases + identities + distincts:
             cited.update(row["rules"])
         missing = sorted(
-            rid for rid, status in spec_rules().items()
-            if status != "OPEN" and rid not in EXEMPT and rid not in cited
+            rid for rid, status in spec_rules().items() if status != "OPEN" and rid not in EXEMPT and rid not in cited
         )
         self.assertEqual(missing, [], "spec rules with no corpus case")
 

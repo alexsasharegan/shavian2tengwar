@@ -15,11 +15,15 @@ class ReviewSheet(unittest.TestCase):
             out = Path(tmp) / "review.html"
             subprocess.run(
                 [sys.executable, str(ROOT / "tools/render_corpus.py"), "-o", str(out)],
-                check=True, capture_output=True,
+                check=True,
+                capture_output=True,
             )
             committed = (ROOT / "corpus/review.html").read_text(encoding="utf8")
-            self.assertEqual(out.read_text(encoding="utf8"), committed,
-                             "corpus/review.html is stale: run python3 tools/render_corpus.py")
+            self.assertEqual(
+                out.read_text(encoding="utf8"),
+                committed,
+                "corpus/review.html is stale: run python3 tools/render_corpus.py",
+            )
 
     def test_shareable_sheet_embeds_its_font_and_drops_the_install_note(self):
         from tools.render_corpus import build_sheet
