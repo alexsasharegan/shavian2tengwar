@@ -1,26 +1,24 @@
 {
-  "name": "shavian2tengwar",
-  "version": "1.0.0",
-  "description": "A Unix-style CLI that converts Shavian text (U+10450–U+1047F) into Alcarin Tengwar Private Use Area code points, using Shavian as a phonemic intermediate representation.",
-  "homepage": "https://github.com/alexsasharegan/shavian2tengwar#readme",
-  "bugs": {
-    "url": "https://github.com/alexsasharegan/shavian2tengwar/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexsasharegan/shavian2tengwar.git"
-  },
-  "license": "MIT",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "python3 -m unittest discover -s tests -t .",
-    "corpus": "python3 tools/render_corpus.py",
-    "corpus:view": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf -o .tmp/review.html",
-    "pdf": "python3 tools/build_pdfs.py"
-  },
-  "devDependencies": {
-    "prettier": "^3.9.9"
-  }
+	"name": "shavian2tengwar",
+	"version": "1.0.0",
+	"description": "A Unix-style CLI that converts Shavian text (U+10450–U+1047F) into Alcarin Tengwar Private Use Area code points, using Shavian as a phonemic intermediate representation.",
+	"homepage": "https://github.com/alexsasharegan/shavian2tengwar#readme",
+	"bugs": {
+		"url": "https://github.com/alexsasharegan/shavian2tengwar/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alexsasharegan/shavian2tengwar.git"
+	},
+	"license": "MIT",
+	"author": "Alex Regan",
+	"scripts": {
+		"test": "python3 -m unittest discover -s tests -t .",
+		"corpus": "python3 tools/render_corpus.py",
+		"corpus:view": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf -o .tmp/review.html",
+		"pdf": "python3 tools/build_pdfs.py"
+	},
+	"devDependencies": {
+		"prettier": "^3.9.9"
+	}
 }
