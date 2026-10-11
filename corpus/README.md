@@ -17,7 +17,7 @@ It currently holds 91 cases, 17 identity pairs and 10 distinct pairs.
 | `phrases.md` | whole sentences |
 | `review.html` | generated; do not edit |
 
-Every `.md` file is read by `tests/corpus.py`. A file only needs to follow the table formats below; the headings and prose can say anything.
+Every `.md` file is read by `tools/corpus.py`. A file only needs to follow the table formats below; the headings and prose can say anything.
 
 ## The three table formats
 

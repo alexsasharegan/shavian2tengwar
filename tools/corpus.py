@@ -1,4 +1,4 @@
-"""Reads corpus/*.md. Shared by the corpus tests.
+"""Reads corpus/*.md. Shared by the corpus tests and tools/render_corpus.py.
 
 Three kinds of table are recognised, by their header row:
 

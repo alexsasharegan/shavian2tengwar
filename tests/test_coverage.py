@@ -5,7 +5,7 @@ import unittest
 
 from s2t import to_literal, translate
 
-from .corpus import load_all, spec_rules
+from tools.corpus import load_all, spec_rules
 from .test_identities import sequences
 
 # Principles are cross-cutting; R-02 is a prohibition, tested below.

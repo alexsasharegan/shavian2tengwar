@@ -65,8 +65,8 @@ class EncodingDrift(unittest.TestCase):
     def test_no_reserved_glyphs_in_use_by_accident(self):
         # E014 (oore), E048 (double acute) are reserved (AE-04).
         used = "".join(LETTERS.values()) + "".join(MARKS.values())
-        self.assertNotIn("", used)
-        self.assertNotIn("", used)
+        self.assertNotIn("\ue014", used)
+        self.assertNotIn("\ue048", used)
 
 
 if __name__ == "__main__":

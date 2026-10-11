@@ -6,7 +6,7 @@ import unittest
 from s2t import to_literal, translate
 from s2t.glyphs import Cell
 
-from .corpus import load_all, spec_rules
+from tools.corpus import load_all, spec_rules
 
 
 def fired(items):

@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from s2t import get_encoding, translate  # noqa: E402
-from tests.corpus import CORPUS_DIR, corpus_files, load  # noqa: E402
+from tools.corpus import CORPUS_DIR, corpus_files, load  # noqa: E402
 
 CSS = """
 :root { --bg:#fbfaf7; --fg:#1d1b17; --muted:#6b665c; --line:#ddd8cc; --chip:#ece7da; }
