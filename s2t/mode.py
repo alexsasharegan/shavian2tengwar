@@ -78,17 +78,23 @@ SHORTHANDS = {
     "𐑯": ("and-shorthand", "W-03"),
 }
 
+# --- L-09, L-10 (W-04): the words 𐑑 and 𐑓 are weak forms, /tə/ and /fər/ -----
+WEAK_FORMS = {
+    "𐑑": ("𐑑𐑩", "L-09"),
+    "𐑓": ("𐑓𐑼", "L-10"),
+}
+
 Letter = Tuple[str, Tuple[str, ...]]  # (Shavian letter, rules that produced it)
 
 
-def _expand(word: str) -> List[Letter]:
+def _expand(word: str, extra: Tuple[str, ...] = ()) -> List[Letter]:
     out: List[Letter] = []
     for ch in word:
         if ch in LIGATURES:
             components, rule = LIGATURES[ch]
-            out.extend((c, (rule,)) for c in components)
+            out.extend((c, extra + (rule,)) for c in components)
         else:
-            out.append((ch, ()))
+            out.append((ch, extra))
     return out
 
 
@@ -118,7 +124,11 @@ def translate_word(word: str, trace: Optional[list] = None) -> list:
             trace.append((word, [cell]))
         return [cell]
 
-    letters = _expand(word)
+    if word in WEAK_FORMS:
+        expansion, rule = WEAK_FORMS[word]
+        letters = _expand(expansion, ("W-04", rule))
+    else:
+        letters = _expand(word)
     cells: list = []
     pending: Optional[Tuple[str, Tuple[str, ...]]] = None  # (mark, rules)
 
