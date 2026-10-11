@@ -20,7 +20,9 @@ If a font is not installed, pass its file with --font, for example
     --font "Alcarin Tengwar=/path/to/AlcarinTengwar-Regular.otf"
 
 Setup (once):
-    pip install -r tools/requirements-docs.txt
+    npm run setup:docs      (makes .venv and installs tools/requirements-docs.txt; Homebrew's
+                             Python refuses a plain `pip install`)
+Then run this script with .venv/bin/python, or use `npm run pdf`.
 Chrome must be installed; use --browser PATH to point at a different executable.
 Python 3.14. The corpus sheet comes from tools/render_corpus.py, so building it needs the engine;
 the Markdown documents need nothing else from this repo.
@@ -108,7 +110,7 @@ def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path
     try:
         from markdown_it import MarkdownIt
     except ImportError:
-        sys.exit("markdown-it-py is missing: pip install -r tools/requirements-docs.txt")
+        sys.exit("markdown-it-py is missing: npm run setup:docs")
     md = MarkdownIt("commonmark", {"html": True}).enable("table")
     body = md.render(markdown_text)
     faces = font_face_css(font_faces)
@@ -151,7 +153,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        sys.exit("playwright is missing: pip install -r tools/requirements-docs.txt")
+        sys.exit("playwright is missing: npm run setup:docs")
 
     sources = [d if d == CORPUS else (Path(d) if Path(d).is_absolute() else ROOT / d) for d in (args.docs or DEFAULT_DOCS)]
     for src in sources:

@@ -16,7 +16,8 @@
 		"test": "python3 -m unittest discover -s tests -t .",
 		"corpus": "python3 tools/render_corpus.py",
 		"corpus:view": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf -o .tmp/review.html",
-		"pdf": "python3 tools/build_pdfs.py"
+		"setup:docs": "python3 -m venv .venv && .venv/bin/pip install -r tools/requirements-docs.txt",
+		"pdf": ".venv/bin/python tools/build_pdfs.py"
 	},
 	"devDependencies": {
 		"prettier": "^3.9.9"

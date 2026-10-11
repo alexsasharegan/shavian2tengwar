@@ -151,9 +151,9 @@ To change a rule, edit `spec/mode.md`, then the engine, then add or update corpu
 `language-guide.pdf`, `philosophy.pdf` and `corpus/review.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
 
 ```bash
-pip install -r tools/requirements-docs.txt   # once
-npm run pdf                                  # or: python3 tools/build_pdfs.py
-python3 tools/build_pdfs.py --out-dir build/ # write elsewhere instead of over the committed PDFs
+npm run setup:docs                           # once: makes .venv and installs the dependencies
+npm run pdf                                  # or: .venv/bin/python tools/build_pdfs.py
+.venv/bin/python tools/build_pdfs.py --out-dir build/   # write elsewhere instead of over the committed PDFs
 ```
 
 - It needs Google Chrome installed (or `--browser PATH`).
