@@ -1,133 +1,177 @@
 # shavian2tengwar
 
-A Unix-style CLI stream converter written in Python that translates UTF-8 Shavian text (`U+10450`–`U+1047F`) into Everson 2001 / Alcarin Tengwar Private Use Area code points (`U+E000`–`U+E07F`).
+A command-line converter that turns Shavian text (`U+10450`–`U+1047F`) into Alcarin Tengwar Private Use Area code points (`U+E000`–`U+E07F`), using Shavian as a phonemic intermediate representation.
 
 ## Overview
 
-Traditional English orthography is non-phonetic, making direct English-to-Tengwar transliteration complex and context-heavy. `shavian2tengwar` uses the Shavian alphabet's 40–48 character phonemic system as an Intermediate Representation (IR). By first converting English into Shavian (e.g., via tools like _Shave_), orthographic noise is stripped away, allowing a deterministic 5-pass state machine to map phonemes into Tengwar characters and _tehtar_ (vowel diacritics).
+English spelling is not phonetic, so converting it straight to Tengwar is full of context and guesswork. `shavian2tengwar` starts from Shavian instead. A Shavian letter is a sound, so each Shavian word maps to Tengwar by fixed rules, with no help from English spelling. To get Shavian from English, use a converter such as _Shave_.
 
-For a note on transliteration philosophy, see [philosophy.md](./philosophy.md). Since font rendering of Tengwar is tricky, see the pdf version at [philosophy.pdf](./philosophy.pdf).
+The rules live in a specification, not in the code:
 
-### Key Features
+- [`spec/mode.md`](./spec/mode.md): the phonemic English Tengwar mode. Every rule has an ID, a status and its IPA, and the code is held to it.
+- [`spec/encodings/alcarin.md`](./spec/encodings/alcarin.md): which Alcarin code point each glyph name maps to.
+- [`corpus/`](./corpus): short phrases and minimal pairs that double as the test suite. Open [`corpus/review.html`](./corpus/review.html) to see every one rendered in Tengwar.
+- [`docs/adr/`](./docs/adr/README.md): why each rule and structure was chosen, and how to revert it. [`docs/ROADMAP.md`](./docs/ROADMAP.md) shows what is in progress.
 
-- **Zero Dependencies:** Built exclusively using the Python standard library (`sys`, `re`, `argparse`).
-- **Stream-Oriented Pipeline:** Reads from `stdin` or CLI arguments and writes to `stdout`.
-- **Passthrough & Escape Tokenization:** Non-Shavian tokens (Latin characters, spaces, punctuation, emojis) pass through unmodified. Verbatim blocks inside `{{...}}` can be retained or stripped using `--strip-escapes`.
-- **Step-by-Step Inspector:** Interactive debugging flag (`--inspect`) traces state-machine transitions and byte outputs for any word.
-- **Dual Encoding Support:** Defaults to Everson 2001 / Alcarin mapping (`U+E000`–`U+E07F`) while providing `--csur` for legacy CSUR mapping compatibility.
-- **Language-Agnostic Test Suite:** Includes an extended 26-case test manifest (`test_cases_everson_3.json`) and runner to validate byte parity across implementations.
+For the reasoning behind the deviations from community norms, see [docs/philosophy.md](./docs/philosophy.md). For a visual guide to the glyphs and marks, see [docs/language-guide.md](./docs/language-guide.md). The PDF versions of those two documents are built from the Markdown. After editing either one, rebuild its PDF with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
+
+### Key features
+
+- **No dependencies.** Python 3.14 standard library only (see `pyproject.toml`; `.python-version` pins it for pyenv and uv). Every command here uses `python3`, so `python3 --version` must say 3.14 or newer; on macOS, `brew install python@3.14` and put it first on your `PATH`, or use pyenv or uv. Older Pythons stop with a one-line message.
+- **Stream-oriented.** Reads stdin or an argument; writes stdout. Non-Shavian text (Latin letters, spaces, emoji) passes through. Verbatim `{{...}}` blocks are kept, or unwrapped with `--strip-escapes`.
+- **Glyph names for Tecendil.** `--format literal` prints names like `{tinco}[dot-above]`, which you can paste into [tecendil.com](https://www.tecendil.com/).
+- **Rule-by-rule inspector.** `--inspect WORD` shows each step with the spec rule IDs that fired.
+- **Ready for more fonts.** The mode is written in font-independent glyph names; Alcarin is the one encoding so far (`--encoding`).
 
 ---
 
-## Repository Structure
+## Repository structure
 
 ```text
 .
-├── LICENSE
-├── shavian2tengwar.py            # Primary Python CLI & translation engine
-├── test_cases_everson_3.json     # Extended 26-case test manifest
-└── test_runner.py                # Cross-implementation test harness with flag support
+├── shavian2tengwar.py        # command-line front end
+├── s2t/                      # the engine
+│   ├── mode.py               #   the phonemic mode: Shavian word -> glyph cells
+│   ├── stream.py             #   words, punctuation, {{escapes}}
+│   ├── glyphs.py             #   glyph IR (Cell) and literal notation
+│   └── encodings/alcarin.py  #   glyph name -> Alcarin code points
+├── spec/
+│   ├── mode.md               # the rules
+│   └── encodings/alcarin.md  # the code point table
+├── corpus/                   # test cases (README.md explains them); review.html is the visual reference
+├── tests/                    # unittest suite
+├── tools/
+│   ├── corpus.py             #   reads corpus/*.md (used by the tests and render_corpus.py)
+│   ├── render_corpus.py      #   regenerates corpus/review.html
+│   └── build_pdfs.py         #   builds the PDFs of the two guides and corpus/review.pdf
+├── docs/
+│   ├── language-guide.md/.pdf  # visual guide to the glyphs and marks
+│   ├── philosophy.md/.pdf      # why the mode deviates from community norms
+│   ├── adr/                    # decision records (why things are the way they are)
+│   ├── projects/               # one folder per piece of work: README, TASKS, LOG
+│   └── ROADMAP.md              # what is in progress
+├── AGENTS.md                 # instructions for AI agents (CLAUDE.md imports it)
+├── pyproject.toml            # Python floor (3.14) and ruff settings
+├── package.json              # npm scripts: test, corpus, corpus:view, pdf
+└── .github/workflows/        # CI: runs the tests on Python 3.14
 ```
 
 ---
 
-## Translation Engine Architecture
-
-The engine executes a 5-pass state machine on word-boundary isolated tokens (`TOKEN_SHAVIAN_WORD`) in **Following Consonant Mode** (vowel _tehtar_ attach to the _next_ consonant in the word):
+## How it works
 
 ```mermaid
 flowchart LR
-    A["Input Stream"] --> B["Tokenizer"]
-    B --> C["TOKEN_PASSTHROUGH / ESCAPE"]
-    B --> D["TOKEN_SHAVIAN_WORD"]
-    D --> E["5-Pass State Machine"]
-    C --> F["Output Stream"]
-    E --> F
+    A["Shavian text"] --> B["s2t.mode<br/>spec/mode.md"]
+    B --> C["glyph IR<br/>{tinco}[dot-above]"]
+    C --> D["encoding<br/>Alcarin code points"]
+    C --> E["literal names<br/>for tecendil.com"]
 ```
 
-1. **Pass 0 & 1: Normalization, Namer Dot Strip, & Big Five Logograms:**
-    - Strips Shavian namer dots (`·`, `U+00B7`).
-    - Maps standalone function word abbreviations directly to canonical Appendix E logograms (`𐑞` → _Extended Anta_ `U+E01C`; `𐑝` → _Extended Ampa_ `U+E01D`; `𐑯` → _Ando_ + _Nasal Bar Above_ `U+E004 U+E050`).
-2. **Pass 2a & 2b: Clusters & Preconsonantal Nasals:**
-    - **Aspirated Wh Cluster:** Intercepts `𐑣𐑢` (/hw/) and emits **_Hwesta_** (`U+E00B`).
-    - **Universal Nasals:** Homorganic nasal-stop pairs (`𐑯𐑑`, `𐑯𐑛`, `𐑥𐑐`, `𐑥𐑚`, `𐑙𐑒`, `𐑙𐑜`) always collapse to the stop base carrying a _Nasal Bar Above_ (`U+E050`), attaching any preceding vowel _tehta_ directly to the stop.
-3. **Pass 3: Contextual Consonant Selection (`𐑮` /r/):**
-    - Emits _Rómen_ (`U+E020`) when followed by a vowel in the word.
-    - Emits _Óre_ (`U+E014`) when word-final or followed by a consonant.
-4. **Pass 4: Vowel Attachment & Carrier Resolution:**
-    - **Short Vowels:** Attach to the following consonant base glyph.
-    - **Long Vowels (`𐑰`, `𐑵`):** Attach as double _tehtar_ (`U+E047`, `U+E04D`) on base consonants or flush to _Ára_ (Long Carrier, `U+E02D`).
-    - **Rhotic Vowels (`𐑸`, `𐑹`, `𐑺`, `𐑽`, `𐑻`, `𐑼`):** Decompose into `[Tehta]` + _Rómen_ (`U+E020`) or _Óre_ (`U+E014`). _ARRAY/lettER_ (`𐑼`) maps to R-base + _schwa-tehta_ (`U+E045`).
-    - **Diphthongs (`𐑲`, `𐑶`, `𐑱`, `𐑬`, `𐑴`, `𐑾`, `𐑿`):** Emit offglide carriers (_Anna_ `U+E016` or _Vala_ `U+E015`) carrying the primary _tehta_.
-    - **Orphan / Word-Final Vowels:** Flush to a _Telco_ (Short Carrier, `U+E02E`) or _Ára_ (Long Carrier, `U+E02D`).
-5. **Pass 5: Positional Inversions (_Nuquerna_ Flips):** Automatically converts upright _Silme_ (`U+E024`) and _Esse_ (`U+E026`) to _Silme Nuquerna_ (`U+E025`) and _Esse Nuquerna_ (`U+E027`) whenever carrying any top-placed _tehta_ or nasal bar.
+A word becomes a list of _cells_, each one base glyph with its marks. The mode follows these ideas; the spec has the full rules.
+
+- **Vowel marks sit above, and are read first.** A short vowel is a mark on the _next_ consonant; a vowel with no consonant after it sits on a short carrier (`{telco}`).
+- **Long vowels always use the long carrier.** FLEECE, PALM, THOUGHT and GOOSE are `{aara}` plus a mark. Length is never written by doubling a mark.
+- **Short and long vowels share a mark.** KIT/FLEECE, TRAP/PALM, LOT/THOUGHT and FOOT/GOOSE use the same mark; the long one sits on the long carrier. STRUT (grave) and the schwa (breve, `U+E053`) have marks of their own.
+- **R is always rómen.** The R-vowels (𐑸 𐑹 𐑺 𐑽 𐑻 𐑼) are expanded to vowel + 𐑮, and óre is not used.
+- **Diphthongs put the glide last.** `{anna}[acute]` reads /e/ then /j/. 𐑾 is 𐑦𐑩 and 𐑿 is 𐑘𐑵.
+- **A schwa is always written**, so a consonant cluster is never mistaken for a schwa between consonants.
+- **Nasal bar and gemination bar** mark nasal-plus-stop (`𐑯𐑑`, `𐑥𐑐`, `𐑙𐑒`, ...) and true double consonants.
+- **Silmë and Essë flip** to their nuquerna forms when a mark lands on them.
+- **Shorthands.** _the_, _of_ and _and_ have the Appendix E shorthands. _to_ and _for_ are written as weak forms (/tə/, /fər/).
 
 ---
 
-## Font & Rendering Requirements
+## Font and rendering requirements
 
-Displaying transformed text requires an Everson 2001 or CSUR-compatible Tengwar font.
+Displaying the output needs a font with Alcarin's code point layout. Alcarin's layout is not Everson's and not CSUR; a font built for those will show the wrong glyphs.
 
-- **Recommended Font:** **[Alcarin Tengwar](https://github.com/Tosche/Alcarin-Tengwar)** (by Toshi Omagari / Tosche).
-    - **macOS & Modern IDE Users:** Download and install _Alcarin Tengwar_ for clean visual rendering in macOS apps, VS Code, and browser text editors. _Alcarin_ is built with native OpenType `mark` / `mkmk` GPOS positioning tables, allowing standard Chromium/HarfBuzz text shapers to anchor diacritics directly over consonant bases without fallback errors.
-- **Important Note on _Tengwar Telcontar_:**
-    - While _Tengwar Telcontar_ is a popular Tengwar font, it relies on the **SIL Graphite** layout engine to calculate mark positioning.
-    - Most modern text editors, terminals, and OS text views do not execute SIL Graphite tables for Private Use Area characters, rendering orphan dotted circles under every _tehta_. Always use an OpenType-native font like _Alcarin Tengwar_.
+- **Recommended font:** [Alcarin Tengwar](https://github.com/Tosche/Alcarin-Tengwar) (Toshi Omagari / Tosche). It positions marks with native OpenType `mark` / `mkmk` features, which most text engines (including macOS apps, VS Code and browsers) handle.
+- **Not Tengwar Telcontar:** it relies on SIL Graphite for mark positioning, which most editors and terminals don't run for Private Use Area characters, so every mark shows as a dotted circle.
 
 ---
 
 ## Usage
 
-### Stream Processing (Pipes & Redirection)
-
 ```bash
-# Process string via pipe
+# a string argument
+python3 shavian2tengwar.py "𐑦𐑯 𐑩 𐑣𐑴𐑤 𐑦𐑯 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑞𐑺 𐑤𐑦𐑝𐑛 𐑩 𐑣𐑪𐑚𐑦𐑑"
+
+# a pipe
 echo "𐑢𐑦𐑯𐑑𐑼" | python3 shavian2tengwar.py
 
-# Unbraid outer {{ and }} escape markers from verbatim pass-through text
+# glyph names, to paste into tecendil.com
+python3 shavian2tengwar.py --format literal "𐑞 𐑚𐑸𐑛, 𐑯 𐑦𐑟"
+# {the-shorthand} {umbar}{aara}[triple-dot-above]{roomen}{ando}{pusta} {and-shorthand} {esse-nuquerna}[dot-above]
+
+# unwrap {{verbatim}} blocks
 python3 shavian2tengwar.py --strip-escapes < in.md > out.md
 ```
 
-### Direct Argument Processing
-
-```bash
-python3 shavian2tengwar.py "𐑦𐑯 𐑩 𐑣𐑴𐑤 𐑦𐑯 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑞𐑺 𐑤𐑦𐑝𐑛 𐑩 𐑣𐑪𐑚𐑦𐑑"
-```
-
-### Interactive Word Inspector (`--inspect`)
-
-Trace character state transitions, carrier flushes, and final hex outputs:
+### Inspecting a word
 
 ```bash
 python3 shavian2tengwar.py --inspect "𐑢𐑦𐑯𐑑𐑼"
 ```
 
-**Output:**
-
 ```text
-=== INSPECTING WORD: '𐑢𐑦𐑯𐑑𐑼' [Encoding: Everson 2001 / Alcarin Tengwar (Default)] ===
-Pass 1 (Namer Dot Strip): '𐑢𐑦𐑯𐑑𐑼'
-Step 0: Char '𐑢' -> Consonant Vala
-  [Emit Consonant] Vala (U+E015)
-Step 1: Char '𐑦' -> Queue Pending Short Vowel i-tehta
-Step 2: Detected Universal Nasal Pair '𐑯𐑑' (Númen + Tinco) -> Stop Tinco + Nasal Bar Above
-  [Emit Consonant] Tinco (U+E000)
-    └─ Attached Preceding Vowel Tehta: i-tehta (U+E044)
-Step 4: Char '𐑼' -> R-Vowel ARRAY/lettER (schwa-tehta) using Óre
-  [Emit Consonant] Óre (U+E014)
-Final Tengwar Output String: ''
-Final Hex Code Points:     U+E015 U+E000 U+E050 U+E044 U+E014 U+E045
+=== INSPECTING WORD: '𐑢𐑦𐑯𐑑𐑼' [Encoding: alcarin] ===
+  𐑢  ->  {vala}   [C-01]
+  𐑦  queued: a vowel mark waits for the next consonant (V-01)
+  𐑯𐑑  ->  {tinco}[dot-above][bar-above]   [N-01, V-11, V-01, K-01]
+  𐑩  queued: a vowel mark waits for the next consonant (V-01)
+  𐑮  ->  {roomen}[breve]   [L-06, R-01, V-14, V-01]
+Glyphs:      {vala}{tinco}[dot-above][bar-above]{roomen}[breve]
+Code points: U+E015 U+E000 U+E050 U+E044 U+E020 U+E053
 ```
+
+The inspector also prints the converted word itself, as the "Output" line.
 
 ---
 
-## Testing & Cross-Implementation Verification
-
-The repository includes a test suite driven by `test_cases_everson_3.json`. The runner script pipes inputs to `stdin` and verifies exact byte-level UTF-8 output strings.
-
-### Running Tests
+## Testing
 
 ```bash
-# Test the Python reference implementation across all 26 cases
-python3 test_runner.py --cmd "python3 shavian2tengwar.py" --manifest test_cases_everson_3.json
+python3 -m unittest discover -s tests -t .      # or: npm test
 ```
+
+- `tests/test_corpus.py`: every row of `corpus/*.md` must produce its stated glyphs, and every rule it cites must exist in the spec and actually fire.
+- `tests/test_coverage.py`: every adopted or provisional rule in `spec/mode.md` must be cited by some corpus row.
+- `tests/test_identities.py`: two different Shavian spellings may only give the same glyphs where the spec declares them identical (the ligatures and the diphthong identities).
+- `tests/test_encoding.py`: the Alcarin table must match `spec/encodings/alcarin.md`, and cover every glyph name the mode uses.
+- `tests/test_spec_tables.py`: the engine's consonant, ligature, weak-form, word-sign and punctuation tables must match the tables in `spec/mode.md`.
+- `tests/test_stream.py`: `{{...}}` escapes, every punctuation mark, quote alternation, error paths, and the `parse_literal`/`to_literal` round trip.
+- `tests/test_cli.py`: the command line, including stdin, exit codes, the UTF-8 guarantee and a closed pipe.
+- `tests/test_review_sheet.py`: `corpus/review.html` must be current. Regenerate it with `npm run corpus`.
+
+The tests need Python 3.14. GitHub Actions runs them, and the lint and format checks below, on every push (`.github/workflows/test.yml`).
+
+### Formatting and lint
+
+The Python is formatted with `ruff format` and linted with `ruff check`, using the settings in `pyproject.toml`. CI fails on either.
+
+```bash
+npm run setup:dev     # once: makes .venv and installs ruff (the pinned "dev" group in pyproject.toml)
+npm run fmt           # format
+npm run lint          # what CI checks
+```
+
+`.git-blame-ignore-revs` lists the reformatting commits. Run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once so `git blame` skips them.
+
+To change a rule, edit `spec/mode.md`, then the engine, then add or update corpus rows, and record why in an ADR (`docs/adr/`).
+
+---
+
+## Building the PDFs
+
+`docs/language-guide.pdf`, `docs/philosophy.pdf` and `corpus/review.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
+
+```bash
+npm run setup:docs                           # once: makes .venv and installs the dependencies
+npm run pdf                                  # or: .venv/bin/python tools/build_pdfs.py
+.venv/bin/python tools/build_pdfs.py --out-dir build/   # write elsewhere instead of over the committed PDFs
+```
+
+- It needs Google Chrome installed (or `--browser PATH`).
+- Text uses the font stack **Courier, Bernie Sans Beta, Alcarin Tengwar**, falling back one glyph at a time: Latin in Courier, Shavian in Bernie Sans Beta, Tengwar in Alcarin. All three must be installed, or load a file with `--font "Alcarin Tengwar=/path/to/AlcarinTengwar-Regular.otf"`. The script warns if one is missing, and `--strict` makes that an error.
+- Pass other Markdown files as arguments to build them too, or `corpus` to build only `corpus/review.pdf`.

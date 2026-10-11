@@ -1,23 +1,28 @@
 {
-  "name": "shavian2tengwar",
-  "version": "1.0.0",
-  "description": "A Unix-style CLI stream converter written in Python that translates UTF-8 Shavian text (`U+10450`–`U+1047F`) into ConScript Unicode Registry (CSUR) Tengwar Private Use Area code points (`U+E000`–`U+E07F`).",
-  "homepage": "https://github.com/alexsasharegan/shavian2tengwar#readme",
-  "bugs": {
-    "url": "https://github.com/alexsasharegan/shavian2tengwar/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexsasharegan/shavian2tengwar.git"
-  },
-  "license": "MIT",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "prettier": "^3.9.9"
-  }
+	"name": "shavian2tengwar",
+	"version": "1.0.0",
+	"description": "A Unix-style CLI that converts Shavian text (U+10450–U+1047F) into Alcarin Tengwar Private Use Area code points, using Shavian as a phonemic intermediate representation.",
+	"homepage": "https://github.com/alexsasharegan/shavian2tengwar#readme",
+	"bugs": {
+		"url": "https://github.com/alexsasharegan/shavian2tengwar/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alexsasharegan/shavian2tengwar.git"
+	},
+	"license": "MIT",
+	"author": "Alex Regan",
+	"scripts": {
+		"test": "python3 -m unittest discover -s tests -t .",
+		"corpus": "python3 tools/render_corpus.py",
+		"corpus:view": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf -o .tmp/review.html",
+		"setup:dev": "python3 -m venv .venv && .venv/bin/pip install --group dev",
+		"lint": ".venv/bin/ruff check . && .venv/bin/ruff format --check .",
+		"fmt": ".venv/bin/ruff format .",
+		"setup:docs": "python3 -m venv .venv && .venv/bin/pip install -r tools/requirements-docs.txt",
+		"pdf": ".venv/bin/python tools/build_pdfs.py"
+	},
+	"devDependencies": {
+		"prettier": "^3.9.9"
+	}
 }
