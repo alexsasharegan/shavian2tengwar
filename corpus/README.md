@@ -61,7 +61,9 @@ If the engine and the corpus disagree, one of them is wrong. Decide which by rea
 
 ## The review sheet
 
-`python3 tools/render_corpus.py` writes `review.html`. It shows each row as Tengwar next to its Shavian, English, IPA, glyph names and rules, and it follows the browser's light or dark setting. It uses the Alcarin Tengwar font if it is installed. The committed copy never embeds a font path, because a path on one machine would make the freshness test fail on every other. If the browser shows boxes, run `npm run corpus:view` (edit the font path in `package.json` to match your machine), which writes a copy with the font embedded to `.tmp/review.html`; that copy is not committed. Open it in a browser to check that marks land where they should, which the text tables cannot show.
+`python3 tools/render_corpus.py` writes `review.html`. It shows each row as Tengwar next to its Shavian, English, IPA, glyph names and rules, and it follows the browser's light or dark setting. It uses the Alcarin Tengwar font if it is installed (and Bernie Sans Beta for the Shavian). The committed copy never embeds a font path, because a path on one machine would make the freshness test fail on every other. If the browser shows boxes, run `npm run corpus:view` (edit the font path in `package.json` to match your machine), which writes a copy with the font embedded to `.tmp/review.html`; that copy is not committed. Open it in a browser to check that marks land where they should, which the text tables cannot show.
+
+`npm run pdf` also prints the sheet as `corpus/review.pdf`, with the fonts embedded, for sharing with people who do not have them. Each corpus file starts on a new page, and no row is split across pages.
 
 ## How the first version was made
 

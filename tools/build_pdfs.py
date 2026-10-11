@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build the PDF editions of the Markdown documents.
 
-    python3 tools/build_pdfs.py                    # language-guide.pdf and philosophy.pdf
+    python3 tools/build_pdfs.py                    # language-guide.pdf, philosophy.pdf, corpus/review.pdf
     python3 tools/build_pdfs.py README.md          # any other Markdown file
+    python3 tools/build_pdfs.py corpus             # only the corpus review sheet
     python3 tools/build_pdfs.py --out-dir build/   # write somewhere else
 
 Pipeline: Markdown -> HTML (markdown-it-py) -> PDF (Chrome's print-to-PDF, through
@@ -21,7 +22,8 @@ If a font is not installed, pass its file with --font, for example
 Setup (once):
     pip install -r tools/requirements-docs.txt
 Chrome must be installed; use --browser PATH to point at a different executable.
-Python 3.14; nothing else from this repo is imported.
+Python 3.14. The corpus sheet comes from tools/render_corpus.py, so building it needs the engine;
+the Markdown documents need nothing else from this repo.
 """
 
 import argparse
@@ -31,7 +33,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_DOCS = ["language-guide.md", "philosophy.md"]
+sys.path.insert(0, str(ROOT))
+
+CORPUS = "corpus"  # not a file: the review sheet, rendered from corpus/*.md by tools/render_corpus.py
+CORPUS_PDF = ROOT / "corpus" / "review.pdf"
+DEFAULT_DOCS = ["language-guide.md", "philosophy.md", CORPUS]
 FONT_STACK = ["Courier", "Bernie Sans Beta", "Alcarin Tengwar"]
 
 CSS = """
@@ -84,16 +90,10 @@ FONT_SAMPLES = {
 }
 
 
-def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path]]) -> str:
-    try:
-        from markdown_it import MarkdownIt
-    except ImportError:
-        sys.exit("markdown-it-py is missing: pip install -r tools/requirements-docs.txt")
-    md = MarkdownIt("commonmark", {"html": True}).enable("table")
-    body = md.render(markdown_text)
+def font_face_css(font_faces: list[tuple[str, Path]]) -> str:
     # Data URIs: a page set from a string cannot load file:// URLs.
     formats = {".otf": "opentype", ".ttf": "truetype", ".woff": "woff", ".woff2": "woff2"}
-    faces = "\n".join(
+    return "\n".join(
         '@font-face {{ font-family: "{}"; src: url("data:font/{};base64,{}") format("{}"); }}'.format(
             name,
             path.suffix.lstrip(".").lower(),
@@ -102,6 +102,16 @@ def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path
         )
         for name, path in font_faces
     )
+
+
+def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path]]) -> str:
+    try:
+        from markdown_it import MarkdownIt
+    except ImportError:
+        sys.exit("markdown-it-py is missing: pip install -r tools/requirements-docs.txt")
+    md = MarkdownIt("commonmark", {"html": True}).enable("table")
+    body = md.render(markdown_text)
+    faces = font_face_css(font_faces)
     stack = ", ".join(f'"{f}"' for f in FONT_STACK)
     return (
         "<!doctype html><html><head><meta charset='utf-8'>"
@@ -129,7 +139,9 @@ def parse_fonts(specs: list[str]) -> list[tuple[str, Path]]:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("docs", nargs="*", help="Markdown files (default: language-guide.md and philosophy.md)")
+    ap.add_argument(
+        "docs", nargs="*", help='Markdown files, or "corpus" for the review sheet (default: the two guides and corpus)'
+    )
     ap.add_argument("--out-dir", type=Path, help="where to write the PDFs (default: next to each source)")
     ap.add_argument("--font", action="append", default=[], metavar="NAME=PATH", help="load a font file")
     ap.add_argument("--browser", metavar="PATH", help="Chrome/Chromium executable (default: installed Google Chrome)")
@@ -141,9 +153,9 @@ def main(argv: list[str] | None = None) -> int:
     except ImportError:
         sys.exit("playwright is missing: pip install -r tools/requirements-docs.txt")
 
-    sources = [Path(d) if Path(d).is_absolute() else ROOT / d for d in (args.docs or DEFAULT_DOCS)]
+    sources = [d if d == CORPUS else (Path(d) if Path(d).is_absolute() else ROOT / d) for d in (args.docs or DEFAULT_DOCS)]
     for src in sources:
-        if not src.is_file():
+        if src != CORPUS and not src.is_file():
             sys.exit(f"not found: {src}")
     font_faces = parse_fonts(args.font)
     missing_any = False
@@ -156,8 +168,15 @@ def main(argv: list[str] | None = None) -> int:
             sys.exit(f"could not start the browser ({exc}). Install Chrome or pass --browser PATH.")
         page = browser.new_page()
         for src in sources:
-            text = src.read_text(encoding="utf-8")
-            doc = render_html(text, first_heading(text, src.stem), font_faces)
+            if src == CORPUS:
+                from tools.render_corpus import build_sheet
+
+                doc = build_sheet(font_face_css(font_faces), shareable=True)
+                out = (args.out_dir / CORPUS_PDF.name) if args.out_dir else CORPUS_PDF
+            else:
+                text = src.read_text(encoding="utf-8")
+                doc = render_html(text, first_heading(text, src.stem), font_faces)
+                out = (args.out_dir or src.parent) / (src.stem + ".pdf")
             page.set_content(doc, wait_until="load")
             for name, _ in font_faces:  # @font-face files load lazily; force them
                 page.evaluate("([n, s]) => document.fonts.load('16px \"' + n + '\"', s)", [name, FONT_SAMPLES.get(name, "A")])
@@ -166,7 +185,6 @@ def main(argv: list[str] | None = None) -> int:
                 if not page.evaluate(FONT_PROBE, [family, sample]):
                     missing_any = True
                     print(f'warning: font "{family}" does not seem to be available (use --font)', file=sys.stderr)
-            out = (args.out_dir or src.parent) / (src.stem + ".pdf")
             out.parent.mkdir(parents=True, exist_ok=True)
             page.pdf(path=str(out), prefer_css_page_size=True, print_background=True)
             print(f"wrote {out}")

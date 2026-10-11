@@ -31,6 +31,7 @@ spec, corpus and engine out of step; the "Revert" lines say what else has to go 
 | D-18 | CLI behaviour: UTF-8 I/O, exit codes, closed pipe | adopted | `e8ca735` |
 | D-19 | The corpus parser lives in `tools/`, not `tests/` | adopted | `4e74f64` |
 | D-20 | Tests for the CLI, streams and spec tables; GitHub Actions; PDFs stay in git | adopted | `d7b8979`, `324d77d`, and the "Run the tests in CI" commit |
+| D-21 | The corpus review sheet is also a PDF (`corpus/review.pdf`) | adopted | the "corpus PDF" commit |
 
 ---
 
@@ -316,6 +317,20 @@ check them, and a stale PDF is possible after a guide edit. Say so if you would 
 stop tracking them.
 
 **Revert.** The test commits above; the workflow is the "Run the tests in CI" commit.
+
+## D-21. Corpus review sheet as a PDF
+
+**Decided (your proposal, issue 1).** `tools/build_pdfs.py` now builds `corpus/review.pdf` along with the
+two guides, from the same HTML that `tools/render_corpus.py` writes (`build_sheet()`), with Alcarin Tengwar
+embedded as a data URI. The sheet gained print CSS (Letter, light palette, one corpus file per page, no row
+split across pages) and its Shavian column asks for Bernie Sans Beta, then Noto Sans Shavian. In the PDF the
+"install the font" note is omitted. `corpus/review.html` was regenerated for the CSS change.
+
+**Not done.** I did not commit `corpus/review.pdf`. I could build it only in the cloud, without Bernie Sans
+Beta, so the Shavian column would have been in a fallback font. Run `npm run pdf` on your machine and
+commit it. `test_sheet_is_current` guards the HTML only, not the PDF.
+
+**Revert.** The "corpus PDF" commit.
 
 ---
 

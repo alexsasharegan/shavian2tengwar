@@ -44,7 +44,7 @@ For the reasoning behind the deviations from community norms, see [philosophy.md
 │   ├── corpus.py             #   reads corpus/*.md (used by the tests and render_corpus.py)
 │   ├── render_corpus.py      #   regenerates corpus/review.html
 │   └── build_pdfs.py         #   builds language-guide.pdf and philosophy.pdf
-├── language-guide.md/.pdf    # visual guide to the glyphs and marks
+├── language-guide.md/.pdf    # visual guide to the glyphs and marks (corpus/review.pdf is built the same way)
 ├── philosophy.md/.pdf        # why the mode deviates from community norms
 ├── DECISIONS.md              # decisions made without review
 ├── pyproject.toml            # Python floor (3.14) and ruff settings
@@ -148,7 +148,7 @@ To change a rule, edit `spec/mode.md`, then the engine, then add or update corpu
 
 ## Building the PDFs
 
-`language-guide.pdf` and `philosophy.pdf` are built from the Markdown by `tools/build_pdfs.py`: Markdown to HTML with markdown-it-py, then Chrome's print-to-PDF through Playwright (the same engine Obsidian prints with).
+`language-guide.pdf`, `philosophy.pdf` and `corpus/review.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
 
 ```bash
 pip install -r tools/requirements-docs.txt   # once
@@ -158,4 +158,4 @@ python3 tools/build_pdfs.py --out-dir build/ # write elsewhere instead of over t
 
 - It needs Google Chrome installed (or `--browser PATH`).
 - Text uses the font stack **Courier, Bernie Sans Beta, Alcarin Tengwar**, falling back one glyph at a time: Latin in Courier, Shavian in Bernie Sans Beta, Tengwar in Alcarin. All three must be installed, or load a file with `--font "Alcarin Tengwar=/path/to/AlcarinTengwar-Regular.otf"`. The script warns if one is missing, and `--strict` makes that an error.
-- Pass other Markdown files as arguments to build them too.
+- Pass other Markdown files as arguments to build them too, or `corpus` to build only `corpus/review.pdf`.
