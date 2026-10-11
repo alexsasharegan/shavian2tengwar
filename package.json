@@ -1,7 +1,7 @@
 {
   "name": "shavian2tengwar",
   "version": "1.0.0",
-  "description": "A Unix-style CLI stream converter written in Python that translates UTF-8 Shavian text (`U+10450`–`U+1047F`) into ConScript Unicode Registry (CSUR) Tengwar Private Use Area code points (`U+E000`–`U+E07F`).",
+  "description": "A Unix-style CLI that converts Shavian text (U+10450–U+1047F) into Alcarin Tengwar Private Use Area code points, using Shavian as a phonemic intermediate representation.",
   "homepage": "https://github.com/alexsasharegan/shavian2tengwar#readme",
   "bugs": {
     "url": "https://github.com/alexsasharegan/shavian2tengwar/issues"
@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "python3 -m unittest discover -s tests -t ."
   },
   "devDependencies": {
     "prettier": "^3.9.9"
