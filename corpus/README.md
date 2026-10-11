@@ -2,8 +2,6 @@
 
 The corpus is the test data for the engine and the visual reference for the spec. It is a set of Markdown tables, so you can read it on GitHub, edit it by hand, and see every row rendered in Tengwar in [`review.html`](./review.html).
 
-It currently holds 91 cases, 17 identity pairs and 10 distinct pairs.
-
 ## What is in it
 
 | File | Holds |

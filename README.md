@@ -13,7 +13,7 @@ The rules live in a specification, not in the code:
 - [`corpus/`](./corpus): short phrases and minimal pairs that double as the test suite. Open [`corpus/review.html`](./corpus/review.html) to see every one rendered in Tengwar.
 - [`DECISIONS.md`](./DECISIONS.md): decisions made without review, to check and revert if needed.
 
-For the reasoning behind the deviations from community norms, see [philosophy.md](./philosophy.md). For a visual guide to the glyphs and marks, see [language-guide.md](./language-guide.md). The PDF versions of those two documents are older than the Markdown; the Markdown is current. Rebuild them with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
+For the reasoning behind the deviations from community norms, see [philosophy.md](./philosophy.md). For a visual guide to the glyphs and marks, see [language-guide.md](./language-guide.md). The PDF versions of those two documents are built from the Markdown. After editing either one, rebuild its PDF with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
 
 ### Key features
 
@@ -38,11 +38,18 @@ For the reasoning behind the deviations from community norms, see [philosophy.md
 ├── spec/
 │   ├── mode.md               # the rules
 │   └── encodings/alcarin.md  # the code point table
-├── corpus/                   # test cases; review.html is the visual reference
+├── corpus/                   # test cases (README.md explains them); review.html is the visual reference
 ├── tests/                    # unittest suite
-├── tools/render_corpus.py    # regenerates corpus/review.html
-├── tools/build_pdfs.py       # builds language-guide.pdf and philosophy.pdf
-└── DECISIONS.md              # unreviewed decisions
+├── tools/
+│   ├── corpus.py             #   reads corpus/*.md (used by the tests and render_corpus.py)
+│   ├── render_corpus.py      #   regenerates corpus/review.html
+│   └── build_pdfs.py         #   builds language-guide.pdf and philosophy.pdf
+├── language-guide.md/.pdf    # visual guide to the glyphs and marks
+├── philosophy.md/.pdf        # why the mode deviates from community norms
+├── DECISIONS.md              # decisions made without review
+├── pyproject.toml            # Python floor (3.14) and ruff settings
+├── package.json              # npm scripts: test, corpus, corpus:view, pdf
+└── .github/workflows/        # CI: runs the tests on Python 3.14
 ```
 
 ---
@@ -128,7 +135,12 @@ python3 -m unittest discover -s tests -t .      # or: npm test
 - `tests/test_coverage.py`: every adopted or provisional rule in `spec/mode.md` must be cited by some corpus row.
 - `tests/test_identities.py`: two different Shavian spellings may only give the same glyphs where the spec declares them identical (the ligatures and the diphthong identities).
 - `tests/test_encoding.py`: the Alcarin table must match `spec/encodings/alcarin.md`, and cover every glyph name the mode uses.
-- `tests/test_review_sheet.py`: `corpus/review.html` must be current. Regenerate it with `python3 tools/render_corpus.py`.
+- `tests/test_spec_tables.py`: the engine's consonant, ligature, weak-form, word-sign and punctuation tables must match the tables in `spec/mode.md`.
+- `tests/test_stream.py`: `{{...}}` escapes, every punctuation mark, quote alternation, error paths, and the `parse_literal`/`to_literal` round trip.
+- `tests/test_cli.py`: the command line, including stdin, exit codes, the UTF-8 guarantee and a closed pipe.
+- `tests/test_review_sheet.py`: `corpus/review.html` must be current. Regenerate it with `npm run corpus`.
+
+The tests need Python 3.14. GitHub Actions runs them on every push (`.github/workflows/test.yml`).
 
 To change a rule, edit `spec/mode.md`, then the engine, then add or update corpus rows.
 

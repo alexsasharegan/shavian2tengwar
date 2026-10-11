@@ -19,12 +19,18 @@ spec, corpus and engine out of step; the "Revert" lines say what else has to go 
 | D-06 | Corpus format and the tests around it | adopted | `fe2ee13`, `b5a27f3` |
 | D-07 | `corpus/review.html` is committed and guarded by a test | adopted | `2f2dfd7` |
 | D-08 | Legacy tests and manifests retired | adopted | `fe59b74` |
-| D-09 | Replacing the old guide's "Big Five" rows for *to* and *for* | provisional | with D-01, plus the docs commit |
-| D-10 | Documentation approach (README, guide, philosophy, PDFs) | adopted | docs commits |
+| D-09 | Replacing the old guide's "Big Five" rows for *to* and *for* | provisional | with D-01, plus `510c6f7` |
+| D-10 | Documentation approach (README, guide, philosophy, PDFs) | adopted | `80aa868`, `510c6f7`, `ae5db0f`, `ec5bc28` |
 | D-11 | Commit author | adopted | not revertible; see below |
-| D-12 | TRAP uses `[triple-dot-above]`; `E056` retired | **approved by you** | the "TRAP shares PALM's mark" commit |
-| D-13 | Scripted PDF build (`tools/build_pdfs.py`) | adopted | the "scripted PDF build" commit |
-| D-14 | Alcarin emits marks outward from the base (fixes nasal bar stacking) | fix, at your request | the "nasal bar stacking" commit |
+| D-12 | TRAP uses `[triple-dot-above]`; `E056` retired | **approved by you** | `ca09457` |
+| D-13 | Scripted PDF build (`tools/build_pdfs.py`) | adopted | `fdc65e9` |
+| D-14 | Alcarin emits marks outward from the base (fixes nasal bar stacking) | fix, at your request | `5eb9596` |
+| D-15 | Python 3.14 is the floor; ruff configured in `pyproject.toml` | adopted | `bd91cdb` |
+| D-16 | LICENSE holder, narrower `.gitignore`, tracked `.prettierrc`, tidy `package.json` | adopted | `c7f13b4` |
+| D-17 | The committed review sheet embeds no font path | adopted | `b8b84a0` |
+| D-18 | CLI behaviour: UTF-8 I/O, exit codes, closed pipe | adopted | `e8ca735` |
+| D-19 | The corpus parser lives in `tools/`, not `tests/` | adopted | `4e74f64` |
+| D-20 | Tests for the CLI, streams and spec tables; GitHub Actions; PDFs stay in git | adopted | `d7b8979`, `324d77d`, and the "Run the tests in CI" commit |
 
 ---
 
@@ -175,14 +181,18 @@ them in sync, so they can drift if the rules change.
 
 **Why.** Part 3 contradicted the spec in several places (óre, doubled curl, double acute, 𐑾, 𐑿).
 
-**Revert.** The guide commit; the bare-letter rows return.
+**Revert.** `510c6f7`; the bare-letter rows return.
 
 ## D-10. Documentation
 
 **Decided.** README rewritten; `language-guide.md` (Part 2 text, tehta table, all of Part 3) and `philosophy.md`
 (diphthong order, word signs, and new sections on R and on the vowel marks) updated to the spec;
-`spec/` is the authority and the guides point to it. **The PDFs were not regenerated**, per your
-standing instruction, so `language-guide.pdf` and `philosophy.pdf` are stale until you rebuild them.
+`spec/` is the authority and the guides point to it. I did not regenerate the PDFs, per your standing
+instruction; you rebuilt them with `npm run pdf` (`a106a6e`), and they now match the Markdown. The
+README previously still said they were older; that sentence is gone. Whoever edits either guide
+rebuilds its PDF (D-20).
+
+**Revert.** `80aa868` (README), `510c6f7` (guide), `ae5db0f` (philosophy), `ec5bc28` (this log).
 
 ## D-11. Commit author
 
@@ -205,7 +215,7 @@ diphthong is its nucleus plus its glide. I scanned all 111,214 ReadLex entries: 
 *Malawian* (32 occurrences by frequency) and a one-off name, *iau*, contain 𐑨 followed by 𐑘, 𐑢 or 𐑿 (𐑿
 expands to 𐑘𐑵). You said *Malawian* is fine as it comes out.
 
-**Revert.** The commit of this name. It also reverts I-04 and I-05 and restores `E056`.
+**Revert.** `ca09457`. It also reverts I-04 and I-05 and restores `E056`.
 
 ## D-13. Scripted PDF build
 
@@ -223,7 +233,7 @@ committed PDFs. The first run on your machine is the real check on fonts and pag
 **Alternatives.** A Node pipeline (the repo already has `package.json`), which I could not install from the
 cloud; or `pandoc` plus LaTeX, which handles these fonts badly.
 
-**Revert.** The commit of this name. Nothing else depends on it.
+**Revert.** `fdc65e9`. Nothing else depends on it.
 
 ## D-14. Mark stacking in the Alcarin encoding
 
@@ -236,7 +246,76 @@ is `E000 E050 E044`. Before, it was `E000 E044 E050`, which the font stacks with
 verified. I had not checked orders with more than one mark above. Both statements are corrected, and
 `tests/test_encoding.py` now pins the order. I checked the new order by rendering it in Chromium.
 
-**Revert.** The commit of this name restores the old order, and the review sheet with it.
+**Revert.** `5eb9596` restores the old order, and the review sheet with it.
+
+## D-15. Python 3.14 is the floor
+
+**Decided.** You moved to Python 3.14, so `pyproject.toml` says `requires-python = ">=3.14"` and
+`.python-version` pins `3.14`. The code uses what 3.14 offers: lazy annotations (no
+`from __future__ import annotations`), `X | None`, `type` aliases (`Item`, `Letter`, `Trace`), a slotted frozen
+`Cell`, and parameterized `list`/`dict`/`tuple`/`frozenset` annotations. `pyproject.toml` also configures ruff
+(target py314, line length 120, rules E4/E7/E9/F plus `UP`).
+
+**Not verified.** I could not install ruff, so the ruff settings have never run. I ran the tests on Python
+3.14.6 with warnings as errors. The Python I had on your machine is 3.10, which can no longer import the
+package, so run `npm test` there yourself. I did not make the tests support 3.10.
+
+**Alternatives.** Keep 3.10 compatibility (what the README said); that costs the `type` aliases and slots
+and buys nothing for a repo only you run. `pyproject.toml` has no `[build-system]` and no dependencies: this
+is run in place, not installed, and the PDF tools' dependencies stay in `tools/requirements-docs.txt`.
+
+**Revert.** `bd91cdb`.
+
+## D-16. Repository housekeeping
+
+**Decided.** `LICENSE` names "Alex Regan" as holder (your name from your email address; change it if you
+want an organization). `.gitignore` no longer ignores every dotfile (`.*`): it lists `.DS_Store`, `.tmp/`,
+`__pycache__/` and `node_modules/`, so `.prettierrc` is tracked and a future `.github/` is not hidden.
+`package.json` loses the unused `main` and `type` fields, gets `author`, and is indented with tabs to match
+`.prettierrc`. I did not run Prettier, so other files may still differ from it.
+
+**Revert.** `c7f13b4`.
+
+## D-17. The review sheet embeds no font path
+
+**Decided.** `npm run corpus` regenerates `corpus/review.html` with no font file, which keeps the committed
+sheet identical on every machine and keeps `test_sheet_is_current` passing. It uses the installed "Alcarin
+Tengwar" font. If the browser shows boxes, `npm run corpus:view` writes `.tmp/review.html` with the font file
+from `package.json` embedded; edit that path for your machine.
+
+**Why.** The committed sheet had your local font path in it, so the freshness test failed everywhere else.
+I could not find out why the installed font was not picked up by name on your machine (the family name in
+the variable font is "Alcarin Tengwar", which the CSS lists first).
+
+**Revert.** `b8b84a0`.
+
+## D-18. CLI behaviour
+
+**Decided.** The script forces UTF-8 on stdin and stdout, since the output is Private Use code points and
+a non-UTF-8 locale used to garble it without any error. `--encoding` is checked by argparse (exit 2).
+Invalid UTF-8 input prints a one-line error and exits 1. A closed pipe (`| head`) exits 1 without a
+traceback. An empty-string argument is treated as the text, not as "read stdin". `main()` takes `argv` and
+returns the exit code.
+
+**Revert.** `e8ca735`.
+
+## D-19. Corpus parser in `tools/`
+
+**Decided.** The corpus table parser moved from `tests/corpus.py` to `tools/corpus.py`, because
+`tools/render_corpus.py` imported from `tests/`. `tools/` is now a package.
+
+**Revert.** `4e74f64`.
+
+## D-20. New tests, CI, and committed PDFs
+
+**Decided.** Added tests for the CLI, the stream layer, the literal round trip, and the spec's consonant,
+ligature, weak-form, word-sign and punctuation tables (`d7b8979`, `324d77d`). Added a GitHub Actions
+workflow that runs the suite on Python 3.14. It does not run ruff, because I could not run it myself to
+confirm it passes. The two PDFs stay committed: they are built from the Markdown by hand, the tests do not
+check them, and a stale PDF is possible after a guide edit. Say so if you would rather build them in CI or
+stop tracking them.
+
+**Revert.** The test commits above; the workflow is the "Run the tests in CI" commit.
 
 ---
 
