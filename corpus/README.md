@@ -57,13 +57,13 @@ Run them all with `npm test`.
 1. Work out the glyphs from the spec first. Writing the expected Glyphs yourself is the point: the test then checks the engine against the rules. If you copy the engine's output into the table, the row can only ever agree with it.
 2. To see what the engine produces, run `python3 shavian2tengwar.py --format literal "𐑞𐑬𐑯"`, or `--inspect WORD` for each step and the rules that fired.
 3. Add the row to the right file and cite the rules it exercises.
-4. Run `npm test`. If `review.html` is stale, run `python3 tools/render_corpus.py` and commit it with the change.
+4. Run `npm test`. If `review.html` is stale, run `npm run corpus` (or `python3 tools/render_corpus.py`) and commit it with the change.
 
 If the engine and the corpus disagree, one of them is wrong. Decide which by reading the rule in `spec/mode.md`, and change the spec first if the rule itself should change.
 
 ## The review sheet
 
-`python3 tools/render_corpus.py` writes `review.html`. It shows each row as Tengwar next to its Shavian, English, IPA, glyph names and rules, and it follows the browser's light or dark setting. It uses the Alcarin Tengwar font if it is installed; otherwise pass `--font path/to/AlcarinTengwar-Regular.ttf`. Open it in a browser to check that marks land where they should, which the text tables cannot show.
+`python3 tools/render_corpus.py` writes `review.html`. It shows each row as Tengwar next to its Shavian, English, IPA, glyph names and rules, and it follows the browser's light or dark setting. It uses the Alcarin Tengwar font if it is installed. The committed copy never embeds a font path, because a path on one machine would make the freshness test fail on every other. If the browser shows boxes, run `npm run corpus:view` (edit the font path in `package.json` to match your machine), which writes a copy with the font embedded to `.tmp/review.html`; that copy is not committed. Open it in a browser to check that marks land where they should, which the text tables cannot show.
 
 ## How the first version was made
 

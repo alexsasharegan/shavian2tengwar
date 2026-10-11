@@ -16,7 +16,8 @@
   "main": "index.js",
   "scripts": {
     "test": "python3 -m unittest discover -s tests -t .",
-    "corpus": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf",
+    "corpus": "python3 tools/render_corpus.py",
+    "corpus:view": "python3 tools/render_corpus.py --font ~/Library/Fonts/AlcarinTengwarVF.ttf -o .tmp/review.html",
     "pdf": "python3 tools/build_pdfs.py"
   },
   "devDependencies": {
