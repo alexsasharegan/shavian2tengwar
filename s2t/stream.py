@@ -1,7 +1,5 @@
 """Text streams: Shavian words, punctuation, and {{verbatim}} escapes."""
 
-from __future__ import annotations
-
 import re
 
 from .glyphs import Cell, Item

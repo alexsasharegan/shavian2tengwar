@@ -1,14 +1,12 @@
 """Encodings map glyph names to a font's code points."""
 
-from __future__ import annotations
-
 from collections.abc import Iterable
 
 from ..glyphs import Cell, Item
 
 
 class Encoding:
-    def __init__(self, name: str, letters: dict, marks: dict, below: frozenset = frozenset()):
+    def __init__(self, name: str, letters: dict[str, str], marks: dict[str, str], below: frozenset[str] = frozenset()) -> None:
         self.name = name
         self.letters = letters
         self.marks = marks

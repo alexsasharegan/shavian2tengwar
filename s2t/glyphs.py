@@ -5,31 +5,28 @@ notation used by Tecendil: ``{tinco}[dot-above]``. Names are defined in
 spec/mode.md; spec/encodings/*.md maps them to code points.
 """
 
-from __future__ import annotations
-
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Union
 
 CELL_RE = re.compile(r"\{([a-z-]+)\}((?:\[[a-z-]+\])*)")
 MARK_RE = re.compile(r"\[([a-z-]+)\]")
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Cell:
     """One base glyph and its marks, in reading order (spec rule K-01)."""
 
     base: str
-    marks: tuple = ()
+    marks: tuple[str, ...] = ()
     # IDs of the spec rules that produced this cell. Not part of equality.
-    rules: tuple = field(default=(), compare=False)
+    rules: tuple[str, ...] = field(default=(), compare=False)
 
     def literal(self) -> str:
         return "{" + self.base + "}" + "".join("[" + m + "]" for m in self.marks)
 
 
-Item = Union[Cell, str]
+type Item = Cell | str
 
 
 def to_literal(items: Iterable[Item]) -> str:

@@ -17,7 +17,7 @@ For the reasoning behind the deviations from community norms, see [philosophy.md
 
 ### Key features
 
-- **No dependencies.** Python 3.10+ standard library only.
+- **No dependencies.** Python 3.14 standard library only (see `pyproject.toml`; `.python-version` pins it for pyenv and uv).
 - **Stream-oriented.** Reads stdin or an argument; writes stdout. Non-Shavian text (Latin letters, spaces, emoji) passes through. Verbatim `{{...}}` blocks are kept, or unwrapped with `--strip-escapes`.
 - **Glyph names for Tecendil.** `--format literal` prints names like `{tinco}[dot-above]`, which you can paste into [tecendil.com](https://www.tecendil.com/).
 - **Rule-by-rule inspector.** `--inspect WORD` shows each step with the spec rule IDs that fired.

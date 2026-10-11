@@ -21,10 +21,8 @@ If a font is not installed, pass its file with --font, for example
 Setup (once):
     pip install -r tools/requirements-docs.txt
 Chrome must be installed; use --browser PATH to point at a different executable.
-Python 3.9+; nothing else from this repo is imported.
+Python 3.14; nothing else from this repo is imported.
 """
-
-from __future__ import annotations
 
 import argparse
 import base64

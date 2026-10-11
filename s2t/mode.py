@@ -5,11 +5,9 @@ spec rules that produced it, so the corpus can check that the rules it cites
 really fire.
 """
 
-from __future__ import annotations
+from collections.abc import Iterable
 
-from typing import Optional
-
-from .glyphs import Cell
+from .glyphs import Cell, Item
 
 # --- C-01: consonants -------------------------------------------------------
 CONSONANTS = {
@@ -84,7 +82,8 @@ WEAK_FORMS = {
     "𐑓": ("𐑓𐑼", "L-10"),
 }
 
-Letter = tuple[str, tuple[str, ...]]  # (Shavian letter, rules that produced it)
+type Letter = tuple[str, tuple[str, ...]]  # (Shavian letter, rules that produced it)
+type Trace = list[tuple[str, list[Item]]]  # (consumed text, items it produced)
 
 
 def _expand(word: str, extra: tuple[str, ...] = ()) -> list[Letter]:
@@ -98,7 +97,7 @@ def _expand(word: str, extra: tuple[str, ...] = ()) -> list[Letter]:
     return out
 
 
-def _uniq(*groups) -> tuple[str, ...]:
+def _uniq(*groups: Iterable[str]) -> tuple[str, ...]:
     seen: list[str] = []
     for g in groups:
         for r in g:
@@ -107,7 +106,7 @@ def _uniq(*groups) -> tuple[str, ...]:
     return tuple(seen)
 
 
-def translate_word(word: str, trace: Optional[list] = None) -> list:
+def translate_word(word: str, trace: Trace | None = None) -> list[Item]:
     """Translate one Shavian word into a list of Cells.
 
     Letters outside the Shavian alphabet are passed through as raw strings.
@@ -129,15 +128,15 @@ def translate_word(word: str, trace: Optional[list] = None) -> list:
         letters = _expand(expansion, ("W-04", rule))
     else:
         letters = _expand(word)
-    cells: list = []
-    pending: Optional[tuple[str, tuple[str, ...]]] = None  # (mark, rules)
+    cells: list[Item] = []
+    pending: tuple[str, tuple[str, ...]] | None = None  # (mark, rules)
 
-    def step(consumed: str, *emitted):
+    def step(consumed: str, *emitted: Cell) -> None:
         cells.extend(emitted)
         if trace is not None:
             trace.append((consumed, list(emitted)))
 
-    def flush_orphan(consumed: str = ""):
+    def flush_orphan(consumed: str = "") -> None:
         """V-02: a short vowel with no consonant after it sits on {telco}."""
         nonlocal pending
         if pending is not None:
@@ -145,7 +144,7 @@ def translate_word(word: str, trace: Optional[list] = None) -> list:
             step(consumed, Cell("telco", (mark,), _uniq(rules, ("V-02",))))
             pending = None
 
-    def cluster(base: str, consumed: str, rules, nasal=False, geminate=False):
+    def cluster(base: str, consumed: str, rules: Iterable[str], nasal: bool = False, geminate: bool = False) -> None:
         """Emit a consonant cluster in K-01 order: vowel, nasal, gemination."""
         nonlocal pending
         marks: list[str] = []

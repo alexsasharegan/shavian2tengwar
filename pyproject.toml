@@ -1,0 +1,22 @@
+# Project metadata and tool settings. This is a script-and-library repo, not an
+# installable package: run it in place. Dependencies for building the PDFs live in
+# tools/requirements-docs.txt; the engine itself needs only the standard library.
+[project]
+name = "shavian2tengwar"
+version = "1.0.0"
+description = "Convert Shavian text into Alcarin Tengwar, using Shavian as a phonemic intermediate representation."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Alex Regan", email = "alex@alexregan.com" }]
+dependencies = []
+
+[tool.ruff]
+target-version = "py314"
+line-length = 120
+
+[tool.ruff.lint]
+# Ruff's defaults (pycodestyle E4/E7/E9 and pyflakes F) plus pyupgrade, which flags
+# deprecated typing aliases and syntax that newer Pythons make unnecessary.
+select = ["E4", "E7", "E9", "F", "UP"]
