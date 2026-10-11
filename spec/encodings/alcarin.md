@@ -88,7 +88,7 @@ Alcarin has no hyphen glyph, so `-` uses `{section-mark}` (U-04).
 | AE-01 | A cluster is its base code point followed by its mark code points, ordered **outward from the base**, because the font stacks each mark beyond the one before it. The marks above come first, nearest the base first, so K-01's top-to-bottom order is reversed: the nasalizer `E050`, then the vowel mark. The marks below (`E051`, `E045`) follow. For `{tinco}[dot-above][bar-above][bar-below]` this gives `E000 E050 E044 E051`. |
 | AE-02 | The mode's nuquerna choice (S-02) is implemented by swapping `E024`/`E026` for `E025`/`E027`. |
 | AE-03 | Mark stacking was verified with HarfBuzz (through Raqm and in Chromium). Other renderers have not been checked. |
-| AE-04 | The mode never emits `U+E014` (óre, R-02), `U+E048` (double acute, V-21), a doubled `U+E04C` (V-24), or `U+E056` (three inverted dots, formerly TRAP; see DECISIONS.md D-12). They stay in the font but are reserved. |
+| AE-04 | The mode never emits `U+E014` (óre, R-02), `U+E048` (double acute, V-21), a doubled `U+E04C` (V-24), or `U+E056` (three inverted dots, formerly TRAP; see `docs/adr/0004-vowel-marks-and-declared-identities.md`). They stay in the font but are reserved. |
 
 ## 5. Alcarin glyphs the mode does not use
 

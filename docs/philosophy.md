@@ -38,7 +38,7 @@ This architectural choice necessitates several deliberate deviations from the co
 
 **The Community Norm:** Specific shorthand logograms are used for common function words, such as _Extended Ando_ (`U+E01C`) for "the" and _Extended Umbar_ (`U+E01D`) for "of". Some community variants append the under-dot to these extended stems to account for a silent 'e'.
 
-**Our Engine:** We adopted the core Appendix E logograms. _the_ and _of_ stay unadorned. _and_ is written _Ando_ + _Nasal Bar Above_ + _Under-dot_ (`U+E004 U+E050 U+E045`). Because the schwa now sits above the base as a breve, the under-dot no longer competes with a vowel tehta and is free to serve as a word-sign here. Shavian has two more word signs, 𐑑 _to_ and 𐑓 _for_, that the Tengwar community has no settled shorthand for. They are written as their weak forms (/tə/, /fər/), which keeps them apart from _too/two_ and _four_ just as the Shavian signs do. This part is provisional; see `DECISIONS.md`.
+**Our Engine:** We adopted the core Appendix E logograms. _the_ and _of_ stay unadorned. _and_ is written _Ando_ + _Nasal Bar Above_ + _Under-dot_ (`U+E004 U+E050 U+E045`). Because the schwa now sits above the base as a breve, the under-dot no longer competes with a vowel tehta and is free to serve as a word-sign here. Shavian has two more word signs, 𐑑 _to_ and 𐑓 _for_, that the Tengwar community has no settled shorthand for. They are written as their weak forms (/tə/, /fər/), which keeps them apart from _too/two_ and _four_ just as the Shavian signs do. This part is provisional; see [ADR-0005](./adr/0005-weak-forms-for-to-and-for.md).
 
 ### 6. R Is Always Rómen
 

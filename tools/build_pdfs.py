@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the PDF editions of the Markdown documents.
 
-    python3 tools/build_pdfs.py                    # language-guide.pdf, philosophy.pdf, corpus/review.pdf
+    python3 tools/build_pdfs.py                    # docs/language-guide.pdf, docs/philosophy.pdf, corpus/review.pdf
     python3 tools/build_pdfs.py README.md          # any other Markdown file
     python3 tools/build_pdfs.py corpus             # only the corpus review sheet
     python3 tools/build_pdfs.py --out-dir build/   # write somewhere else
@@ -39,7 +39,7 @@ sys.path.insert(0, str(ROOT))
 
 CORPUS = "corpus"  # not a file: the review sheet, rendered from corpus/*.md by tools/render_corpus.py
 CORPUS_PDF = ROOT / "corpus" / "review.pdf"
-DEFAULT_DOCS = ["language-guide.md", "philosophy.md", CORPUS]
+DEFAULT_DOCS = ["docs/language-guide.md", "docs/philosophy.md", CORPUS]
 FONT_STACK = ["Courier", "Bernie Sans Beta", "Alcarin Tengwar"]
 
 CSS = """

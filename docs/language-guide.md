@@ -128,7 +128,7 @@ The double acute (`U+E048`), a doubled left curl and the three inverted dots (`U
 
 By using Shavian as an Intermediate Representation (IR), transliteration bypasses non-phonetic English orthography entirely. Each Shavian word becomes a list of cells (one base glyph plus its marks), which an encoding then turns into code points.
 
-**The rules themselves live in [`spec/mode.md`](./spec/mode.md); this part is a reader's summary.** The tables below were generated from the engine, so they show what the converter actually writes. If they disagree with the spec, the spec wins.
+**The rules themselves live in [`spec/mode.md`](../spec/mode.md); this part is a reader's summary.** The tables below were generated from the engine, so they show what the converter actually writes. If they disagree with the spec, the spec wins.
 
 ### 1. Consonants
 
@@ -203,7 +203,7 @@ The glide is written last and the vowel mark first. R-vowels are not separate gl
 
 ### 4. The Big Five: Shorthand Logograms
 
-Shavian writes five very common words as a single letter. *the*, *of* and *and* have Tengwar shorthands. *to* and *for* do not: they are written as their weak forms /tə/ and /fər/, which keeps them distinct from *too/two* and *four*. This replaces an older version of this guide that gave *to* and *for* as the bare letters Tinco and Formen (see `DECISIONS.md`, D-01).
+Shavian writes five very common words as a single letter. *the*, *of* and *and* have Tengwar shorthands. *to* and *for* do not: they are written as their weak forms /tə/ and /fər/, which keeps them distinct from *too/two* and *four*. This replaces an older version of this guide that gave *to* and *for* as the bare letters Tinco and Formen (see [ADR-0005](./adr/0005-weak-forms-for-to-and-for.md)).
 
 | Target word | Shavian | Tengwar | Glyph names | Code points | Rules |
 | :--- | :--- | :--- | :--- | :--- | :--- |

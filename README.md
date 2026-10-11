@@ -11,9 +11,9 @@ The rules live in a specification, not in the code:
 - [`spec/mode.md`](./spec/mode.md): the phonemic English Tengwar mode. Every rule has an ID, a status and its IPA, and the code is held to it.
 - [`spec/encodings/alcarin.md`](./spec/encodings/alcarin.md): which Alcarin code point each glyph name maps to.
 - [`corpus/`](./corpus): short phrases and minimal pairs that double as the test suite. Open [`corpus/review.html`](./corpus/review.html) to see every one rendered in Tengwar.
-- [`DECISIONS.md`](./DECISIONS.md): decisions made without review, to check and revert if needed.
+- [`docs/adr/`](./docs/adr/README.md): why each rule and structure was chosen, and how to revert it. [`docs/ROADMAP.md`](./docs/ROADMAP.md) shows what is in progress.
 
-For the reasoning behind the deviations from community norms, see [philosophy.md](./philosophy.md). For a visual guide to the glyphs and marks, see [language-guide.md](./language-guide.md). The PDF versions of those two documents are built from the Markdown. After editing either one, rebuild its PDF with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
+For the reasoning behind the deviations from community norms, see [docs/philosophy.md](./docs/philosophy.md). For a visual guide to the glyphs and marks, see [docs/language-guide.md](./docs/language-guide.md). The PDF versions of those two documents are built from the Markdown. After editing either one, rebuild its PDF with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
 
 ### Key features
 
@@ -43,10 +43,14 @@ For the reasoning behind the deviations from community norms, see [philosophy.md
 ├── tools/
 │   ├── corpus.py             #   reads corpus/*.md (used by the tests and render_corpus.py)
 │   ├── render_corpus.py      #   regenerates corpus/review.html
-│   └── build_pdfs.py         #   builds language-guide.pdf and philosophy.pdf
-├── language-guide.md/.pdf    # visual guide to the glyphs and marks (corpus/review.pdf is built the same way)
-├── philosophy.md/.pdf        # why the mode deviates from community norms
-├── DECISIONS.md              # decisions made without review
+│   └── build_pdfs.py         #   builds the PDFs of the two guides and corpus/review.pdf
+├── docs/
+│   ├── language-guide.md/.pdf  # visual guide to the glyphs and marks
+│   ├── philosophy.md/.pdf      # why the mode deviates from community norms
+│   ├── adr/                    # decision records (why things are the way they are)
+│   ├── projects/               # one folder per piece of work: README, TASKS, LOG
+│   └── ROADMAP.md              # what is in progress
+├── AGENTS.md                 # instructions for AI agents (CLAUDE.md imports it)
 ├── pyproject.toml            # Python floor (3.14) and ruff settings
 ├── package.json              # npm scripts: test, corpus, corpus:view, pdf
 └── .github/workflows/        # CI: runs the tests on Python 3.14
@@ -142,13 +146,13 @@ python3 -m unittest discover -s tests -t .      # or: npm test
 
 The tests need Python 3.14. GitHub Actions runs them on every push (`.github/workflows/test.yml`).
 
-To change a rule, edit `spec/mode.md`, then the engine, then add or update corpus rows.
+To change a rule, edit `spec/mode.md`, then the engine, then add or update corpus rows, and record why in an ADR (`docs/adr/`).
 
 ---
 
 ## Building the PDFs
 
-`language-guide.pdf`, `philosophy.pdf` and `corpus/review.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
+`docs/language-guide.pdf`, `docs/philosophy.pdf` and `corpus/review.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
 
 ```bash
 npm run setup:docs                           # once: makes .venv and installs the dependencies

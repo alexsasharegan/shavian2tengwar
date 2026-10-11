@@ -204,8 +204,8 @@ we do, in every place they occur. For *to* and *for* the evidence is thin:
   vowel mark below and breaks P-04. Aranoss writes *to* out in full as `{tinco}{aara}[left-curl]`.
 
 So the Tengwar community has no settled shorthand for *to*, and one Tolkien-based form for *for*. We
-adopt none. (The earlier `language-guide.md` listed *to* as a bare Tinco and *for* as a bare Formen,
-as deliberate "unadorned base" shorthands. This mode replaces them; see DECISIONS.md.) Their signs
+adopt none. (The earlier `docs/language-guide.md` listed *to* as a bare Tinco and *for* as a bare Formen,
+as deliberate "unadorned base" shorthands. This mode replaces them; see `docs/adr/0005-weak-forms-for-to-and-for.md`.) Their signs
 exist in Shavian to tell homophones apart (𐑑 *to* from 𐑑𐑵 *too*/*two*, and 𐑓 *for* from 𐑓𐑹 *four*),
 so the output must still keep them distinct. A bare 𐑑 or 𐑓 is the **weak form**, which for a rhotic RP
 baseline ends in a schwa. They are expanded as spellings, as the ligatures are (L-09, L-10). That needs
@@ -271,20 +271,11 @@ same sound.
 
 *plight* and *polite* differ only by the breve. That is P-03 at work.
 
-## 11. History: changes made to the old engine
+## 11. History
 
-The engine was rewritten to this spec on the `dev/refactor` branch. The old behaviour that this
-replaced, for anyone reading old commits:
-
-- CSUR output and `--csur` were dropped.
-- FLEECE, PALM, THOUGHT and GOOSE became forced carriers (V-21 to V-24).
-- STRUT uses `E054`; the doubled curl and the double acute no longer appear.
-- The r-rule and `{oore}` were removed; the R-vowels are ligature expansions (section 8).
-- The nuquerna trigger list gained the breve and grave (S-02).
-- Mark order follows K-01 (vowel, then nasal bar, then gemination bar).
-- 𐑾 is 𐑦𐑩 (L-08); whole-word 𐑑 and 𐑓 are weak forms (L-09, L-10).
-- `test_collisions.py` became `tests/test_identities.py`, which allows only the declared identities.
-- All punctuation in U-01 to U-05 is mapped.
+The engine was rewritten to this spec on the `dev/refactor` branch. What the old engine did
+differently, and why each choice was made, is recorded in `docs/`: the change list is in
+`docs/projects/0001-engine-rewrite/LOG.md`, and the decisions are in `docs/adr/`.
 
 ## 12. Open questions
 
