@@ -210,3 +210,27 @@ npm run corpus                             # review.html unchanged
 - **Key findings / Blockers resolved:** Nothing blocks the merge.
 - **Context state for next thread:** Merge PR #1 with a merge commit, then mark the project Complete
   and move it to Done in the roadmap. Rebuild `docs/philosophy.pdf`.
+
+## 2026-10-11 — Merged
+
+### Context & Decisions
+
+- Alex rebuilt the PDFs (`5c08c26`) and merged PR #1 with a merge commit, `193cca5`, so the branch
+  hashes cited by the ADRs survive on `main`. `dev/refactor` was deleted.
+- The regenerated `corpus/review.pdf` was compared with the copy Alex had already shared: all 21
+  pages render identically and the extracted text matches; only the PDF creation date differs. It
+  did not need resharing.
+
+### Commands & Operations Executed
+
+```bash
+pdftoppm -r 60 -png <shared copy> old/p && pdftoppm -r 60 -png corpus/review.pdf new/p
+# md5 of every page image: identical. pdftotext -layout of both: identical.
+gh pr view 1 --json state,mergeCommit    # MERGED 193cca5
+```
+
+### LLM Session Summary
+
+- **Thread purpose:** Close the project after the merge.
+- **Key findings / Blockers resolved:** None outstanding.
+- **Context state for next thread:** Complete. Moved to Done in the roadmap.

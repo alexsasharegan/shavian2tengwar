@@ -1,8 +1,8 @@
 # 0001 — Engine Rewrite
 
-> **Status:** Approved; complete when PR #1 merges
+> **Status:** Complete (PR #1, merged in `193cca5`)
 > **Created:** 2026-10-11 (bootstrapped after the fact; the work started at `d729c2c`)
-> **Branch:** `dev/refactor`
+> **Branch:** `dev/refactor` (merged and deleted)
 
 ## Objective
 

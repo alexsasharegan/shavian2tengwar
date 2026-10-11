@@ -36,5 +36,5 @@
 - [x] Run ruff once and fix or record what it reports (ruff 0.17.0: two intentional UP036 guards, marked `noqa`)
 - [x] `ruff format` the Python (`1a43c0c`) and run `ruff check` and `ruff format --check` in CI (`6886431`)
 - [x] Rebuild the PDFs (`npm run pdf`): the guides changed in project 0002 (`3a135c6`)
-- [ ] Rebuild `docs/philosophy.pdf` (`npm run pdf`): its text changed with the approval
-- [ ] Merge PR #1 (`dev/refactor` into `main`) with a merge commit, not squash or rebase
+- [x] Rebuild `docs/philosophy.pdf` (`npm run pdf`): its text changed with the approval (`5c08c26`)
+- [x] Merge PR #1 (`dev/refactor` into `main`) with a merge commit, not squash or rebase (`193cca5`)
