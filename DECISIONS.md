@@ -23,6 +23,7 @@ spec, corpus and engine out of step; the "Revert" lines say what else has to go 
 | D-10 | Documentation approach (README, guide, philosophy, PDFs) | adopted | docs commits |
 | D-11 | Commit author | adopted | not revertible; see below |
 | D-12 | TRAP uses `[triple-dot-above]`; `E056` retired | **approved by you** | the "TRAP shares PALM's mark" commit |
+| D-13 | Scripted PDF build (`tools/build_pdfs.py`) | adopted | the "scripted PDF build" commit |
 
 ---
 
@@ -204,6 +205,24 @@ diphthong is its nucleus plus its glide. I scanned all 111,214 ReadLex entries: 
 expands to 𐑘𐑵). You said *Malawian* is fine as it comes out.
 
 **Revert.** The commit of this name. It also reverts I-04 and I-05 and restores `E056`.
+
+## D-13. Scripted PDF build
+
+**Decided.** `tools/build_pdfs.py` builds both PDFs from the Markdown: markdown-it-py to HTML, then Chrome
+print-to-PDF through Playwright, Letter size, Courier / Bernie Sans Beta / Alcarin Tengwar as the font
+stack. Run it with `npm run pdf`. By default it writes over the PDFs next to the sources.
+
+**Why.** It replaces copy-pasting into Obsidian. Obsidian prints with Chromium too, so the look is close
+(the CSS is my approximation of the old output, not Obsidian's theme).
+
+**Not verified.** I could test the pipeline only in the cloud, with Alcarin loaded from a file and without
+Bernie Sans Beta, so the Shavian letters came out in a fallback font there. I did not run it over the
+committed PDFs. The first run on your machine is the real check on fonts and page breaks.
+
+**Alternatives.** A Node pipeline (the repo already has `package.json`), which I could not install from the
+cloud; or `pandoc` plus LaTeX, which handles these fonts badly.
+
+**Revert.** The commit of this name. Nothing else depends on it.
 
 ---
 

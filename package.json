@@ -15,7 +15,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "python3 -m unittest discover -s tests -t ."
+    "test": "python3 -m unittest discover -s tests -t .",
+    "pdf": "python3 tools/build_pdfs.py"
   },
   "devDependencies": {
     "prettier": "^3.9.9"

@@ -13,7 +13,7 @@ The rules live in a specification, not in the code:
 - [`corpus/`](./corpus): short phrases and minimal pairs that double as the test suite. Open [`corpus/review.html`](./corpus/review.html) to see every one rendered in Tengwar.
 - [`DECISIONS.md`](./DECISIONS.md): decisions made without review, to check and revert if needed.
 
-For the reasoning behind the deviations from community norms, see [philosophy.md](./philosophy.md). For a visual guide to the glyphs and marks, see [language-guide.md](./language-guide.md). The PDF versions of those two documents are older than the Markdown; the Markdown is current.
+For the reasoning behind the deviations from community norms, see [philosophy.md](./philosophy.md). For a visual guide to the glyphs and marks, see [language-guide.md](./language-guide.md). The PDF versions of those two documents are older than the Markdown; the Markdown is current. Rebuild them with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
 
 ### Key features
 
@@ -41,6 +41,7 @@ For the reasoning behind the deviations from community norms, see [philosophy.md
 ├── corpus/                   # test cases; review.html is the visual reference
 ├── tests/                    # unittest suite
 ├── tools/render_corpus.py    # regenerates corpus/review.html
+├── tools/build_pdfs.py       # builds language-guide.pdf and philosophy.pdf
 └── DECISIONS.md              # unreviewed decisions
 ```
 
@@ -130,3 +131,19 @@ python3 -m unittest discover -s tests -t .      # or: npm test
 - `tests/test_review_sheet.py`: `corpus/review.html` must be current. Regenerate it with `python3 tools/render_corpus.py`.
 
 To change a rule, edit `spec/mode.md`, then the engine, then add or update corpus rows.
+
+---
+
+## Building the PDFs
+
+`language-guide.pdf` and `philosophy.pdf` are built from the Markdown by `tools/build_pdfs.py`: Markdown to HTML with markdown-it-py, then Chrome's print-to-PDF through Playwright (the same engine Obsidian prints with).
+
+```bash
+pip install -r tools/requirements-docs.txt   # once
+npm run pdf                                  # or: python3 tools/build_pdfs.py
+python3 tools/build_pdfs.py --out-dir build/ # write elsewhere instead of over the committed PDFs
+```
+
+- It needs Google Chrome installed (or `--browser PATH`).
+- Text uses the font stack **Courier, Bernie Sans Beta, Alcarin Tengwar**, falling back one glyph at a time: Latin in Courier, Shavian in Bernie Sans Beta, Tengwar in Alcarin. All three must be installed, or load a file with `--font "Alcarin Tengwar=/path/to/AlcarinTengwar-Regular.otf"`. The script warns if one is missing, and `--strict` makes that an error.
+- Pass other Markdown files as arguments to build them too.
