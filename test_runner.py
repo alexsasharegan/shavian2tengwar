@@ -10,7 +10,7 @@ def to_hex_string(text: str) -> str:
     return " ".join([f"U+{ord(ch):04X}" for ch in text])
 
 
-def run_tests(cmd: str, manifest_path: str = "test_cases_everson_3.json") -> bool:
+def run_tests(cmd: str, manifest_path: str = "test_cases_everson.json") -> bool:
     with open(manifest_path, "r", encoding="utf-8") as f:
         cases = json.load(f)
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--manifest",
-        default="test_cases_everson_3.json",
+        default="test_cases_everson.json",
         help="Path to test manifest JSON file",
     )
     args = parser.parse_args()

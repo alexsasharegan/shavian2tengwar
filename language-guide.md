@@ -60,7 +60,7 @@ Tall and Deep consonants form physical pairs where rotating or flipping a Tall (
 
 ---
 
-## Part 2: Tolkien's Tengwar & Everson 2001 (Alcarin) Standard
+## Part 2: Tolkien's Tengwar & Alcarin Tengwar Standard
 
 Tengwar is a featural abugida created by J.R.R. Tolkien. Primary consonants (_tengwar_) represent structural articulation features, while vowels (_tehtar_) sit above or below consonant bases as diacritics.
 
@@ -84,7 +84,7 @@ In Tolkien's standard layout, primary consonants are organized into **4 Series**
 
 ---
 
-### 2. Additional & Irregular Tengwar (Everson 2001 / Alcarin Standard)
+### 2. Additional & Irregular Tengwar (Alcarin Standard)
 
 Beyond the standard 24-tengwa grid, specialized base characters handle liquids, sibilants, glottal sounds, and silent carriers:
 
@@ -98,7 +98,7 @@ Beyond the standard 24-tengwa grid, specialized base characters handle liquids, 
 | ****        | `U+E027`     | _Esse Nuquerna_             | Inverted Z-curve (used when carrying top tehta)                                          |
 | ****        | `U+E028`     | _Hyarmen_                   | Downward stem with left hook (/h/)                                                       |
 | ****        | **`U+E02C`** | **_Ára_ (Long Carrier)**    | Descending vertical stem (dotless 'j', drops below baseline) carrying long orphan vowels |
-| ****        | `U+E02D`     | _Extended Carrier_          | Ascending vertical stem (starts above x-height)                                          |
+| ****        | `U+E02D`     | _Halla_ (unused by engine)  | Ascending vertical stem (starts above x-height); not a carrier                           |
 | ****        | `U+E02E`     | **_Telco_ (Short Carrier)** | Neutral x-height vertical stem (dotless 'i') carrying short orphan vowels                |
 
 ---
@@ -111,12 +111,12 @@ In English General Mode, vowel diacritics (_tehtar_) sit directly above or below
 | :--------: | :--------- | :------------- | :------------------- | :---------------------------------- |
 |   ****    | `U+E040`   | _a-tehta_      | /æ/, /ɑː/, /aɪ/      | Three dots in a triangle above base |
 |   ****    | `U+E044`   | _i-tehta_      | /ɪ/, /iː/            | Single dot above base               |
-|   ****    | `U+E045`   | _schwa-tehta_  | /ə/ (schwa)          | Single dot **below** base           |
+|   ****    | `U+E053`   | _schwa-tehta_  | /ə/ (schwa)          | Breve above base                    |
 |   ****    | `U+E046`   | _e-tehta_      | /ɛ/, /eɪ/            | Single acute stroke above base      |
-|   ****    | `U+E047`   | _long e-tehta_ | /iː/ (FLEECE)        | Double acute stroke above base      |
+|   ****    | `U+E048`   | _long e-tehta_ | /iː/ (FLEECE)        | Double acute stroke above base      |
 |   ****    | `U+E04A`   | _o-tehta_      | /ɒ/, /ɔː/, /oʊ/      | Right-facing curl above base        |
 |   ****    | `U+E04C`   | _u-tehta_      | /ʌ/, /ʊ/, /uː/       | Left-facing curl above base         |
-|   ****    | `U+E04D`   | _long u-tehta_ | /uː/ (GOOSE)         | Double left-facing curl above base  |
+|   ****    | `U+E04C` ×2 | _long u-tehta_ | /uː/ (GOOSE)       | Doubled left-facing curl above base |
 |   ****    | `U+E050`   | _nasal bar_    | Preconsonantal nasal | Horizontal tilde above base stop    |
 
 ---
@@ -160,7 +160,7 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 | /eɪ/        | **𐑱**         | ****          | _Anna_ + _e-tehta_              | `U+E016 U+E046`        | FACE diphthong: Offglide _Anna_ base + _e-tehta_                |
 | /æ/         | **𐑨**         | ****          | _a-tehta_                       | `U+E040`               | Attach three dots above next available consonant                |
 | /aɪ/        | **𐑲**         | ****          | _Anna_ + _a-tehta_              | `U+E016 U+E040`        | PRICE diphthong: Offglide _Anna_ base + _a-tehta_               |
-| /ə/         | **𐑩**         | ****          | _schwa-tehta_                   | `U+E045`               | Attach single dot **below** next available consonant            |
+| /ə/         | **𐑩**         | ****          | _schwa-tehta_                   | `U+E053`               | Attach breve above next available consonant                     |
 | /ʌ/         | **𐑳**         | ****          | _u-tehta_                       | `U+E04C`               | STRUT vowel: Attach left curl above next available consonant    |
 | /ɒ/         | **𐑪**         | ****          | _o-tehta_                       | `U+E04A`               | LOT vowel: Attach right curl above next available consonant     |
 | /oʊ/        | **𐑴**         | ****          | _Vala_ + _o-tehta_              | `U+E015 U+E04A`        | GOAT diphthong: Offglide _Vala_ base + _o-tehta_                |
@@ -168,13 +168,13 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 | /uː/        | **𐑵**         | ****          | _Ára_ + _u-tehta_               | `U+E02C U+E04C`        | GOOSE vowel: Attach to Long Carrier or double curl on base      |
 | /aʊ/        | **𐑬**         | ****          | _Vala_ + _a-tehta_              | `U+E015 U+E040`        | MOUTH diphthong: Offglide _Vala_ base + _a-tehta_               |
 | /ɔɪ/        | **𐑶**         | ****          | _Anna_ + _o-tehta_              | `U+E016 U+E04A`        | CHOICE diphthong: Offglide _Anna_ base + _o-tehta_              |
-| /ɑː/        | **𐑭**         | ****          | _a-tehta_                       | `U+E040`               | PALM vowel: Attach three dots above next available consonant    |
-| /ɔː/        | **𐑷**         | ****          | _awe-tehta_                     | `U+E04A`               | THOUGHT vowel: Attach right curl above next available consonant |
+| /ɑː/        | **𐑭**         | ****          | _a-tehta_                       | `U+E040`               | PALM vowel: three dots above next consonant; orphan: _Ára_ + a-tehta (`U+E02C U+E040`) |
+| /ɔː/        | **𐑷**         | ****          | _awe-tehta_                     | `U+E04A`               | THOUGHT vowel: right curl above next consonant; orphan: _Ára_ + o-tehta (`U+E02C U+E04A`) |
 | /iə/        | **𐑾**         | ****          | _Anna_ + _i-tehta_              | `U+E016 U+E044`        | IAN ligature: Offglide _Anna_ base + _i-tehta_                  |
-| /juː/       | **𐑿**         | ****          | _Anna_ + _u-tehta_              | `U+E016 U+E04C`        | YEW ligature: Offglide _Anna_ base + _u-tehta_                  |
+| /juː/       | **𐑿**         | ****          | _Anna_ + _long u-tehta_         | `U+E016 U+E04C U+E04C` | YEW ligature: Offglide _Anna_ base + doubled u-tehta            |
 | /ɑːr/       | **𐑸**         | **** / **** | _Rómen_ / _Óre_ + _a-tehta_     | `U+E020/U+E014 U+E040` | START vowel: Decomposes into R-base + _a-tehta_                 |
 | /ɔːr/       | **𐑹**         | **** / **** | _Rómen_ / _Óre_ + _o-tehta_     | `U+E020/U+E014 U+E04A` | NORTH vowel: Decomposes into R-base + _o-tehta_                 |
-| /ər/        | **𐑼**         | **** / **** | _Rómen_ / _Óre_ + _schwa-tehta_ | `U+E020/U+E014 U+E045` | lettER vowel: Decomposes into R-base + _schwa-tehta_            |
+| /ər/        | **𐑼**         | **** / **** | _Rómen_ / _Óre_ + _schwa-tehta_ | `U+E020/U+E014 U+E053` | lettER vowel: Decomposes into R-base + _schwa-tehta_            |
 | /ɪər/       | **𐑽**         | **** / **** | _Rómen_ / _Óre_ + _i-tehta_     | `U+E020/U+E014 U+E044` | NEAR vowel: Decomposes into R-base + _i-tehta_                  |
 | /ɛər/       | **𐑺**         | **** / **** | _Rómen_ / _Óre_ + _e-tehta_     | `U+E020/U+E014 U+E046` | SQUARE vowel: Decomposes into R-base + _e-tehta_                |
 | /ɜːr/       | **𐑻**         | **** / **** | _Rómen_ / _Óre_ + _u-tehta_     | `U+E020/U+E014 U+E04C` | NURSE vowel: Decomposes into R-base + _u-tehta_                 |
@@ -185,8 +185,8 @@ By using Shavian as an Intermediate Representation (IR), transliteration bypasse
 
 | Target Word | Shavian IR | Tengwar Output | Glyph Name           | Code Point Stream | State Machine Rule                 |
 | :---------- | :--------- | :------------- | :------------------- | :---------------- | :--------------------------------- |
-| _the_       | **𐑞**      | ****          | _Extended Anta_      | `U+E01C`          | Standalone logogram for "the"      |
-| _of_        | **𐑝**      | ****          | _Extended Ampa_      | `U+E01D`          | Standalone logogram for "of"       |
-| _and_       | **𐑯**      | ****         | _Ando_ + _Nasal Bar_ | `U+E004 U+E050`   | Standalone shorthand for "and"     |
+| _the_       | **𐑞**      | ****          | _Extended Ando_      | `U+E01C`          | Standalone logogram for "the"      |
+| _of_        | **𐑝**      | ****          | _Extended Umbar_     | `U+E01D`          | Standalone logogram for "of"       |
+| _and_       | **𐑯**      | ****         | _Ando_ + _Nasal Bar_ + _Under-dot_ | `U+E004 U+E050 U+E045` | Standalone shorthand for "and" |
 | _to_        | **𐑑**      | ****          | _Tinco_ Base         | `U+E000`          | Unadorned base shorthand for "to"  |
 | _for_       | **𐑓**      | ****          | _Formen_ Base        | `U+E009`          | Unadorned base shorthand for "for" |

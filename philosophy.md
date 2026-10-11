@@ -11,10 +11,10 @@ This architectural choice necessitates several deliberate deviations from the co
 
 ## Deliberate Deviations from Community Norms
 
-### 1. Repurposing the Under-dot (`unutixë`) for the Schwa
+### 1. The Schwa as a Breve Above (`U+E053`)
 
 **The Community Norm:** Standard English modes explicitly reserve the under-dot diacritic to represent a silent 'e' on the preceding consonant (e.g., the 'e' in _dade_).
-**Our Engine:** Because Shavian maps pure sound, silent letters do not exist in our data stream. Rather than discarding the diacritic, we repurposed the under-dot to represent the unstressed schwa (`/ə/`). English relies heavily on vowel reduction; deploying the under-dot exclusively for the schwa allows us to distinguish between fully stressed and reduced vowels with a precision that standard orthographic modes lack.
+**Our Engine:** Because Shavian maps pure sound, silent letters do not exist in our data stream. We leave the under-dot alone and write the unstressed schwa (`/ə/`) as a breve above the base. English relies heavily on vowel reduction, and a dedicated schwa tehta lets us distinguish fully stressed from reduced vowels with a precision that standard orthographic modes lack. Placing it above keeps every vowel tehta in one position, and avoids repurposing a mark the community already reads as silent 'e'.
 
 ### 2. True Phonetic Gemination (The Under-bar `U+E051`)
 
@@ -33,8 +33,8 @@ This architectural choice necessitates several deliberate deviations from the co
 
 ### 5. Unadorned Logograms
 
-**The Community Norm:** Specific shorthand logograms are used for common function words, such as _Extended Anta_ (, `U+E01C`) for "the" and _Extended Ampa_ (, `U+E01D`) for "of". Some community variants append the under-dot to these extended stems to account for a silent 'e'.
-**Our Engine:** We adopted the core Appendix E logograms but strictly avoid adorning them. Because our engine fiercely protects the under-dot as the schwa, placing it under an extended carrier as a static word-sign would introduce visual and mechanical confusion. Our logograms remain unadorned to preserve the semantic integrity of the vowel diacritics.
+**The Community Norm:** Specific shorthand logograms are used for common function words, such as _Extended Ando_ (, `U+E01C`) for "the" and _Extended Umbar_ (, `U+E01D`) for "of". Some community variants append the under-dot to these extended stems to account for a silent 'e'.
+**Our Engine:** We adopted the core Appendix E logograms. _the_ and _of_ stay unadorned. _and_ is written _Ando_ + _Nasal Bar Above_ + _Under-dot_ (`U+E004 U+E050 U+E045`). Because the schwa now sits above the base as a breve, the under-dot no longer competes with a vowel tehta and is free to serve as a word-sign here.
 
 ---
 

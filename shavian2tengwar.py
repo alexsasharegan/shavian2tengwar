@@ -35,8 +35,8 @@ TENGWA_VALA = "\ue015"
 TENGWA_ANNA = "\ue016"
 
 # --- Standalone Appendix E Logograms ---
-LOGOGRAM_THE = "\ue01c"  # Extended Anta ("the")
-LOGOGRAM_OF = "\ue01d"  # Extended Ampa ("of")
+LOGOGRAM_THE = "\ue01c"  # Extended Ando ("the")
+LOGOGRAM_OF = "\ue01d"  # Extended Umbar ("of")
 LOGOGRAM_AND = "\ue004\ue050\ue045"  # Ando + Nasal Bar Above ("and")
 
 # --- Tehtar (Vowel & Modifier Diacritics) ---
@@ -48,7 +48,7 @@ TEHTA_O_ABOVE = "\ue04a"  # Right curl above (o-tehta)
 TEHTA_U_ABOVE = "\ue04c"  # Left curl above (u-tehta)
 TEHTA_LONG_U_ABOVE = "\ue04c\ue04c"  # Double left curl above (long u-tehta)
 
-TEHTA_SCHWA = "\ue053"
+TEHTA_SCHWA = "\ue053"  # Breve above (schwa; all vowel tehtar sit above the base)
 
 TEHTA_NASAL_BAR_ABOVE = "\ue050"  # Bar/tilde above (nasalizer)
 TEHTA_GEMINATION_BELOW = "\ue051"  # Bar below (geminator)
@@ -106,7 +106,7 @@ DIPHTHONGS = {
     "𐑬": (TENGWA_VALA, TEHTA_A_ABOVE, "MOUTH (Vala + a-tehta)"),
     "𐑴": (TENGWA_VALA, TEHTA_O_ABOVE, "GOAT (Vala + o-tehta)"),
     "𐑾": (TENGWA_ANNA, TEHTA_I_ABOVE, "IAN (Anna + i-tehta)"),
-    "𐑿": (TENGWA_ANNA, TEHTA_U_ABOVE, "YEW (Anna + u-tehta)"),
+    "𐑿": (TENGWA_ANNA, TEHTA_LONG_U_ABOVE, "YEW (Anna + long u-tehta)"),
 }
 
 NASAL_PAIRS = {
@@ -143,7 +143,7 @@ def translate_punctuation(text: str) -> str:
 
 
 def get_encoding_config(use_csur: bool):
-    """Returns encoding-specific code points for CSUR vs Everson 2001 (Alcarin)."""
+    """Returns encoding-specific code points for CSUR vs Alcarin."""
     if use_csur:
         return {
             "silme": "\ue01c",
@@ -158,7 +158,7 @@ def get_encoding_config(use_csur: bool):
             "mode_name": "CSUR (Legacy)",
         }
     else:
-        # Everson 2001 / Alcarin Tengwar (Default)
+        # Alcarin Tengwar mapping (Default)
         return {
             "silme": "\ue024",
             "silme_nuq": "\ue025",
@@ -169,7 +169,7 @@ def get_encoding_config(use_csur: bool):
             "hyarmen": "\ue028",
             "short_carrier": "\ue02e",
             "long_carrier": "\ue02c",
-            "mode_name": "Everson 2001 / Alcarin Tengwar (Default)",
+            "mode_name": "Alcarin Tengwar (Default)",
         }
 
 
@@ -184,7 +184,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
             print(
-                f"Step 0: Standalone 'the' (𐑞) -> Extended Anta Logogram (U+{ord(LOGOGRAM_THE):04X})"
+                f"Step 0: Standalone 'the' (𐑞) -> Extended Ando Logogram (U+{ord(LOGOGRAM_THE):04X})"
             )
         return LOGOGRAM_THE
 
@@ -192,7 +192,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
         if inspect:
             print(f"\n=== INSPECTING WORD: '{word}' ===")
             print(
-                f"Step 0: Standalone 'of' (𐑝) -> Extended Ampa Logogram (U+{ord(LOGOGRAM_OF):04X})"
+                f"Step 0: Standalone 'of' (𐑝) -> Extended Umbar Logogram (U+{ord(LOGOGRAM_OF):04X})"
             )
         return LOGOGRAM_OF
 
@@ -248,6 +248,14 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                 trace.append(
                     f"  [Flush Vowel] Long U -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + u-tehta (U+{ord(TEHTA_U_ABOVE):04X})"
                 )
+        elif vtype == "LONG_SINGLE":
+            # Long vowels with no doubled tehta (𐑭 𐑷): length is carried by the long carrier.
+            output.append(cfg["long_carrier"])
+            output.append(tehta)
+            if inspect:
+                trace.append(
+                    f"  [Flush Vowel] Long Single-Tehta Vowel -> Long Carrier (U+{ord(cfg['long_carrier']):04X}) + {name}"
+                )
         elif vtype == "SHORT":
             output.append(cfg["short_carrier"])
             output.append(tehta)
@@ -281,7 +289,7 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                     trace.append(
                         f"    └─ Attached: Double Left Curl (U+{ord(TEHTA_LONG_U_ABOVE):04X})"
                     )
-            elif vtype == "SHORT":
+            elif vtype in ("SHORT", "LONG_SINGLE"):
                 output.append(tehta)
                 if inspect:
                     trace.append(f"    └─ Attached: {name} (U+{ord(tehta):04X})")
@@ -361,6 +369,18 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
             i += 1
             continue
 
+        # Long vowels with a single tehta (𐑭 PALM, 𐑷 THOUGHT): attach like a short
+        # vowel, but use the long carrier when orphaned.
+        if c in ("𐑭", "𐑷"):
+            if pending_vowel is not None:
+                flush_pending_vowel()
+            v_hex, v_name = (TEHTA_A_ABOVE, "a-tehta") if c == "𐑭" else SHORT_VOWELS[c]
+            pending_vowel = ("LONG_SINGLE", v_hex, v_name)
+            if inspect:
+                trace.append(f"Step {i}: Char '{c}' -> Queue Pending Long Single-Tehta Vowel {v_name}")
+            i += 1
+            continue
+
         # Short Vowels
         if c in SHORT_VOWELS:
             v_hex, v_name = SHORT_VOWELS[c]
@@ -371,15 +391,6 @@ def translate_word(word: str, inspect: bool = False, use_csur: bool = False) -> 
                 trace.append(
                     f"Step {i}: Char '{c}' -> Queue Pending Short Vowel {v_name}"
                 )
-            i += 1
-            continue
-
-        if c == "𐑭":
-            if pending_vowel is not None:
-                flush_pending_vowel()
-            pending_vowel = ("SHORT", TEHTA_A_ABOVE, "a-tehta")
-            if inspect:
-                trace.append(f"Step {i}: Char '𐑭' (PALM) -> Queue Pending a-tehta")
             i += 1
             continue
 
@@ -495,7 +506,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--csur",
         action="store_true",
-        help="Use classic CSUR mapping (U+E01C, U+E01A, U+E018) instead of Everson 2001 default.",
+        help="Use classic CSUR mapping (U+E01C, U+E01A, U+E018) instead of the Alcarin default.",
     )
     parser.add_argument(
         "--strip-escapes",
