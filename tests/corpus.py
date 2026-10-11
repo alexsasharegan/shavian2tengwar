@@ -26,6 +26,11 @@ def _rules(cell):
     return RULE_ID.findall(cell)
 
 
+def corpus_files():
+    """The corpus tables: every corpus/*.md except the README, which only describes them."""
+    return [p for p in sorted(CORPUS_DIR.glob("*.md")) if p.name != "README.md"]
+
+
 def load(path):
     """Return (cases, identities, distincts); each entry carries its file, heading and line number."""
     cases, identities, distincts = [], [], []
@@ -63,7 +68,7 @@ def load(path):
 
 def load_all():
     cases, identities, distincts = [], [], []
-    for p in sorted(CORPUS_DIR.glob("*.md")):
+    for p in corpus_files():
         c, i, d = load(p)
         cases += c
         identities += i
