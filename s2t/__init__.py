@@ -1,9 +1,17 @@
 """shavian2tengwar: Shavian text to Tengwar, via a font-independent glyph IR."""
 
-from .encodings import ENCODINGS, get_encoding
-from .glyphs import Cell, parse_literal, to_literal
-from .mode import translate_word
-from .stream import translate
+import sys
+
+if sys.version_info < (3, 14):
+    raise RuntimeError(
+        f"shavian2tengwar needs Python 3.14 or newer; this is {sys.version.split()[0]} ({sys.executable}). "
+        "Install 3.14 and run the commands with it (see README)."
+    )
+
+from .encodings import ENCODINGS, get_encoding  # noqa: E402
+from .glyphs import Cell, parse_literal, to_literal  # noqa: E402
+from .mode import translate_word  # noqa: E402
+from .stream import translate  # noqa: E402
 
 
 def render(text: str, fmt: str = "pua", encoding: str = "alcarin", strip_escapes: bool = False) -> str:

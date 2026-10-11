@@ -259,7 +259,9 @@ verified. I had not checked orders with more than one mark above. Both statement
 
 **Not verified.** I could not install ruff, so the ruff settings have never run. I ran the tests on Python
 3.14.6 with warnings as errors. The Python I had on your machine is 3.10, which can no longer import the
-package, so run `npm test` there yourself. I did not make the tests support 3.10.
+package, so run `npm test` there yourself. I did not make the tests support 3.10. Your shell's `python3` turned out to be 3.9.25 (Homebrew), so
+every module failed with a `SyntaxError` on `type Item = ...`. `s2t/__init__.py` and `tests/__init__.py` now
+stop with a one-line "needs Python 3.14" message instead.
 
 **Alternatives.** Keep 3.10 compatibility (what the README said); that costs the `type` aliases and slots
 and buys nothing for a repo only you run. `pyproject.toml` has no `[build-system]` and no dependencies: this
