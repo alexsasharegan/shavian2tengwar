@@ -4,7 +4,7 @@
 **Date:** 2026-10-11
 **Affected:** s2t/encodings/, spec/encodings/alcarin.md, corpus/review.html
 **Origin:** DECISIONS.md D-05 (CSUR dropped), D-14
-**Review:** Mark order corrected at Alex's request; dropping CSUR unreviewed
+**Review:** Mark order corrected at Alex's request; approved by merging PR #1
 **Revert:** CSUR removal is in `6d1e271`; mark order in `5eb9596` (restores the old order and the review sheet with it)
 
 ## Context

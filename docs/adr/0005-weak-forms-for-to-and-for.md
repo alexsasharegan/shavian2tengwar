@@ -1,10 +1,10 @@
 # ADR-0005: Weak Forms for *to* and *for*
 
-**Status:** Proposed
+**Status:** Active
 **Date:** 2026-10-11
-**Affected:** spec/mode.md (W-04, L-09, L-10, section 12), s2t/mode.py, corpus/word-signs.md, docs/language-guide.md (Part 3)
+**Affected:** spec/mode.md (W-04, L-09, L-10), s2t/mode.py, corpus/word-signs.md, docs/language-guide.md (Part 3)
 **Origin:** DECISIONS.md D-01, D-09
-**Review:** Unreviewed; open in spec section 12
+**Review:** Approved by merging PR #1
 **Revert:** `6ba78b7` and `510c6f7`; in `spec/mode.md` set W-04, L-09 and L-10 back (the corpus rows citing them also go; `tests/test_coverage.py` names any leftovers)
 
 ## Context
@@ -40,7 +40,7 @@ guide were replaced to match, and its stale tables were regenerated from the eng
 ## Consequences
 
 - *to* stays distinct from *too/two*, and *for* from *four*.
-- *for* is less certain than *to*: /fər/ is the usual weak form, but a reader may expect the full vowel.
+- *for* is less certain than *to*, and a later PR may revisit it: /fər/ is the usual weak form, but a reader may expect the full vowel.
 - The language guide's regenerated tables have no script keeping them in sync with the engine; they
   can drift if the rules change.
 - Commit `6ba78b7` calls the old bare letters "an accident of fall-through". That is wrong: the guide

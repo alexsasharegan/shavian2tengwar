@@ -4,7 +4,7 @@
 **Date:** 2026-10-11
 **Affected:** shavian2tengwar.py, tests/test_cli.py
 **Origin:** DECISIONS.md D-18
-**Review:** Unreviewed
+**Review:** Approved by merging PR #1
 **Revert:** `e8ca735`
 
 ## Context

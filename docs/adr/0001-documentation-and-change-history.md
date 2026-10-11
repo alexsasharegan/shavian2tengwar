@@ -29,7 +29,13 @@ projects and a roadmap, and wanted the same pattern here.
   ADR keeps the original `D-NN` number under **Origin**, its review state and its revert pointers.
   The commit-author note (old D-11) is process, not architecture, and lives in project 0001's log.
 - ADRs carry two fields that `DECISIONS.md` had and plain Nygard ADRs lack:
-  **Review** (whether Alex has approved it) and **Revert** (the commits to back it out).
+  **Review** (how it was approved) and **Revert** (the commits to back it out).
+- **The pull request is the approval gate.** A decision made in a branch is `Proposed` (its spec
+  rules `PROVISIONAL`) while the PR is open. When Alex approves the PR, a last commit sets them to
+  `Active` and `ADOPTED` with **Review:** "Approved by merging PR #N", and the merge is the approval.
+  So `main` holds only approved decisions. A change of mind after merge is a new PR and a new or
+  superseding ADR. PRs are merged with a merge commit, never squashed or rebased, because ADRs and
+  logs cite the branch's commit hashes.
 - Decisions are cited as `ADR-NNNN`, never `D-NN`, so they cannot be mistaken for spec rule IDs.
 - `spec/` stays the authority on the rules. An ADR records *why* a rule was chosen; the rule itself
   lives in the spec, and the ADR links to it.

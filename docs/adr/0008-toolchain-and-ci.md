@@ -4,8 +4,8 @@
 **Date:** 2026-10-11
 **Affected:** pyproject.toml, .python-version, package.json, .prettierrc, .gitignore, LICENSE, .github/workflows/test.yml, tests/
 **Origin:** DECISIONS.md D-15, D-16, D-20 (tests and CI)
-**Review:** Python 3.14 requested by Alex; the rest unreviewed
-**Revert:** Python floor `bd91cdb`; housekeeping `c7f13b4`; tests `d7b8979`, `324d77d`; CI `6ecdd3e`; formatting `1a43c0c` and the "lint and format-check in CI" commit
+**Review:** Python 3.14 and ruff format requested by Alex; approved by merging PR #1
+**Revert:** Python floor `bd91cdb`; housekeeping `c7f13b4`; tests `d7b8979`, `324d77d`; CI `6ecdd3e`; formatting `1a43c0c`; lint in CI `6886431`
 
 ## Context
 

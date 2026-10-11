@@ -4,7 +4,7 @@
 **Date:** 2026-10-11
 **Affected:** spec/mode.md (V-13, section 6), spec/encodings/alcarin.md (AE-04), s2t/mode.py, s2t/encodings/alcarin.py, tests/test_identities.py, corpus/
 **Origin:** DECISIONS.md D-12, D-04
-**Review:** TRAP mark approved by Alex, 2026-10-11; the glide edge case unreviewed
+**Review:** TRAP mark approved by Alex, 2026-10-11; approved by merging PR #1
 **Revert:** `ca09457` (also reverts I-04 and I-05 and restores `E056`); the edge case is in `f774302` and `0c27b54`
 
 ## Context

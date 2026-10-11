@@ -27,4 +27,4 @@
 - [x] `npm test` passes
 - [x] No broken relative links in any tracked Markdown file
 - [x] `tools/build_pdfs.py` finds both guides at their new paths
-- [ ] Alex: rebuild the PDFs (`npm run pdf`). The guides' text changed (ADR links), so the PDFs are stale (tracked in project 0001)
+- [x] Alex: rebuild the PDFs with `npm run pdf`, since the guides' text changed (`3a135c6`)

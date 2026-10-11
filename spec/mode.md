@@ -9,8 +9,9 @@ fails if a rule has no case. When this document and the code disagree, the code 
 
 ## 0. Conventions
 
-**Status.** `ADOPTED` is decided and must be enforced. `PROVISIONAL` is the working choice but may
-still change. `OPEN` is undecided; the text lists the candidates and current behaviour.
+**Status.** `ADOPTED` is decided and must be enforced. `PROVISIONAL` is proposed in an open pull
+request; merging the PR approves it and makes it `ADOPTED`, so `main` has none. `OPEN` is undecided;
+the text lists the candidates and current behaviour.
 
 **Glyph names** follow [Tecendil](https://www.tecendil.com/) so that output can be pasted into its
 literal-input box.
@@ -182,12 +183,12 @@ The plain sequences with PALM (𐑭𐑘, 𐑭𐑢) use the long carrier, so they
 | W-01 | The word 𐑞 alone (*the*, /ðə/) is `{the-shorthand}`. | ADOPTED |
 | W-02 | The word 𐑝 alone (*of*, /əv/) is `{of-shorthand}`. | ADOPTED |
 | W-03 | The word 𐑯 alone (*and*, /ənd/) is `{ando}[bar-above][dot-below]`. It is the only place `[dot-below]` appears, and is exempt from P-04. | ADOPTED |
-| W-04 | The words 𐑑 (*to*) and 𐑓 (*for*) have **no** Tengwar shorthand. They are expanded to their weak forms by L-09 and L-10. | PROVISIONAL |
+| W-04 | The words 𐑑 (*to*) and 𐑓 (*for*) have **no** Tengwar shorthand. They are expanded to their weak forms by L-09 and L-10. | ADOPTED |
 | U-01 | `,` is `{pusta}`. `.` is `{double-pusta}`. | ADOPTED |
-| U-02 | `;` is `{double-section-mark}`† (a stronger pause than a comma, distinct from `:`). Aranoss writes it the same way. | PROVISIONAL |
-| U-03 | `:` is `{triple-pusta}`†. | PROVISIONAL |
-| U-04 | `-` is `{section-mark}`†, because Alcarin has no hyphen glyph. | PROVISIONAL |
-| U-05 | `!` is `{exclamation-mark}`†, `?` is `{question-mark}`†, and both parentheses are `{parenthesis-mark}`† (Alcarin has one glyph for both sides). Curly double quotes are `{left-quotation-mark}`† and `{right-quotation-mark}`†, and an ASCII `"` alternates between them. Single quotes and apostrophes pass through. | PROVISIONAL |
+| U-02 | `;` is `{double-section-mark}`† (a stronger pause than a comma, distinct from `:`). Aranoss writes it the same way. | ADOPTED |
+| U-03 | `:` is `{triple-pusta}`†. | ADOPTED |
+| U-04 | `-` is `{section-mark}`†, because Alcarin has no hyphen glyph. | ADOPTED |
+| U-05 | `!` is `{exclamation-mark}`†, `?` is `{question-mark}`†, and both parentheses are `{parenthesis-mark}`† (Alcarin has one glyph for both sides). Curly double quotes are `{left-quotation-mark}`† and `{right-quotation-mark}`†, and an ASCII `"` alternates between them. Single quotes and apostrophes pass through. | ADOPTED |
 
 Other punctuation passes through unchanged.
 
@@ -233,8 +234,7 @@ glyphs.
 | L-09 | 𐑑 (the word *to*) | /tə/ | 𐑑𐑩 | `{tinco}{telco}[breve]` |
 | L-10 | 𐑓 (the word *for*) | /fər/ | 𐑓𐑼 (= 𐑓𐑩𐑮) | `{formen}{roomen}[breve]` |
 
-L-01 to L-08 are ADOPTED. L-09 and L-10 are PROVISIONAL, and apply only when the whole word is that one
-letter. L-09 stays distinct from *too*/*two* (𐑑𐑵, `{tinco}{aara}[left-curl]`), and L-10 from *four* (𐑓𐑹,
+L-01 to L-10 are ADOPTED. L-09 and L-10 apply only when the whole word is that one letter. L-09 stays distinct from *too*/*two* (𐑑𐑵, `{tinco}{aara}[left-curl]`), and L-10 from *four* (𐑓𐑹,
 `{formen}{aara}[right-curl]{roomen}`).
 
 𐑾 often spans a syllable break (*media*, *India*), so it is written as two vowels, each with its own
@@ -279,7 +279,4 @@ differently, and why each choice was made, is recorded in `docs/`: the change li
 
 ## 12. Open questions
 
-| Where | Question |
-|---|---|
-| W-04, L-09, L-10 | Confirm that 𐑑 *to* and 𐑓 *for* are written as weak-form spellings with no shorthand. |
-| U-02 to U-05 | Provisional punctuation choices to confirm. |
+None. A new question is raised in a pull request, with a `PROVISIONAL` rule and a `Proposed` ADR.

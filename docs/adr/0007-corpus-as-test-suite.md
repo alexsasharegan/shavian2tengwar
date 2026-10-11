@@ -4,7 +4,7 @@
 **Date:** 2026-10-11
 **Affected:** corpus/, tools/corpus.py, tools/render_corpus.py, tests/, package.json
 **Origin:** DECISIONS.md D-06, D-07, D-08, D-17, D-19
-**Review:** Unreviewed
+**Review:** Approved by merging PR #1
 **Revert:** format and harness `fe2ee13`, `b5a27f3`; review sheet `2f2dfd7`; legacy tests `fe59b74` (the restored files fail against the new engine); font path `b8b84a0`; parser move `4e74f64`
 
 ## Context

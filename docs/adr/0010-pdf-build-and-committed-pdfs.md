@@ -4,7 +4,7 @@
 **Date:** 2026-10-11
 **Affected:** tools/build_pdfs.py, tools/requirements-docs.txt, docs/*.pdf, corpus/review.pdf, package.json
 **Origin:** DECISIONS.md D-10, D-13, D-20 (PDFs), D-21
-**Review:** Corpus PDF proposed by Alex; the rest unreviewed
+**Review:** Corpus PDF proposed by Alex; approved by merging PR #1
 **Revert:** build script `fdc65e9`; corpus PDF `14a1c7b`
 
 ## Context

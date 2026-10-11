@@ -4,7 +4,7 @@
 
 ## 🟢 Now (In Progress)
 
-* **[0001-engine-rewrite](projects/0001-engine-rewrite/README.md):** Spec-first rewrite of the engine on `dev/refactor`. Built and tested; waiting on review of the provisional rules ([ADR-0005](adr/0005-weak-forms-for-to-and-for.md), [ADR-0006](adr/0006-punctuation-mapping.md)) and the merge to `main`.
+* **[0001-engine-rewrite](projects/0001-engine-rewrite/README.md):** Spec-first rewrite of the engine on `dev/refactor`. Approved; every ADR is Active and every rule ADOPTED. Done when PR #1 merges.
 
 ## 🟡 Next (Queued)
 

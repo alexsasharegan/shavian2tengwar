@@ -23,16 +23,18 @@
 - [x] Scripted PDF build, including the corpus sheet (`fdc65e9`, `14a1c7b`, `0a14dce`)
 - [x] Build and commit `corpus/review.pdf` on Alex's machine (`bd4e50d`)
 
-## Phase 3: Review (Alex)
+## Phase 3: Review (Alex, through PR #1)
 
-- [ ] Confirm or change the weak forms W-04, L-09, L-10 ([ADR-0005](../../adr/0005-weak-forms-for-to-and-for.md))
-- [ ] Confirm or change punctuation U-02 to U-05 ([ADR-0006](../../adr/0006-punctuation-mapping.md))
-- [ ] Decide on `"` alternation across the stream, and whether `...` needs an ellipsis rule ([ADR-0006](../../adr/0006-punctuation-mapping.md))
-- [ ] Review the ADRs marked **Unreviewed** (0002, 0003, 0004 edge case, 0007, 0008, 0009, 0010)
-- [ ] Optional: re-author Claude's commits as yourself (see LOG, 2026-10-11 — Commit authorship)
+- [x] Confirm or change the weak forms W-04, L-09, L-10 ([ADR-0005](../../adr/0005-weak-forms-for-to-and-for.md))
+- [x] Confirm or change punctuation U-02 to U-05 ([ADR-0006](../../adr/0006-punctuation-mapping.md))
+- [x] Decide on `"` alternation across the stream, and whether `...` needs an ellipsis rule ([ADR-0006](../../adr/0006-punctuation-mapping.md))
+- [x] Review the unreviewed ADRs (0002 to 0010): approved by merging PR #1, with the provisional rules ADOPTED
+- [ ] ~~Optional: re-author Claude's commits as yourself~~ Not done: it rewrites every hash the ADRs cite
 
 ## Phase 4: Finish
 
-- [ ] Run ruff once and fix or record what it reports; then decide whether CI should run it
-- [ ] Rebuild the PDFs (`npm run pdf`): the guides changed in project 0002
-- [ ] Merge `dev/refactor` into `main`
+- [x] Run ruff once and fix or record what it reports (ruff 0.17.0: two intentional UP036 guards, marked `noqa`)
+- [x] `ruff format` the Python (`1a43c0c`) and run `ruff check` and `ruff format --check` in CI (`6886431`)
+- [x] Rebuild the PDFs (`npm run pdf`): the guides changed in project 0002 (`3a135c6`)
+- [ ] Rebuild `docs/philosophy.pdf` (`npm run pdf`): its text changed with the approval
+- [ ] Merge PR #1 (`dev/refactor` into `main`) with a merge commit, not squash or rebase

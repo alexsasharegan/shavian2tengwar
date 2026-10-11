@@ -1,6 +1,6 @@
 # 0001 — Engine Rewrite
 
-> **Status:** In progress (review)
+> **Status:** Approved; complete when PR #1 merges
 > **Created:** 2026-10-11 (bootstrapped after the fact; the work started at `d729c2c`)
 > **Branch:** `dev/refactor`
 
@@ -22,8 +22,8 @@ has an ID, and a Markdown corpus proves each rule fires.
 
 ## Definition of Done
 
-- Alex has reviewed every ADR marked **Unreviewed** and each provisional rule (W-04, L-09, L-10,
-  U-02 to U-05) is either ADOPTED or changed.
-- `npm test` passes on Python 3.14 and in CI.
+- Every ADR is approved and every provisional rule (W-04, L-09, L-10, U-02 to U-05) is ADOPTED.
+  PR #1 is the review: merging it approves them (ADR-0001).
+- `npm test` and `npm run lint` pass on Python 3.14 and in CI.
 - The PDFs match their Markdown.
 - `dev/refactor` is merged into `main`.

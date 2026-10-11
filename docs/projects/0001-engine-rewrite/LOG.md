@@ -142,3 +142,71 @@ bd4e50d doc gen                                          (Alex: built and commit
 - **Key findings / Blockers resolved:** All audit findings are fixed except running ruff and Prettier.
 - **Context state for next thread:** 62 tests pass on Python 3.14.8. Remaining work is review, ruff,
   and the merge; see `TASKS.md` Phases 3 and 4.
+
+## 2026-10-11 — Merge readiness check for PR #1
+
+### Context & Decisions
+
+- PR #1 (`dev/refactor` → `main`, 40 commits) is mergeable with state `clean`, and the `unittest`
+  check passed on `3a135c6`. Alex committed project 0002 and rebuilt the PDFs in `3a135c6`.
+- Ruff ran for the first time (0.17.0, installed into `.venv`). `ruff check` reported only UP036 on
+  the two Python-version guards in `s2t/__init__.py` and `tests/__init__.py`. Those guards are
+  deliberate (`dc4c704`): ruff assumes `requires-python` is enforced, but this repo is run in place,
+  not installed, so nothing else stops an older Python. Marked `# noqa: UP036`. `ruff check` is now clean.
+- Not adopted yet, pending Alex: `ruff format --check` would reformat 11 Python files, and
+  `prettier --check` flags 24 files (mostly Markdown tables not column-aligned, plus the CI YAML and
+  `package-lock.json`). Both are cosmetic.
+
+### Commands & Operations Executed
+
+```bash
+.venv/bin/pip install -q ruff
+.venv/bin/ruff check .            # 2 x UP036 -> noqa -> "All checks passed!"
+.venv/bin/ruff format --check .   # 11 files would be reformatted
+npm ci && npx prettier --check "**/*.{md,json,yml}"   # 24 files
+python3 -m unittest discover -s tests -t .           # OK
+```
+
+### LLM Session Summary
+
+- **Thread purpose:** Decide whether PR #1 can merge, and close what can be closed.
+- **Key findings / Blockers resolved:** Nothing blocks the merge. Lint is clean.
+- **Context state for next thread:** Open: Alex's review of the provisional rules and unreviewed
+  ADRs, a CI/formatting decision, then the merge.
+
+## 2026-10-11 — Formatting, lint in CI, and approval through PR #1
+
+### Context & Decisions
+
+- Alex wants all Python formatted by the language's standard formatter, churn accepted. `ruff format`
+  (Black-compatible, already configured) was run over everything in one mechanical commit, listed in
+  `.git-blame-ignore-revs`. Its output is accepted as is; the hand-aligned consonant table in
+  `s2t/mode.py` is now one entry per line.
+- ruff is pinned in `pyproject.toml` (`[dependency-groups] dev`, `ruff==0.17.0`), with `npm run
+  setup:dev`, `fmt` and `lint`. A `lint` CI job runs `ruff check` and `ruff format --check`.
+  ADR-0008 updated.
+- Alex uses the pull request as the gate from proposed to approved, and said everything in this PR
+  follows that. So every ADR is now Active with **Review:** "Approved by merging PR #1", and W-04,
+  L-09, L-10 and U-02 to U-05 are ADOPTED. Spec section 12 has no open questions. The rule itself is
+  in ADR-0001 and the ADR index.
+- Re-authoring Claude's commits was not done: it would change every hash the ADRs cite.
+- `docs/philosophy.md` dropped the word "provisional", so `docs/philosophy.pdf` is stale again.
+- An auto-mode classifier blocked the matching edits to `AGENTS.md` and the documentation skill
+  (agent instruction files). They wait for Alex's go-ahead.
+
+### Commands & Operations Executed
+
+```bash
+.venv/bin/ruff format .                    # 11 files reformatted -> 1a43c0c
+.venv/bin/pip install -q --group dev
+npm run lint                               # All checks passed! / 54 files already formatted -> 6886431
+npm test                                   # OK
+npm run corpus                             # review.html unchanged
+```
+
+### LLM Session Summary
+
+- **Thread purpose:** Format the Python, enforce lint in CI, and approve the PR's proposals.
+- **Key findings / Blockers resolved:** Nothing blocks the merge.
+- **Context state for next thread:** Merge PR #1 with a merge commit, then mark the project Complete
+  and move it to Done in the roadmap. Rebuild `docs/philosophy.pdf`.

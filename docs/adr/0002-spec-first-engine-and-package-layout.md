@@ -4,7 +4,7 @@
 **Date:** 2026-10-11
 **Affected:** spec/, s2t/, shavian2tengwar.py, README.md, docs/language-guide.md, docs/philosophy.md
 **Origin:** DECISIONS.md D-05, D-10
-**Review:** Unreviewed
+**Review:** Approved by merging PR #1
 **Revert:** `c9f0f33` and `6d1e271` together (engine and CLI); docs in `80aa868`, `510c6f7`, `ae5db0f`
 
 ## Context

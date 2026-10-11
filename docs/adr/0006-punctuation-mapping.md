@@ -1,10 +1,10 @@
 # ADR-0006: Punctuation Mapping
 
-**Status:** Proposed
+**Status:** Active
 **Date:** 2026-10-11
 **Affected:** spec/mode.md (U-02 to U-05), s2t/stream.py (`PUNCTUATION`), corpus/marks.md
 **Origin:** DECISIONS.md D-02, D-03
-**Review:** Unreviewed; open in spec section 12
+**Review:** Approved by merging PR #1
 **Revert:** U-05 is `0c27b54`. U-02 to U-04 came in with the engine (`c9f0f33`), so edit `PUNCTUATION` in `s2t/stream.py`, U-02 to U-04 in `spec/mode.md` and the rows in `corpus/marks.md` instead
 
 ## Context
@@ -42,4 +42,5 @@ or dropped (loses compound boundaries).
 
 - An odd number of `"` in the input flips every later quote, because the state never resets.
 - `...` is three `{double-pusta}`; there is no ellipsis rule.
-- Both are open questions for Alex (project 0001, TASKS).
+- Both were accepted as is in PR #1. An ellipsis rule, or resetting the quote state per paragraph,
+  would be a new ADR.
