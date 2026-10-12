@@ -10,6 +10,7 @@ import os
 import sys
 
 from s2t import ENCODINGS, get_encoding, render, to_literal, translate_word
+from s2t.encodings import DEFAULT_ENCODING
 from s2t.glyphs import Cell
 from s2t.mode import Trace
 
@@ -49,7 +50,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--encoding",
         choices=ENCODINGS,
-        default="alcarin",
+        default=DEFAULT_ENCODING,
         help="Font encoding (default: %(default)s).",
     )
     parser.add_argument(

@@ -9,8 +9,8 @@ English spelling is not phonetic, so converting it straight to Tengwar is full o
 The rules live in a specification, not in the code:
 
 - [`spec/mode.md`](./spec/mode.md): the phonemic English Tengwar mode. Every rule has an ID, a status and its IPA, and the code is held to it.
-- [`spec/encodings/alcarin.md`](./spec/encodings/alcarin.md): which Alcarin code point each glyph name maps to.
-- [`corpus/`](./corpus): short phrases and minimal pairs that double as the test suite. Open [`corpus/review.html`](./corpus/review.html) to see every one rendered in Tengwar.
+- [`spec/encodings/alcarin.md`](./spec/encodings/alcarin.md) and [`spec/encodings/freemono.md`](./spec/encodings/freemono.md): which code point each glyph name maps to, per font.
+- [`corpus/`](./corpus): short phrases and minimal pairs that double as the test suite. Open [`corpus/review.html`](./corpus/review.html) (Alcarin) or [`corpus/review-freemono.html`](./corpus/review-freemono.html) (FreeMonoTengwar) to see every one rendered in Tengwar.
 - [`docs/adr/`](./docs/adr/README.md): why each rule and structure was chosen, and how to revert it. [`docs/ROADMAP.md`](./docs/ROADMAP.md) shows what is in progress.
 
 For the reasoning behind the deviations from community norms, see [docs/philosophy.md](./docs/philosophy.md). For a visual guide to the glyphs and marks, see [docs/language-guide.md](./docs/language-guide.md). The PDF versions of those two documents are built from the Markdown. After editing either one, rebuild its PDF with `npm run pdf` (see [Building the PDFs](#building-the-pdfs)).
@@ -21,7 +21,7 @@ For the reasoning behind the deviations from community norms, see [docs/philosop
 - **Stream-oriented.** Reads stdin or an argument; writes stdout. Non-Shavian text (Latin letters, spaces, emoji) passes through. Verbatim `{{...}}` blocks are kept, or unwrapped with `--strip-escapes`.
 - **Glyph names for Tecendil.** `--format literal` prints names like `{tinco}[dot-above]`, which you can paste into [tecendil.com](https://www.tecendil.com/).
 - **Rule-by-rule inspector.** `--inspect WORD` shows each step with the spec rule IDs that fired.
-- **Ready for more fonts.** The mode is written in font-independent glyph names; Alcarin is the one encoding so far (`--encoding`).
+- **More than one font.** The mode is written in font-independent glyph names. `--encoding` picks the font: `alcarin` (default) or `freemono` (FreeMonoTengwar). Both use the same code points for every glyph the mode emits (ADR-0012).
 
 ---
 
@@ -34,16 +34,18 @@ For the reasoning behind the deviations from community norms, see [docs/philosop
 │   ├── mode.py               #   the phonemic mode: Shavian word -> glyph cells
 │   ├── stream.py             #   words, punctuation, {{escapes}}
 │   ├── glyphs.py             #   glyph IR (Cell) and literal notation
-│   └── encodings/alcarin.py  #   glyph name -> Alcarin code points
+│   └── encodings/            #   glyph name -> code points: alcarin.py, freemono.py
 ├── spec/
 │   ├── mode.md               # the rules
-│   └── encodings/alcarin.md  # the code point table
+│   └── encodings/            # the code point tables: alcarin.md, freemono.md
 ├── corpus/                   # test cases (README.md explains them); review.html is the visual reference
 ├── tests/                    # unittest suite
 ├── tools/
 │   ├── corpus.py             #   reads corpus/*.md (used by the tests and render_corpus.py)
-│   ├── render_corpus.py      #   regenerates corpus/review.html
-│   └── build_pdfs.py         #   builds the PDFs of the two guides and corpus/review.pdf
+│   ├── render_corpus.py      #   regenerates the review sheets, one per encoding
+│   ├── build_pdfs.py         #   builds the PDFs of the two guides and the review sheets
+│   ├── font_gate.py          #   the font gate: mark-stacking test page for vetting a Tengwar font (ADR-0011)
+│   └── ctrender.swift        #   renders text through Core Text (macOS), for font_gate.py --coretext
 ├── docs/
 │   ├── language-guide.md/.pdf  # visual guide to the glyphs and marks
 │   ├── philosophy.md/.pdf      # why the mode deviates from community norms
@@ -64,7 +66,7 @@ For the reasoning behind the deviations from community norms, see [docs/philosop
 flowchart LR
     A["Shavian text"] --> B["s2t.mode<br/>spec/mode.md"]
     B --> C["glyph IR<br/>{tinco}[dot-above]"]
-    C --> D["encoding<br/>Alcarin code points"]
+    C --> D["encoding<br/>Alcarin or FreeMonoTengwar code points"]
     C --> E["literal names<br/>for tecendil.com"]
 ```
 
@@ -138,11 +140,11 @@ python3 -m unittest discover -s tests -t .      # or: npm test
 - `tests/test_corpus.py`: every row of `corpus/*.md` must produce its stated glyphs, and every rule it cites must exist in the spec and actually fire.
 - `tests/test_coverage.py`: every adopted or provisional rule in `spec/mode.md` must be cited by some corpus row.
 - `tests/test_identities.py`: two different Shavian spellings may only give the same glyphs where the spec declares them identical (the ligatures and the diphthong identities).
-- `tests/test_encoding.py`: the Alcarin table must match `spec/encodings/alcarin.md`, and cover every glyph name the mode uses.
+- `tests/test_encoding.py`: every encoding's table must match its `spec/encodings/*.md`, cover every glyph name the mode uses and every corpus row, and write its marks in its own order (ADR-0012).
 - `tests/test_spec_tables.py`: the engine's consonant, ligature, weak-form, word-sign and punctuation tables must match the tables in `spec/mode.md`.
 - `tests/test_stream.py`: `{{...}}` escapes, every punctuation mark, quote alternation, error paths, and the `parse_literal`/`to_literal` round trip.
 - `tests/test_cli.py`: the command line, including stdin, exit codes, the UTF-8 guarantee and a closed pipe.
-- `tests/test_review_sheet.py`: `corpus/review.html` must be current. Regenerate it with `npm run corpus`.
+- `tests/test_review_sheet.py`: every `corpus/review*.html` must be current. Regenerate them with `npm run corpus`.
 
 The tests need Python 3.14. GitHub Actions runs them, and the lint and format checks below, on every push (`.github/workflows/test.yml`).
 
@@ -164,7 +166,7 @@ To change a rule, edit `spec/mode.md`, then the engine, then add or update corpu
 
 ## Building the PDFs
 
-`docs/language-guide.pdf`, `docs/philosophy.pdf` and `corpus/review.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
+`docs/language-guide.pdf`, `docs/philosophy.pdf`, `corpus/review.pdf` and `corpus/review-freemono.pdf` are built by `tools/build_pdfs.py`. The two guides go from Markdown to HTML with markdown-it-py; the corpus review sheet comes from `tools/render_corpus.py`. Both are then printed by Chrome through Playwright (the same engine Obsidian prints with). The PDFs embed their fonts, so they can be shared with people who have none of them installed.
 
 ```bash
 npm run setup:docs                           # once: makes .venv and installs the dependencies
@@ -174,4 +176,4 @@ npm run pdf                                  # or: .venv/bin/python tools/build_
 
 - It needs Google Chrome installed (or `--browser PATH`).
 - Text uses the font stack **Courier, Bernie Sans Beta, Alcarin Tengwar**, falling back one glyph at a time: Latin in Courier, Shavian in Bernie Sans Beta, Tengwar in Alcarin. All three must be installed, or load a file with `--font "Alcarin Tengwar=/path/to/AlcarinTengwar-Regular.otf"`. The script warns if one is missing, and `--strict` makes that an error.
-- Pass other Markdown files as arguments to build them too, or `corpus` to build only `corpus/review.pdf`.
+- Pass other Markdown files as arguments to build them too, or `corpus` to build only the review sheets (`--encoding NAME` for just one).
