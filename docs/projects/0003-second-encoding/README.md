@@ -1,6 +1,6 @@
 # 0003 — Second Font Encoding
 
-> **Status:** In progress (gate: waiting on Alex's macOS check and two font files)
+> **Status:** In progress (gate: two candidates pass on rendering; waiting on Alex's choice)
 > **Created:** 2026-10-11
 > **Branch:** `feat/0003-second-encoding`
 

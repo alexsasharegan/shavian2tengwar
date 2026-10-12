@@ -85,3 +85,73 @@ curl -sSL https://www.evertype.com/standards/csur/tengwar.html     # registry ch
   sheet and PDFs.
 - **Context state for next thread:** Blocked on Alex for the FreeMonoTengwar and Telcontar files, and
   for the Safari and TextEdit check. No ADR, spec or code yet, by design (tasks 5 and 6 come first).
+
+## 2026-10-11 — FreeMonoTengwar and Telcontar surveyed; Alex's Safari and TextEdit check
+
+### Context & Decisions
+
+- Alex downloaded the three zips into `.wip/fonts/` (untracked). The `TengwarFormalCSUR.ttf` in the zip
+  has the same SHA-1 as the installed copy, so the earlier survey stands. Read with `python -I`, scripts
+  kept outside the font folders.
+- **Tengwar Telcontar fails the gate.** Its only layout tables are Graphite (`Silf`, `Glat`, `Gloc`), and
+  its tehtar have a 1125-unit advance. Core Text and Chrome both draw every mark on its own dotted
+  circle, beside the base. This matches what Alex saw before. Graphite-only, so it is out by the brief.
+- **FreeMonoTengwar passes in Core Text and in Chrome.** It is monospaced: every glyph is 600 units and
+  the tehtar are zero-width outlines drawn into the preceding cell at fixed heights (`tehtaI` y 563…643,
+  `tehtaN` y 490…530). The vowel mark always lands above the nasal bar, so **both code point orders give
+  the same picture**. Core Text substitutes nothing for any fixture case (its glyph names stay `tinco
+  tehtaI tehtaN`). The font has `morx` (14 subtables), an empty `GPOS` and a `liga`-only `GSUB`, but the
+  gate cases need none of them.
+  - Open point for Alex: the gate says "Core Text positions its tehtar through OpenType GPOS or AAT".
+    FreeMono positions them by their outlines, not by a table. It meets the gate's purpose (marks attach,
+    no dotted circles, no Graphite needed) but not its letter. Alex decides whether that passes.
+  - License: GPLv3 or later with the font-embedding exception. `FontLog.txt` says commercial use of the
+    tengwar "may need permission from the Tolkien Estate" (for ADR-0011).
+  - Coverage: all 42 letters and 10 marks at Alcarin's code points, with the same glyph names as Formal
+    CSUR (one spelling differs: `tengwarParanthesis`).
+- **Alex's check (screenshots, Safari and TextEdit).** Alex reported "several nasal bars stacked over the
+  tehta". In the screenshots those are the **Alcarin "top first"** rows, in both apps: the bar sits above
+  the dot, and above the acute on ando. Alcarin's "nearest first" rows are correct. That is ADR-0003's
+  finding again. The fixture shows the failing order on purpose, and the engine emits nearest first for
+  Alcarin (`Encoding.encode_cell`), so the converter's output is not affected.
+  - Tengwar Formal CSUR in Safari: dot over bar and acute over bar in **both** orders; every mark
+    attached; no dotted circles. Pass, the same as the direct Core Text render.
+  - TextEdit: the screenshot shows only the Alcarin section. Formal CSUR's section still to be seen.
+- The fixture now has four columns (FreeMono and Telcontar added, code points read from each cmap) and
+  was regenerated. FreeMono must be installed for the TextEdit file to show it.
+
+### Results
+
+| Case | FreeMono, Chrome | FreeMono, Core Text | Telcontar, Chrome | Telcontar, Core Text |
+|---|---|---|---|---|
+| Vowel mark (tinco, ando) | pass | pass | **fail**: dotted circle | **fail** (same) |
+| Vowel + nasal bar, either order | pass | pass | **fail** | **fail** |
+| Same on ando | pass (ando is narrow in this font) | pass | **fail** | **fail** |
+| Gemination, vowel + gemination | pass | pass | **fail** | **fail** |
+| Nuquerna + vowel, carriers | pass | pass | **fail** | **fail** |
+
+Alex, Safari (Formal CSUR): pass, both orders. Alex, Safari and TextEdit (Alcarin): top first fails,
+nearest first passes.
+
+### Commands & Operations Executed
+
+```bash
+python -I fontinfo.py .wip/fonts/FreeMonoTengwar.2013-07-21/FreeMonoTengwar.ttf   # and -embedding, tengtelc, tengtelcb
+python -I coverage.py <repo> <Formal CSUR> <FreeMono> <tengtelc>     # mode names at Alcarin's code points
+python -I cmapdump.py <font>                                          # -> survey.md
+shasum .wip/fonts/TengwarFormalCSUR11/TengwarFormalCSUR.ttf ~/Library/Fonts/TengwarFormalCSUR.ttf
+python3 .wip/gate_fixture.py .wip/gate --font ... (four fonts)
+swift .wip/ctrender.swift <FreeMono> .wip/gate/FreeMonoTengwar.lines .wip/gate/coretext-freemono.png
+swift .wip/ctrender.swift <tengtelc> .wip/gate/Tengwar-Telcontar.lines .wip/gate/coretext-telcontar.png
+.venv/bin/python .wip/shoot.py .wip/gate/gate.html .wip/gate/chrome.png
+```
+
+### LLM Session Summary
+
+- **Thread purpose:** Finish tasks 5 and 6: survey the downloaded fonts and record Alex's check.
+- **Key findings / Blockers resolved:** Two candidates pass on rendering. Formal CSUR passes in Core Text
+  and Safari but not Chrome. FreeMono passes everywhere but positions marks by outline, not by GPOS or
+  AAT. Telcontar fails. The stacked bars Alex saw are Alcarin's top-first control rows.
+- **Context state for next thread:** Waiting on Alex for: (1) whether FreeMono's outline positioning
+  passes the gate; (2) which font gets the first encoding; (3) Formal CSUR's section in TextEdit, and
+  FreeMono in Safari and TextEdit once installed. No ADR, spec or code yet.

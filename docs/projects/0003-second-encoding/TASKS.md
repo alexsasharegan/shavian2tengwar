@@ -7,10 +7,13 @@
 - [x] Render it in headless Chrome (155) for Alcarin (control) and Tengwar Formal CSUR
 - [x] Render it through Core Text directly (`.wip/ctrender.swift`), with the glyphs Core Text chose
 - [x] Survey Tengwar Formal CSUR: license, tables, full PUA cmap ([survey.md](./survey.md))
-- [ ] **Alex:** download `FreeMonoTengwar.2013-07-21.zip` and `TengwarTelcontar.008.zip` (SourceForge returns 403 from Claude's sandbox) into `docs/projects/0003-second-encoding/.wip/fonts/`
-- [ ] Survey FreeMonoTengwar and Tengwar Telcontar; render both in the fixture
-- [ ] **Alex:** open `.wip/gate/gate.html` in Safari and `.wip/gate/gate.rtf` in TextEdit; report per font (attach a screenshot if anything is off)
-- [ ] Record the gate verdict per candidate
+- [x] **Alex:** download `FreeMonoTengwar.2013-07-21.zip` and `TengwarTelcontar.008.zip` (SourceForge returns 403 from Claude's sandbox) into `docs/projects/0003-second-encoding/.wip/fonts/`
+- [x] Survey FreeMonoTengwar and Tengwar Telcontar; render both in the fixture
+- [x] **Alex:** open `.wip/gate/gate.html` in Safari and `.wip/gate/gate.rtf` in TextEdit (Alcarin and Formal CSUR in Safari; Alcarin in TextEdit)
+- [ ] **Alex:** Formal CSUR's section in TextEdit; FreeMono in Safari and TextEdit (install `FreeMonoTengwar.ttf` first)
+- [ ] **Alex:** decide whether FreeMono's outline-positioned tehtar pass the gate ("through GPOS or AAT")
+- [ ] **Alex:** choose the font for the first encoding (Formal CSUR or FreeMono)
+- [x] Record the gate verdict per candidate (Telcontar fails; Formal CSUR and FreeMono pass on rendering; see LOG)
 
 ## Phase 2: Decisions (only if a candidate passes)
 
