@@ -4,12 +4,14 @@
 Every corpus row is shown in Tengwar (using the encoding's font, installed on this
 machine), next to its Shavian, English, IPA, glyph names and rules.
 
-    python3 tools/render_corpus.py                       # Alcarin: writes corpus/review.html
-    python3 tools/render_corpus.py --encoding freemono   # writes .tmp/review-freemono.html
-    python3 tools/render_corpus.py --font path/to/AlcarinTengwar-Regular.ttf
+    python3 tools/render_corpus.py                       # every encoding: corpus/review.html (Alcarin),
+                                                         # corpus/review-freemono.html, ...
+    python3 tools/render_corpus.py --encoding freemono   # one encoding
+    python3 tools/render_corpus.py --font path/to/AlcarinTengwar-Regular.ttf -o .tmp/review.html
 
 With --font the page embeds a relative URL to that file instead of relying on
-an installed font. Only the default encoding's sheet is committed.
+an installed font. --font and -o apply to one encoding (--encoding, default alcarin).
+Every encoding's sheet is committed.
 """
 
 import argparse
@@ -68,6 +70,12 @@ def chips(rules):
     return "".join(f'<span class="chip">{html.escape(r)}</span>' for r in rules)
 
 
+def sheet_path(encoding: str, suffix: str = ".html") -> Path:
+    """corpus/review.html for the default encoding, corpus/review-NAME.html for the others."""
+    stem = "review" if encoding == DEFAULT_ENCODING else f"review-{encoding}"
+    return CORPUS_DIR / (stem + suffix)
+
+
 def families_css(enc) -> str:
     return ", ".join(f'"{f}"' for f in enc.families)
 
@@ -117,25 +125,23 @@ def build_sheet(face: str = "", encoding: str = DEFAULT_ENCODING, shareable: boo
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--font", help="path to a font file to reference from the page (relative to the output)")
-    ap.add_argument("--encoding", choices=ENCODINGS, default=DEFAULT_ENCODING)
-    ap.add_argument("-o", "--output", help="default: corpus/review.html, or .tmp/review-NAME.html for another encoding")
+    ap.add_argument("--encoding", choices=ENCODINGS, help="one encoding (default: every encoding)")
+    ap.add_argument("-o", "--output", help="output file for one encoding (default: corpus/review[-NAME].html)")
     args = ap.parse_args()
 
-    face = ""
-    if args.font:
-        rel = Path(args.font)
-        family = get_encoding(args.encoding).families[0]
-        face = f'@font-face {{ font-family: "{family}"; src: url("{rel.as_posix()}"); }}\n'
-    doc = build_sheet(face, args.encoding)
-    if args.output:
-        out = Path(args.output)
-    elif args.encoding == DEFAULT_ENCODING:
-        out = CORPUS_DIR / "review.html"
+    if args.font or args.output:
+        encodings = [args.encoding or DEFAULT_ENCODING]
     else:
-        out = ROOT / ".tmp" / f"review-{args.encoding}.html"
-        out.parent.mkdir(exist_ok=True)
-    out.write_text(doc, encoding="utf8")
-    print(f"wrote {out}")
+        encodings = [args.encoding] if args.encoding else list(ENCODINGS)
+    for encoding in encodings:
+        face = ""
+        if args.font:
+            rel = Path(args.font)
+            family = get_encoding(encoding).families[0]
+            face = f'@font-face {{ font-family: "{family}"; src: url("{rel.as_posix()}"); }}\n'
+        out = Path(args.output) if args.output else sheet_path(encoding)
+        out.write_text(build_sheet(face, encoding), encoding="utf8")
+        print(f"wrote {out}")
 
 
 if __name__ == "__main__":

@@ -3,9 +3,9 @@
 
     python3 tools/build_pdfs.py                    # docs/language-guide.pdf, docs/philosophy.pdf, corpus/review.pdf
     python3 tools/build_pdfs.py README.md          # any other Markdown file
-    python3 tools/build_pdfs.py corpus             # only the corpus review sheet
+    python3 tools/build_pdfs.py corpus             # only the corpus review sheets, one per encoding
     python3 tools/build_pdfs.py --out-dir build/   # write somewhere else
-    python3 tools/build_pdfs.py --encoding freemono corpus   # corpus/review-freemono.pdf, in FreeMonoTengwar
+    python3 tools/build_pdfs.py --encoding freemono corpus   # only corpus/review-freemono.pdf
 
 Pipeline: Markdown -> HTML (markdown-it-py) -> PDF (Chrome's print-to-PDF, through
 Playwright). Obsidian prints through the same engine, so the result is close to what
@@ -13,7 +13,9 @@ exporting from Obsidian gave.
 
 Fonts are looked up by name from the system, in this order (CSS falls back one glyph at a
 time, so Latin text uses Courier, Shavian letters use Bernie Sans Beta, and Tengwar
-code points use the encoding's font, Alcarin Tengwar by default):
+code points use the encoding's font, Alcarin Tengwar by default). The corpus sheet is
+printed once per encoding, each in its own font (corpus/review.pdf is Alcarin's,
+corpus/review-NAME.pdf the others'):
 
     Courier, Bernie Sans Beta, <the encoding's font family>
 
@@ -41,7 +43,6 @@ sys.path.insert(0, str(ROOT))
 from s2t.encodings import DEFAULT_ENCODING, ENCODINGS, get_encoding  # noqa: E402
 
 CORPUS = "corpus"  # not a file: the review sheet, rendered from corpus/*.md by tools/render_corpus.py
-CORPUS_PDF = ROOT / "corpus" / "review.pdf"
 DEFAULT_DOCS = ["docs/language-guide.md", "docs/philosophy.md", CORPUS]
 TEXT_FONTS = ["Courier", "Bernie Sans Beta"]
 
@@ -161,13 +162,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument(
         "--encoding",
         choices=ENCODINGS,
-        default=DEFAULT_ENCODING,
-        help="Tengwar font for the stack and the corpus sheet (default: %(default)s)",
+        help="Tengwar font for the documents' stack (default: alcarin) and the only corpus sheet to build "
+        "(default: one per encoding)",
     )
     args = ap.parse_args(argv)
-    encoding = args.encoding
-    stack = font_stack(encoding)
-    samples = {f: FONT_SAMPLES.get(f, TENGWAR_SAMPLE) for f in stack}
 
     try:
         from playwright.sync_api import sync_playwright
@@ -180,6 +178,13 @@ def main(argv: list[str] | None = None) -> int:
     for src in sources:
         if src != CORPUS and not src.is_file():
             sys.exit(f"not found: {src}")
+    # (source, encoding) pairs: a document once, the corpus sheet once per encoding.
+    jobs = []
+    for src in sources:
+        if src == CORPUS:
+            jobs += [(src, e) for e in ([args.encoding] if args.encoding else ENCODINGS)]
+        else:
+            jobs.append((src, args.encoding or DEFAULT_ENCODING))
     font_faces = parse_fonts(args.font)
     missing_any = False
 
@@ -190,13 +195,15 @@ def main(argv: list[str] | None = None) -> int:
         except Exception as exc:  # noqa: BLE001 - surface Playwright's own message
             sys.exit(f"could not start the browser ({exc}). Install Chrome or pass --browser PATH.")
         page = browser.new_page()
-        for src in sources:
+        for src, encoding in jobs:
+            stack = font_stack(encoding)
+            samples = {f: FONT_SAMPLES.get(f, TENGWAR_SAMPLE) for f in stack}
             if src == CORPUS:
-                from tools.render_corpus import build_sheet
+                from tools.render_corpus import build_sheet, sheet_path
 
                 doc = build_sheet(font_face_css(font_faces), encoding, shareable=True)
-                pdf_name = CORPUS_PDF.name if encoding == DEFAULT_ENCODING else f"review-{encoding}.pdf"
-                out = (args.out_dir or CORPUS_PDF.parent) / pdf_name
+                pdf = sheet_path(encoding, ".pdf")
+                out = (args.out_dir / pdf.name) if args.out_dir else pdf
             else:
                 text = src.read_text(encoding="utf-8")
                 doc = render_html(text, first_heading(text, src.stem), font_faces, stack)
