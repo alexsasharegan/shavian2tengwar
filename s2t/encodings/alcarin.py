@@ -67,4 +67,7 @@ MARKS = {
 # Marks drawn below the base (AE-01).
 BELOW = frozenset({"bar-below", "dot-below"})
 
-ALCARIN = Encoding("alcarin", LETTERS, MARKS, BELOW)
+# AE-01: the marks above go in nearest the base first.
+ALCARIN = Encoding(
+    "alcarin", LETTERS, MARKS, BELOW, families=("Alcarin Tengwar", "AlcarinTengwar"), order="nearest-first"
+)

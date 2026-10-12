@@ -8,13 +8,13 @@ if sys.version_info < (3, 14):  # noqa: UP036 - deliberate: a clear message inst
         "Install 3.14 and run the commands with it (see README)."
     )
 
-from .encodings import ENCODINGS, get_encoding  # noqa: E402
+from .encodings import DEFAULT_ENCODING, ENCODINGS, get_encoding  # noqa: E402
 from .glyphs import Cell, parse_literal, to_literal  # noqa: E402
 from .mode import translate_word  # noqa: E402
 from .stream import translate  # noqa: E402
 
 
-def render(text: str, fmt: str = "pua", encoding: str = "alcarin", strip_escapes: bool = False) -> str:
+def render(text: str, fmt: str = "pua", encoding: str = DEFAULT_ENCODING, strip_escapes: bool = False) -> str:
     """Translate text and serialize it: ``fmt`` is "pua" (code points) or "literal" (glyph names)."""
     items = translate(text, strip_escapes=strip_escapes)
     if fmt == "literal":
