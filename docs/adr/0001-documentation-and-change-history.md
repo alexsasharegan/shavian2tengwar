@@ -1,6 +1,6 @@
 # ADR-0001: Documentation and Change History
 
-**Status:** Active
+**Status:** Active; the approval-gate and merge-commit bullets are superseded by ADR-0013
 **Date:** 2026-10-11
 **Affected:** docs/, AGENTS.md, .agents/skills/documentation/, .gitignore
 **Origin:** Replaces `DECISIONS.md`

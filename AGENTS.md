@@ -6,7 +6,7 @@
 
 ### `documentation` (ALWAYS ACTIVE)
 
-Load [`.agents/skills/documentation/SKILL.md`](.agents/skills/documentation/SKILL.md) before starting any task. It sets out:
+Load Alex's user-level `project-docs` skill and then [`.agents/skills/documentation/SKILL.md`](.agents/skills/documentation/SKILL.md) before starting any task. The repo skill adds what is specific here and wins where they differ (ADR-0013). Together they set out:
 
 - The project lifecycle: every piece of work gets `docs/projects/NNNN-title/` with `README.md`, `TASKS.md` and `LOG.md`, and an entry in `docs/ROADMAP.md`.
 - Real-time, append-only logging in `LOG.md`.
@@ -60,7 +60,7 @@ Load [`.agents/skills/documentation/SKILL.md`](.agents/skills/documentation/SKIL
 - `spec/mode.md` defines what the engine does. **When the spec and the code disagree, the code is wrong.**
 - To change behaviour: **spec first, then engine, then corpus**, then record why in an ADR.
 - Statuses are `ADOPTED`, `PROVISIONAL` and `OPEN`. Open questions are in spec section 12.
-- **The pull request is the approval gate.** A new or changed rule is `PROVISIONAL`, and its ADR `Proposed`, while its PR is open. Only when Alex says the PR is approved, add a last commit that sets them to `ADOPTED` / `Active` with **Review:** "Approved by merging PR #N". Merging is the approval, so `main` never holds a provisional rule. Never promote anything on your own judgment.
+- **Merging the pull request accepts it** (ADR-0013). A rule the PR implements is written `ADOPTED`, and its ADR `Active` with **Review:** "Accepted by merging PR #N". The PR's last commits also close its project. `PROVISIONAL` rules and `Proposed` ADRs are for spike work and roadmap plans. Never promote one on your own judgment, and never merge a PR yourself.
 - Rule IDs look like `C-01`, `V-13`, `D-02`, `L-09`, `U-05`. Decisions are `ADR-NNNN`. Never number a decision `D-NN`; that is a diphthong rule.
 
 ### The corpus is the test suite
@@ -115,7 +115,7 @@ Run `npm run setup:dev` once to get ruff (pinned in `pyproject.toml`, dependency
 - **Formatting:** `.prettierrc` uses tabs and width 120 for JSON and Markdown.
 - **Prose:** plain, short sentences. Name glyphs as `{tinco}` and marks as `[dot-above]` (Tecendil literals). Cite rule IDs.
 - **Commits:** one logical change per commit, message in the imperative. Each commit leaves `npm test` passing. A commit that changes a rule names the rule ID.
-- **Branches:** `main` is the release branch; work happens on branches and is merged after Alex reviews it.
+- **Branches:** `main` is the release branch; work happens on branches and is squash-merged after Alex reviews it. ADRs cite the PR, not branch hashes.
 
 ---
 
