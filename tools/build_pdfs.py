@@ -5,6 +5,7 @@
     python3 tools/build_pdfs.py README.md          # any other Markdown file
     python3 tools/build_pdfs.py corpus             # only the corpus review sheet
     python3 tools/build_pdfs.py --out-dir build/   # write somewhere else
+    python3 tools/build_pdfs.py --encoding freemono corpus   # corpus/review-freemono.pdf, in FreeMonoTengwar
 
 Pipeline: Markdown -> HTML (markdown-it-py) -> PDF (Chrome's print-to-PDF, through
 Playwright). Obsidian prints through the same engine, so the result is close to what
@@ -12,9 +13,9 @@ exporting from Obsidian gave.
 
 Fonts are looked up by name from the system, in this order (CSS falls back one glyph at a
 time, so Latin text uses Courier, Shavian letters use Bernie Sans Beta, and Tengwar
-code points use Alcarin Tengwar):
+code points use the encoding's font, Alcarin Tengwar by default):
 
-    Courier, Bernie Sans Beta, Alcarin Tengwar
+    Courier, Bernie Sans Beta, <the encoding's font family>
 
 If a font is not installed, pass its file with --font, for example
     --font "Alcarin Tengwar=/path/to/AlcarinTengwar-Regular.otf"
@@ -37,10 +38,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from s2t.encodings import DEFAULT_ENCODING, ENCODINGS, get_encoding  # noqa: E402
+
 CORPUS = "corpus"  # not a file: the review sheet, rendered from corpus/*.md by tools/render_corpus.py
 CORPUS_PDF = ROOT / "corpus" / "review.pdf"
 DEFAULT_DOCS = ["docs/language-guide.md", "docs/philosophy.md", CORPUS]
-FONT_STACK = ["Courier", "Bernie Sans Beta", "Alcarin Tengwar"]
+TEXT_FONTS = ["Courier", "Bernie Sans Beta"]
+
+
+def font_stack(encoding: str) -> list[str]:
+    """Courier, Bernie Sans Beta, then the encoding's font family."""
+    return [*TEXT_FONTS, get_encoding(encoding).families[0]]
+
 
 CSS = """
 @page { size: Letter; margin: 0.75in; }
@@ -85,11 +94,12 @@ FONT_PROBE = """
 """
 
 # Characters each font is expected to cover; used only to warn about missing fonts.
+# Any Tengwar family not listed gets TENGWAR_SAMPLE.
 FONT_SAMPLES = {
     "Courier": "Abc",
     "Bernie Sans Beta": "\U00010450\U00010451\U00010452",
-    "Alcarin Tengwar": "",
 }
+TENGWAR_SAMPLE = ""
 
 
 def font_face_css(font_faces: list[tuple[str, Path]]) -> str:
@@ -106,7 +116,7 @@ def font_face_css(font_faces: list[tuple[str, Path]]) -> str:
     )
 
 
-def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path]]) -> str:
+def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path]], stack: list[str]) -> str:
     try:
         from markdown_it import MarkdownIt
     except ImportError:
@@ -114,10 +124,10 @@ def render_html(markdown_text: str, title: str, font_faces: list[tuple[str, Path
     md = MarkdownIt("commonmark", {"html": True}).enable("table")
     body = md.render(markdown_text)
     faces = font_face_css(font_faces)
-    stack = ", ".join(f'"{f}"' for f in FONT_STACK)
+    families = ", ".join(f'"{f}"' for f in stack)
     return (
         "<!doctype html><html><head><meta charset='utf-8'>"
-        f"<title>{html.escape(title)}</title><style>{faces}\n{CSS % {'stack': stack}}</style>"
+        f"<title>{html.escape(title)}</title><style>{faces}\n{CSS % {'stack': families}}</style>"
         f"</head><body>{body}</body></html>"
     )
 
@@ -148,7 +158,16 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--font", action="append", default=[], metavar="NAME=PATH", help="load a font file")
     ap.add_argument("--browser", metavar="PATH", help="Chrome/Chromium executable (default: installed Google Chrome)")
     ap.add_argument("--strict", action="store_true", help="fail if a font in the stack is not available")
+    ap.add_argument(
+        "--encoding",
+        choices=ENCODINGS,
+        default=DEFAULT_ENCODING,
+        help="Tengwar font for the stack and the corpus sheet (default: %(default)s)",
+    )
     args = ap.parse_args(argv)
+    encoding = args.encoding
+    stack = font_stack(encoding)
+    samples = {f: FONT_SAMPLES.get(f, TENGWAR_SAMPLE) for f in stack}
 
     try:
         from playwright.sync_api import sync_playwright
@@ -175,19 +194,20 @@ def main(argv: list[str] | None = None) -> int:
             if src == CORPUS:
                 from tools.render_corpus import build_sheet
 
-                doc = build_sheet(font_face_css(font_faces), shareable=True)
-                out = (args.out_dir / CORPUS_PDF.name) if args.out_dir else CORPUS_PDF
+                doc = build_sheet(font_face_css(font_faces), encoding, shareable=True)
+                pdf_name = CORPUS_PDF.name if encoding == DEFAULT_ENCODING else f"review-{encoding}.pdf"
+                out = (args.out_dir or CORPUS_PDF.parent) / pdf_name
             else:
                 text = src.read_text(encoding="utf-8")
-                doc = render_html(text, first_heading(text, src.stem), font_faces)
+                doc = render_html(text, first_heading(text, src.stem), font_faces, stack)
                 out = (args.out_dir or src.parent) / (src.stem + ".pdf")
             page.set_content(doc, wait_until="load")
             for name, _ in font_faces:  # @font-face files load lazily; force them
                 page.evaluate(
-                    "([n, s]) => document.fonts.load('16px \"' + n + '\"', s)", [name, FONT_SAMPLES.get(name, "A")]
+                    "([n, s]) => document.fonts.load('16px \"' + n + '\"', s)", [name, samples.get(name, "A")]
                 )
             page.evaluate("document.fonts.ready")
-            for family, sample in FONT_SAMPLES.items():
+            for family, sample in samples.items():
                 if not page.evaluate(FONT_PROBE, [family, sample]):
                     missing_any = True
                     print(f'warning: font "{family}" does not seem to be available (use --font)', file=sys.stderr)

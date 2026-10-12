@@ -35,6 +35,17 @@ class ReviewSheet(unittest.TestCase):
         self.assertIn("@font-face", shareable)
         self.assertEqual(shareable.count('class="row'), plain.count('class="row'))
 
+    def test_each_encoding_sets_its_own_font_family(self):
+        from s2t import ENCODINGS, get_encoding
+        from tools.render_corpus import build_sheet
+
+        for name in ENCODINGS:
+            with self.subTest(name):
+                family = get_encoding(name).families[0]
+                sheet = build_sheet(encoding=name)
+                self.assertIn(f'.tw {{ font-family: "{family}"', sheet)
+                self.assertIn(f"install the {family} font", sheet)
+
 
 if __name__ == "__main__":
     unittest.main()
