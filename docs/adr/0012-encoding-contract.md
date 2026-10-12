@@ -6,8 +6,8 @@
 tools/render_corpus.py, tools/build_pdfs.py, shavian2tengwar.py
 **Origin:** project 0003
 **Review:** In PR #3
-**Revert:** `ca18a8e` (encodings, spec table, tests), `524c1ee` (review sheet and PDF font). Revert
-both together, and ADR-0011 with them.
+**Revert:** `ca18a8e` (encodings, spec table, tests), `524c1ee` and `29927b1` (review sheets and
+PDF font). Revert them together, and ADR-0011 with them.
 
 ## Context
 
@@ -62,11 +62,13 @@ The mark-order tests are kept for each encoding (AE-01, FE-01), and one test che
 
 The tools follow the encoding:
 
-- `tools/render_corpus.py --encoding NAME` sets the Tengwar font family, the install note and the
-  `--font` face from the encoding. Only the default encoding's sheet is committed
-  (`corpus/review.html`); other encodings write `.tmp/review-NAME.html`.
-- `tools/build_pdfs.py --encoding NAME` puts the encoding's family last in the font stack and writes
-  the corpus as `corpus/review-NAME.pdf`. The default build is unchanged.
+- **Every encoding gets its own committed review sheet** (Alex, 2026-10-11). `tools/render_corpus.py`
+  writes one per encoding, each in its own font: `corpus/review.html` for the default (Alcarin), and
+  `corpus/review-NAME.html` for each other one. `--encoding NAME` writes just one. The freshness test
+  checks all of them.
+- `tools/build_pdfs.py` prints the corpus sheet once per encoding (`corpus/review.pdf`,
+  `corpus/review-NAME.pdf`). `--encoding NAME` limits the corpus to that one, and sets the Tengwar font
+  in the guides' font stack (Alcarin by default).
 
 **FreeMonoTengwar** (`freemono`) is the second encoding, with rules FE-01 to FE-06 in
 `spec/encodings/freemono.md`. For every glyph the mode uses, its code points are the same as

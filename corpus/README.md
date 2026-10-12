@@ -13,7 +13,7 @@ The corpus is the test data for the engine and the visual reference for the spec
 | `word-signs.md` | *the*, *of*, *and*, and the weak forms of *to* and *for* |
 | `marks.md` | punctuation |
 | `phrases.md` | whole sentences |
-| `review.html` | generated; do not edit |
+| `review.html`, `review-freemono.html` | generated, one per encoding; do not edit |
 
 Every `.md` file is read by `tools/corpus.py`. A file only needs to follow the table formats below; the headings and prose can say anything.
 
@@ -46,7 +46,7 @@ The Glyphs column is the Tecendil-style literal, so it can be pasted into tecend
 - `tests/test_corpus.py`: every case produces its stated glyphs. Every rule a row cites must exist in `spec/mode.md` and must actually have fired for that input, so a stale citation fails. Same pairs must match, distinct pairs must differ.
 - `tests/test_coverage.py`: every adopted or provisional rule in the spec is cited by at least one row. The exceptions are the constraint rules (P-01 to P-05 and R-02), which have no output of their own.
 - `tests/test_identities.py`: independent of the corpus, it enumerates short vowel sequences and fails on any two different Shavian spellings that give the same glyphs, unless the spec declares them identical.
-- `tests/test_review_sheet.py`: `review.html` must match what `tools/render_corpus.py` would produce now.
+- `tests/test_review_sheet.py`: every review sheet must match what `tools/render_corpus.py` would produce now.
 
 Run them all with `npm test`.
 
@@ -55,15 +55,15 @@ Run them all with `npm test`.
 1. Work out the glyphs from the spec first. Writing the expected Glyphs yourself is the point: the test then checks the engine against the rules. If you copy the engine's output into the table, the row can only ever agree with it.
 2. To see what the engine produces, run `python3 shavian2tengwar.py --format literal "𐑞𐑬𐑯"`, or `--inspect WORD` for each step and the rules that fired.
 3. Add the row to the right file and cite the rules it exercises.
-4. Run `npm test`. If `review.html` is stale, run `npm run corpus` (or `python3 tools/render_corpus.py`) and commit it with the change.
+4. Run `npm test`. If a review sheet is stale, run `npm run corpus` (or `python3 tools/render_corpus.py`) and commit them with the change.
 
 If the engine and the corpus disagree, one of them is wrong. Decide which by reading the rule in `spec/mode.md`, and change the spec first if the rule itself should change.
 
 ## The review sheet
 
-`python3 tools/render_corpus.py` writes `review.html`. It shows each row as Tengwar next to its Shavian, English, IPA, glyph names and rules, and it follows the browser's light or dark setting. It uses the Alcarin Tengwar font if it is installed (and Bernie Sans Beta for the Shavian). The committed copy never embeds a font path, because a path on one machine would make the freshness test fail on every other. If the browser shows boxes, run `npm run corpus:view` (edit the font path in `package.json` to match your machine), which writes a copy with the font embedded to `.tmp/review.html`; that copy is not committed. Open it in a browser to check that marks land where they should, which the text tables cannot show.
+`python3 tools/render_corpus.py` writes one sheet per font encoding: `review.html` in Alcarin Tengwar and `review-freemono.html` in FreeMonoTengwar (`--encoding NAME` writes just one). Each shows each row as Tengwar next to its Shavian, English, IPA, glyph names and rules, and it follows the browser's light or dark setting. Each uses its font if it is installed (and Bernie Sans Beta for the Shavian). The committed copy never embeds a font path, because a path on one machine would make the freshness test fail on every other. If the browser shows boxes, run `npm run corpus:view` (edit the font path in `package.json` to match your machine), which writes a copy with the font embedded to `.tmp/review.html`; that copy is not committed. Open it in a browser to check that marks land where they should, which the text tables cannot show.
 
-`npm run pdf` also prints the sheet as `corpus/review.pdf`, with the fonts embedded, for sharing with people who do not have them. Each corpus file starts on a new page, and no row is split across pages.
+`npm run pdf` also prints each sheet (`corpus/review.pdf`, `corpus/review-freemono.pdf`), with the fonts embedded, for sharing with people who do not have them. Each corpus file starts on a new page, and no row is split across pages.
 
 ## How the first version was made
 

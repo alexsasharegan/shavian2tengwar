@@ -223,3 +223,34 @@ All checks passed!
   are cramped on tall letters. Its code points match Alcarin's for the mode.
 - **Context state for next thread:** PR #3 is open for Alex's review. Not merged. On approval, follow
   the last task in TASKS.md.
+
+## 2026-10-11 — One committed review sheet per font
+
+### Context & Decisions
+
+- Alex: "I would like each font to be rendered and committed." `tools/render_corpus.py` now writes every
+  encoding's sheet by default: `corpus/review.html` (Alcarin, unchanged) and
+  `corpus/review-freemono.html`. `tests/test_review_sheet.py` checks each one for freshness and presence.
+  `tools/build_pdfs.py corpus` prints one PDF per encoding.
+- Built **only** `corpus/review-freemono.pdf`, because Alex asked for it to be committed. The run used
+  `--strict` and gave no font warnings; `pdffonts` shows FreeMonoTengwar, Courier and Bernie Sans Beta
+  embedded. The existing PDFs were not rebuilt. Page 1 was checked as an image: every mark attached.
+- ADR-0012 (still Proposed) now records one committed sheet per encoding.
+- The gate fixture question is still open. Alex asked what the fixture is; explained in chat.
+
+### Commands & Operations Executed
+
+```bash
+npm run corpus                      # review.html (unchanged), review-freemono.html
+.venv/bin/python tools/build_pdfs.py --strict --encoding freemono corpus
+pdffonts corpus/review-freemono.pdf
+npm test && npm run lint
+```
+
+```
+Ran 69 tests in 0.94s
+
+OK
+All checks passed!
+62 files already formatted
+```

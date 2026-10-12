@@ -33,5 +33,5 @@
 
 - [x] `npm test` and `npm run lint` on Python 3.14, output in the LOG and the PR
 - [x] ADR index, ROADMAP; PR open for Alex (not merged)
-- [ ] **Alex:** look at `.tmp/review-freemono.html` (`npm run corpus -- --encoding freemono`) and, if wanted, build `corpus/review-freemono.pdf` (`npm run pdf -- --encoding freemono corpus`) and decide whether to commit it
+- [x] **Alex:** decide whether the FreeMono sheet is committed: yes, every font is rendered and committed (`corpus/review-freemono.html` and `.pdf`)
 - [ ] On approval: ADR-0011 and ADR-0012 to Active, FE-01 to FE-06 to ADOPTED, drop "(proposed)" from ADR-0003's last bullet, Review "Approved by merging PR #3", close the project
