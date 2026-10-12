@@ -27,7 +27,7 @@
 - [x] `spec/encodings/freemono.md` with PROVISIONAL rules FE-01 to FE-06, each code point read from the cmap
 - [x] `s2t/encodings/freemono.py`, registered; `--encoding freemono` and the review sheet use it
 - [x] Render the corpus in it and look at the result (Chrome; tall-letter check in Core Text)
-- [ ] **Alex:** decide whether the gate fixture moves from `.wip/` to `tools/` (left in `.wip/` for now)
+- [x] **Alex:** move the gate fixture to `tools/`: yes. Now `tools/font_gate.py` and `tools/ctrender.swift` (`7008e3e`)
 
 ## Phase 4: Finish
 

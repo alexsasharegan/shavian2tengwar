@@ -43,7 +43,9 @@ For the reasoning behind the deviations from community norms, see [docs/philosop
 ├── tools/
 │   ├── corpus.py             #   reads corpus/*.md (used by the tests and render_corpus.py)
 │   ├── render_corpus.py      #   regenerates the review sheets, one per encoding
-│   └── build_pdfs.py         #   builds the PDFs of the two guides and the review sheets
+│   ├── build_pdfs.py         #   builds the PDFs of the two guides and the review sheets
+│   ├── font_gate.py          #   the font gate: mark-stacking test page for vetting a Tengwar font (ADR-0011)
+│   └── ctrender.swift        #   renders text through Core Text (macOS), for font_gate.py --coretext
 ├── docs/
 │   ├── language-guide.md/.pdf  # visual guide to the glyphs and marks
 │   ├── philosophy.md/.pdf      # why the mode deviates from community norms

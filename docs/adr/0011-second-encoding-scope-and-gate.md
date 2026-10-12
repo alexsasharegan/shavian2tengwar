@@ -2,10 +2,11 @@
 
 **Status:** Proposed
 **Date:** 2026-10-11
-**Affected:** s2t/encodings/, spec/encodings/, docs/projects/0003-second-encoding/survey.md
+**Affected:** s2t/encodings/, spec/encodings/, tools/font_gate.py, tools/ctrender.swift,
+tools/requirements-docs.txt, docs/projects/0003-second-encoding/survey.md
 **Origin:** project 0003 (Alex's brief)
 **Review:** In PR #3; Alex decided the gate's principle and the font choice on 2026-10-11
-**Revert:** `ca18a8e` (with ADR-0012; see there)
+**Revert:** `ca18a8e` (with ADR-0012; see there); the gate tool alone: `7008e3e`
 
 ## Context
 
@@ -68,5 +69,11 @@ Tengwar Telcontar had already failed on Alex's Mac: tehtar on dotted circles in 
   Tolkien's tengwar may need permission from the Tolkien Estate**. That applies to the script whatever
   the font, and it applies to Alcarin output too. This project gives no legal advice; anyone publishing
   commercially should ask.
-- The gate fixture stays in the project's `.wip/` for now. It is reused by re-running it with a
-  font's cmap values.
+- **The gate is a tool**, `tools/font_gate.py` (Alex, 2026-10-11). It takes its cases from glyph
+  literals, and each registered font's code points from its encoding. A candidate font is tried at a
+  registered encoding's code points (`alcarin:Label=PATH`), and every code point used is looked up in
+  the candidate's own cmap, so a missing glyph is reported, not assumed. It writes `gate.html`,
+  `gate.rtf` and `gate.txt`. `--chrome` screenshots the page, and `--coretext` renders each font through
+  `tools/ctrender.swift`. The cmap check is standard library only. The font's own glyph names are shown
+  when fontTools is installed, which is now in `tools/requirements-docs.txt`.
+  `tests/test_font_gate.py` covers it.

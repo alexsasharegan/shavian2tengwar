@@ -38,7 +38,7 @@ Load [`.agents/skills/documentation/SKILL.md`](.agents/skills/documentation/SKIL
 │   └── encodings/            #   code point tables (alcarin.md, freemono.md)
 ├── corpus/                   # Markdown tables that are the test data; review sheets generated, one per encoding
 ├── tests/                    # unittest suite
-├── tools/                    # corpus parser, review-sheet renderer, PDF builder
+├── tools/                    # corpus parser, review-sheet renderer, PDF builder, font gate
 ├── docs/                     # prose and change history (git-tracked)
 │   ├── adr/                  #   Architecture Decision Records + index
 │   ├── projects/NNNN-title/  #   README.md, TASKS.md, LOG.md (+ untracked .wip/)
@@ -98,6 +98,9 @@ npm run corpus                             # regenerate corpus/review.html and r
 npm run fmt                                # ruff format (run before every commit)
 npm run lint                               # ruff check + format check, as CI runs them
 npm run setup:docs && npm run pdf          # PDFs (Alex only; needs Chrome and the fonts)
+.venv/bin/python tools/font_gate.py .tmp/gate alcarin=FONT freemono:Candidate=FONT --chrome --coretext
+                                           # vet a new Tengwar font (ADR-0011); Alex then checks gate.html
+                                           # in Safari and gate.rtf in TextEdit
 ```
 
 `python3` must be 3.14 or newer (`python3 --version`). Older versions stop with a one-line message. On macOS: `/opt/homebrew/bin/python3.14`.

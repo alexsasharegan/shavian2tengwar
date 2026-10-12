@@ -254,3 +254,41 @@ OK
 All checks passed!
 62 files already formatted
 ```
+
+## 2026-10-11 — The gate fixture becomes tools/font_gate.py
+
+### Context & Decisions
+
+- Alex: move the fixture to `tools/`. It was rebuilt rather than copied, so it cannot drift:
+  - Cases are glyph literals (`{tinco}[dot-above][bar-above]`), plus a new tall-stem case
+    (`{anto}`) and the `and` shorthand.
+  - Registered fonts take their code points from their encodings, in both mark orders. A candidate is
+    tried at a registered encoding's code points (`alcarin:Label=PATH`).
+  - Every code point used is looked up in the font's own cmap, with a standard-library reader for
+    cmap formats 4 and 12 and the name table. Glyph names are shown when fontTools is installed, and
+    `fonttools` is now in `tools/requirements-docs.txt`.
+  - `--chrome` screenshots the page; `--coretext` renders through `tools/ctrender.swift`, moved
+    from `.wip/`.
+- Checked against the earlier fixture, with all four fonts: the same verdicts in Chrome and Core Text.
+  The stdlib cmap reader finds 114 PUA code points in FreeMonoTengwar, the same as fontTools.
+- `tests/test_font_gate.py`: every case encodes in every encoding; the two orders differ where they
+  should; the page and RTF are written for installed fonts.
+- The `.wip/` copies of `gate_fixture.py`, `shoot.py` and `ctrender.swift` were deleted (untracked,
+  superseded). `.wip/gate/` keeps the earlier renders.
+
+### Commands & Operations Executed
+
+```bash
+.venv/bin/python tools/font_gate.py .tmp/gate alcarin=<Alcarin> freemono=<FreeMono> \
+    "alcarin:Tengwar Formal CSUR=<file>" "alcarin:Tengwar Telcontar=<file>" --chrome --coretext
+python3 tools/font_gate.py .tmp/gate2 "freemono:Telcontar=<file>" "freemono:Formal=<file>" alcarin   # no fontTools
+npm test && npm run lint
+```
+
+```
+Ran 72 tests in 0.944s
+
+OK
+All checks passed!
+64 files already formatted
+```
