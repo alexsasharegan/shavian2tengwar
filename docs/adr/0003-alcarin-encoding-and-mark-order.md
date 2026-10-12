@@ -34,5 +34,5 @@ bar. The encoding first wrote the marks in that order (`{tinco}[dot-above][bar-a
   verified. Neither was checked with two marks above. Both are corrected; the new order was checked
   by rendering it in Chromium.
 - Anyone adding an encoding must decide which of its marks sit below (`below=` in `Encoding`).
-- ADR-0012 (proposed) adds a second encoding and makes the mark order a per-encoding setting. This
+- ADR-0012 adds a second encoding and makes the mark order a per-encoding setting. This
   ADR's order stays Alcarin's.

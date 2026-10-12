@@ -1,8 +1,8 @@
 # 0003 — Second Font Encoding
 
-> **Status:** In review (PR #3): FreeMonoTengwar encoding added; ADRs Proposed, FE rules PROVISIONAL
+> **Status:** Complete (PR #3, squash-merged in `8862322`)
 > **Created:** 2026-10-11
-> **Branch:** `feat/0003-second-encoding`
+> **Branch:** `feat/0003-second-encoding` (merged)
 
 ## Objective
 
@@ -15,6 +15,7 @@ contract that any font has to meet.
 - Only Unicode Private Use Area fonts. ASCII-mapped fonts (Annatar, Parmaite, Eldamar and the like) are out.
 - **Gate.** A candidate qualifies only if it is free, uses PUA code points, installs on macOS, and Core Text
   positions its tehtar through OpenType GPOS or AAT, with no dotted circles. Graphite-only fonts are out.
+  Alex later widened this to robust rendering in Core Text, Chrome and PDFs, whatever the technology (ADR-0011).
 - Tengwar Telcontar failed on Alex's Mac (tehtar on dotted circles in Core Text). It is evaluated only for
   comparison.
 - Candidates: FreeMonoTengwar, Tengwar Formal CSUR, and Tengwar Telcontar for comparison.
