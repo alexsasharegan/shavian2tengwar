@@ -27,11 +27,11 @@
 - [x] `spec/encodings/freemono.md` with PROVISIONAL rules FE-01 to FE-06, each code point read from the cmap
 - [x] `s2t/encodings/freemono.py`, registered; `--encoding freemono` and the review sheet use it
 - [x] Render the corpus in it and look at the result (Chrome; tall-letter check in Core Text)
-- [x] **Alex:** move the gate fixture to `tools/`: yes. Now `tools/font_gate.py` and `tools/ctrender.swift` (`7008e3e`)
+- [x] **Alex:** move the gate fixture to `tools/`: yes. Now `tools/font_gate.py` and `tools/ctrender.swift` (`7008e3e` on the branch; in `8862322` on `main`)
 
 ## Phase 4: Finish
 
 - [x] `npm test` and `npm run lint` on Python 3.14, output in the LOG and the PR
 - [x] ADR index, ROADMAP; PR open for Alex (not merged)
 - [x] **Alex:** decide whether the FreeMono sheet is committed: yes, every font is rendered and committed (`corpus/review-freemono.html` and `.pdf`)
-- [ ] On approval: ADR-0011 and ADR-0012 to Active, FE-01 to FE-06 to ADOPTED, drop "(proposed)" from ADR-0003's last bullet, Review "Approved by merging PR #3", close the project
+- [x] On approval: ADR-0011 and ADR-0012 to Active, FE-01 to FE-06 to ADOPTED, drop "(proposed)" from ADR-0003's last bullet, Review "Approved by merging PR #3", close the project (after the merge, on `docs/close-0003`)

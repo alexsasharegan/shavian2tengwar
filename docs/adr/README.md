@@ -54,7 +54,7 @@ Number ADRs sequentially and never reuse a number. Cite them as `ADR-NNNN`, neve
 | [ADR-0008](./0008-toolchain-and-ci.md) | Toolchain and CI | Active | 2026-10-11 | D-15, D-16, D-20 |
 | [ADR-0009](./0009-cli-contract.md) | CLI Contract | Active | 2026-10-11 | D-18 |
 | [ADR-0010](./0010-pdf-build-and-committed-pdfs.md) | PDF Build and Committed PDFs | Active | 2026-10-11 | D-10, D-13, D-20, D-21 |
-| [ADR-0011](./0011-second-encoding-scope-and-gate.md) | Second Encoding: Scope and Acceptance Gate | Proposed | 2026-10-11 | project 0003 |
-| [ADR-0012](./0012-encoding-contract.md) | The Encoding Contract | Proposed | 2026-10-11 | project 0003 |
+| [ADR-0011](./0011-second-encoding-scope-and-gate.md) | Second Encoding: Scope and Acceptance Gate | Active | 2026-10-11 | project 0003 |
+| [ADR-0012](./0012-encoding-contract.md) | The Encoding Contract | Active | 2026-10-11 | project 0003 |
 
 `DECISIONS.md` D-11 (commit author) is recorded in [project 0001's log](../projects/0001-engine-rewrite/LOG.md), not as an ADR.

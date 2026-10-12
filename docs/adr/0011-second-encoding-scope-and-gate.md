@@ -1,12 +1,12 @@
 # ADR-0011: Second Encoding: Scope and Acceptance Gate
 
-**Status:** Proposed
+**Status:** Active
 **Date:** 2026-10-11
 **Affected:** s2t/encodings/, spec/encodings/, tools/font_gate.py, tools/ctrender.swift,
 tools/requirements-docs.txt, docs/projects/0003-second-encoding/survey.md
 **Origin:** project 0003 (Alex's brief)
-**Review:** In PR #3; Alex decided the gate's principle and the font choice on 2026-10-11
-**Revert:** `ca18a8e` (with ADR-0012; see there); the gate tool alone: `7008e3e`
+**Review:** Approved by merging PR #3; Alex decided the gate's principle and the font choice on 2026-10-11
+**Revert:** `8862322` (PR #3, squash-merged; reverts ADR-0012 with it)
 
 ## Context
 

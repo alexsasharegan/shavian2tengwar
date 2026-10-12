@@ -1,13 +1,13 @@
 # ADR-0012: The Encoding Contract
 
-**Status:** Proposed
+**Status:** Active
 **Date:** 2026-10-11
 **Affected:** s2t/encodings/, spec/encodings/, tests/test_encoding.py, tests/test_review_sheet.py,
 tools/render_corpus.py, tools/build_pdfs.py, shavian2tengwar.py
 **Origin:** project 0003
-**Review:** In PR #3
-**Revert:** `ca18a8e` (encodings, spec table, tests), `524c1ee` and `29927b1` (review sheets and
-PDF font). Revert them together, and ADR-0011 with them.
+**Review:** Approved by merging PR #3
+**Revert:** `8862322` (PR #3, squash-merged: encodings, spec table, tests, review sheets, PDF font,
+font gate). It reverts ADR-0011 with it.
 
 ## Context
 

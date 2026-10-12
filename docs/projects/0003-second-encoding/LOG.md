@@ -292,3 +292,15 @@ OK
 All checks passed!
 64 files already formatted
 ```
+
+## 2026-10-11/12: Approved and merged; project closed
+
+- Alex approved and merged PR #3. It was squash-merged as `8862322` before the approval commit was
+  added, so `main` briefly held ADR-0011 and ADR-0012 as Proposed and FE-01 to FE-06 as PROVISIONAL.
+  This follow-up (`docs/close-0003`) flips them.
+- ADR-0011 and ADR-0012 to Active, Review "Approved by merging PR #3". FE-01 to FE-06 to ADOPTED.
+  "(proposed)" dropped from ADR-0003's last bullet.
+- The branch commits (`ca18a8e`, `524c1ee`, `29927b1`, `7008e3e`) are not on `main` after the squash,
+  so both ADRs' **Revert** now name `8862322`.
+- The project README's scope notes that Alex widened the gate (ADR-0011).
+- ROADMAP: 0003 moved to Done.
