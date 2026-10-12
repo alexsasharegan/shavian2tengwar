@@ -9,8 +9,9 @@ fails if a rule has no case. When this document and the code disagree, the code 
 
 ## 0. Conventions
 
-**Status.** `ADOPTED` is decided and must be enforced. `PROVISIONAL` is proposed in an open pull
-request; merging the PR approves it and makes it `ADOPTED`, so `main` has none. `OPEN` is undecided;
+**Status.** `ADOPTED` is decided and must be enforced; a rule is written `ADOPTED` in the pull request
+that implements it, and merging the PR accepts it (ADR-0013). `PROVISIONAL` is implemented and
+enforced but on trial (spike work), to be settled by a later PR. `OPEN` is undecided;
 the text lists the candidates and current behaviour.
 
 **Glyph names** follow [Tecendil](https://www.tecendil.com/) so that output can be pasted into its
@@ -279,4 +280,5 @@ differently, and why each choice was made, is recorded in `docs/`: the change li
 
 ## 12. Open questions
 
-None. A new question is raised in a pull request, with a `PROVISIONAL` rule and a `Proposed` ADR.
+None. A new question is raised in a pull request, as an `OPEN` question or a `PROVISIONAL` rule with a
+`Proposed` ADR.

@@ -6,8 +6,9 @@
 
 | Status | Meaning |
 |--------|---------|
-| **Proposed** | In an open pull request, waiting for Alex's approval. Never on `main` |
-| **Active** | Current, effective decision |
+| **Proposed** | Not yet settled: spike work or a roadmap plan. May be on `main` |
+| **Active** | Current, effective decision (this repo's word for Accepted) |
+| **Rejected** | Decided against; kept for the record |
 | **Superseded** | Replaced by a later ADR (say which) |
 | **Deprecated** | No longer recommended for new work |
 
@@ -16,12 +17,12 @@
 ```markdown
 # ADR-NNNN: Title
 
-**Status:** Proposed | Active | Superseded by ADR-NNNN | Deprecated
+**Status:** Proposed | Active | Rejected | Superseded by ADR-NNNN | Deprecated
 **Date:** YYYY-MM-DD
 **Affected:** files and spec rules it touches
 **Origin:** where it came from (e.g. DECISIONS.md D-12, or a project number)
-**Review:** Approved by merging PR #N | Requested by Alex
-**Revert:** commits that back it out, and what else must go with them
+**Review:** Accepted by merging PR #N, plus Alex's decisions along the way
+**Revert:** the squash commit of PR #N, and what else must go with it
 
 ## Context
 
@@ -36,7 +37,7 @@ What was decided, and the alternatives considered.
 What follows, good and bad. Known risks and things not verified.
 ```
 
-**The pull request is the approval gate** (ADR-0001). Write new ADRs as `Proposed`. When Alex approves the PR, a final commit sets them to `Active` and records the PR in **Review**; merging is the approval.
+**Merging the pull request accepts it** (ADR-0013). Write an ADR as `Active` in the PR that implements it; there is no flip commit. Use `Proposed` only for spike work and roadmap plans.
 
 Number ADRs sequentially and never reuse a number. Cite them as `ADR-NNNN`, never `D-NN`, which is a spec rule ID (the diphthongs).
 
@@ -56,5 +57,6 @@ Number ADRs sequentially and never reuse a number. Cite them as `ADR-NNNN`, neve
 | [ADR-0010](./0010-pdf-build-and-committed-pdfs.md) | PDF Build and Committed PDFs | Active | 2026-10-11 | D-10, D-13, D-20, D-21 |
 | [ADR-0011](./0011-second-encoding-scope-and-gate.md) | Second Encoding: Scope and Acceptance Gate | Active | 2026-10-11 | project 0003 |
 | [ADR-0012](./0012-encoding-contract.md) | The Encoding Contract | Active | 2026-10-11 | project 0003 |
+| [ADR-0013](./0013-accept-on-merge-and-global-docs-workflow.md) | Accept on Merge, Squash Merges, and the Global Docs Workflow | Active | 2026-10-12 | project 0004 |
 
 `DECISIONS.md` D-11 (commit author) is recorded in [project 0001's log](../projects/0001-engine-rewrite/LOG.md), not as an ADR.
