@@ -10,26 +10,28 @@
 - [x] **Alex:** download `FreeMonoTengwar.2013-07-21.zip` and `TengwarTelcontar.008.zip` (SourceForge returns 403 from Claude's sandbox) into `docs/projects/0003-second-encoding/.wip/fonts/`
 - [x] Survey FreeMonoTengwar and Tengwar Telcontar; render both in the fixture
 - [x] **Alex:** open `.wip/gate/gate.html` in Safari and `.wip/gate/gate.rtf` in TextEdit (Alcarin and Formal CSUR in Safari; Alcarin in TextEdit)
-- [ ] **Alex:** Formal CSUR's section in TextEdit; FreeMono in Safari and TextEdit (install `FreeMonoTengwar.ttf` first)
-- [ ] **Alex:** decide whether FreeMono's outline-positioned tehtar pass the gate ("through GPOS or AAT")
-- [ ] **Alex:** choose the font for the first encoding (Formal CSUR or FreeMono)
+- [x] **Alex:** FreeMono and Telcontar in TextEdit (FreeMono pass, Telcontar dotted circles). Formal CSUR's TextEdit section not checked; moot after the choice below
+- [x] **Alex:** decide whether FreeMono's outline-positioned tehtar pass the gate: yes, the principle is robust accessibility (Core Text, browsers, PDFs, word processors)
+- [x] **Alex:** choose the font for the first encoding: FreeMonoTengwar
 - [x] Record the gate verdict per candidate (Telcontar fails; Formal CSUR and FreeMono pass on rendering; see LOG)
 
 ## Phase 2: Decisions (only if a candidate passes)
 
-- [ ] ADR-0011: second-encoding scope and acceptance criteria (Proposed)
-- [ ] ADR-0012: the encoding contract (Proposed)
+- [x] ADR-0011: second-encoding scope and acceptance gate (Proposed)
+- [x] ADR-0012: the encoding contract (Proposed)
 
 ## Phase 3: Code (only if a candidate passes)
 
-- [ ] Generalise `tests/test_encoding.py` to every registered encoding
-- [ ] Font family per encoding in `tools/render_corpus.py` and `tools/build_pdfs.py`
-- [ ] `spec/encodings/<font>.md` with PROVISIONAL rules, each code point verified against the cmap
-- [ ] `s2t/encodings/<font>.py`, registered in `ENCODINGS`; `--encoding` and the review sheet use it
-- [ ] Render the corpus in it and look at the result
-- [ ] Decide where the gate fixture lives once it is reused (promote from `.wip/` to `tools/`?)
+- [x] Generalise `tests/test_encoding.py` to every registered encoding
+- [x] Font family per encoding in `tools/render_corpus.py` and `tools/build_pdfs.py`
+- [x] `spec/encodings/freemono.md` with PROVISIONAL rules FE-01 to FE-06, each code point read from the cmap
+- [x] `s2t/encodings/freemono.py`, registered; `--encoding freemono` and the review sheet use it
+- [x] Render the corpus in it and look at the result (Chrome; tall-letter check in Core Text)
+- [ ] **Alex:** decide whether the gate fixture moves from `.wip/` to `tools/` (left in `.wip/` for now)
 
 ## Phase 4: Finish
 
-- [ ] `npm test` and `npm run lint` on Python 3.14, output in the LOG and the PR
-- [ ] ADR index, ROADMAP; PR open for Alex (not merged)
+- [x] `npm test` and `npm run lint` on Python 3.14, output in the LOG and the PR
+- [x] ADR index, ROADMAP; PR open for Alex (not merged)
+- [ ] **Alex:** look at `.tmp/review-freemono.html` (`npm run corpus -- --encoding freemono`) and, if wanted, build `corpus/review-freemono.pdf` (`npm run pdf -- --encoding freemono corpus`) and decide whether to commit it
+- [ ] On approval: ADR-0011 and ADR-0012 to Active, FE-01 to FE-06 to ADOPTED, drop "(proposed)" from ADR-0003's last bullet, Review "Approved by merging PR #3", close the project

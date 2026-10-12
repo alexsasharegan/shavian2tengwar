@@ -32,10 +32,10 @@ Load [`.agents/skills/documentation/SKILL.md`](.agents/skills/documentation/SKIL
 │   ├── mode.py               #   Shavian word -> glyph cells (implements spec/mode.md)
 │   ├── stream.py             #   words, punctuation, {{verbatim}} escapes
 │   ├── glyphs.py             #   glyph IR: Cell, Tecendil literal notation
-│   └── encodings/            #   glyph name -> font code points (alcarin.py)
+│   └── encodings/            #   glyph name -> font code points (alcarin.py, freemono.py)
 ├── spec/                     # THE AUTHORITY on the rules
 │   ├── mode.md               #   every rule has an ID (C-01, V-13, ...) and a status
-│   └── encodings/alcarin.md  #   code point table
+│   └── encodings/            #   code point tables (alcarin.md, freemono.md)
 ├── corpus/                   # Markdown tables that are the test data; review.html/.pdf generated
 ├── tests/                    # unittest suite
 ├── tools/                    # corpus parser, review-sheet renderer, PDF builder
@@ -95,6 +95,7 @@ python3 shavian2tengwar.py "𐑢𐑦𐑯𐑑𐑼"         # convert (also reads 
 python3 shavian2tengwar.py --format literal "𐑞 𐑚𐑸𐑛"   # glyph names, for tecendil.com
 python3 shavian2tengwar.py --inspect "𐑢𐑦𐑯𐑑𐑼"         # each step and the rules that fired
 npm run corpus                             # regenerate corpus/review.html
+npm run corpus -- --encoding freemono      # the sheet in FreeMonoTengwar, in .tmp/ (not committed)
 npm run fmt                                # ruff format (run before every commit)
 npm run lint                               # ruff check + format check, as CI runs them
 npm run setup:docs && npm run pdf          # PDFs (Alex only; needs Chrome and the fonts)

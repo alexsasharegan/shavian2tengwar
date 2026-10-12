@@ -1,6 +1,6 @@
 # 0003 — Second Font Encoding
 
-> **Status:** In progress (gate: two candidates pass on rendering; waiting on Alex's choice)
+> **Status:** In review (PR #3): FreeMonoTengwar encoding added; ADRs Proposed, FE rules PROVISIONAL
 > **Created:** 2026-10-11
 > **Branch:** `feat/0003-second-encoding`
 

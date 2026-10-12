@@ -155,3 +155,71 @@ swift .wip/ctrender.swift <tengtelc> .wip/gate/Tengwar-Telcontar.lines .wip/gate
 - **Context state for next thread:** Waiting on Alex for: (1) whether FreeMono's outline positioning
   passes the gate; (2) which font gets the first encoding; (3) Formal CSUR's section in TextEdit, and
   FreeMono in Safari and TextEdit once installed. No ADR, spec or code yet.
+
+## 2026-10-11 — Alex's decisions; FreeMonoTengwar encoding, contract, ADRs
+
+### Context & Decisions
+
+- **Alex's rulings:**
+  1. FreeMono's outline-positioned tehtar pass the gate. "The gate tried to be specific, but the more
+     general principle is robust accessibility, especially for macOS users": browsers, PDFs and word
+     processors are all dimensions of support. ADR-0011 records the gate in those terms.
+  2. FreeMonoTengwar gets the first new encoding.
+  3. TextEdit screenshots: FreeMono passes and Telcontar shows dotted circles, matching the machine
+     renders. Formal CSUR's TextEdit section was not shown, and the choice above makes it moot.
+- **Tall letters, checked before writing the table.** FreeMono's `morx` might have lifted marks over
+  ascenders, which Chrome would miss. It does not. Over every base the mode uses (tinco, anto, ampa,
+  formen, hyarmen, lambe, roomen, silme, both carriers, ando, extended ando) with six mark combinations,
+  Core Text substitutes only `lambe` + `tehtaB` → `lambe_tehtaB`. So Core Text and Chrome draw the
+  same marks. The cost: the marks stay at a fixed height, so on anto, ampa, formen and extended ando
+  (stems up to y ≈ 608) the nasal bar crosses the stem, and on hyarmen (apex y 528) it touches it.
+  Recorded as a known limitation (`spec/encodings/freemono.md` §5).
+- **FreeMono's table equals Alcarin's** for every glyph and mark the mode emits. This was read from
+  FreeMono's cmap, and the spec's third column gives FreeMono's own glyph names. The module and the spec
+  are written out in full, not imported from Alcarin (ADR-0012, alternatives).
+- **Mark order (FE-01): nearest first.** Every FreeMono vowel mark starts at y ≥ 528, and the bar
+  spans y 490–530, so the order does not matter. Nearest first makes the output byte-identical to
+  Alcarin's, so text moves between the fonts.
+- **Contract (ADR-0012).** `Encoding` takes `families=` and `order=`. The registry is one table, and
+  `DEFAULT_ENCODING` is `alcarin`. `tests/test_encoding.py` runs every check for every encoding, adds a
+  corpus-wide encode check, and adds a `top-first` test. Fallback for fonts without extended
+  letters: `{the-shorthand}` → `{anto}`, `{of-shorthand}` → `{ampa}`. It is a contract clause only;
+  no registered font needs it.
+- **Tools.** `render_corpus.py --encoding freemono` writes `.tmp/review-freemono.html` (not committed),
+  and `build_pdfs.py --encoding freemono` writes `corpus/review-freemono.pdf`. The committed Alcarin
+  `review.html` is byte-identical. No PDFs were built.
+- **Looked at the result.** Screenshots of the FreeMono review sheet in Chrome, with the font embedded
+  from `.wip/fonts` (`.wip/gate/review-freemono-*.png`): every mark is attached, there are no dotted
+  circles, and identity pairs render the same.
+- The gate fixture stays in `.wip/` (a question for Alex in TASKS).
+
+### Commands & Operations Executed
+
+```bash
+swift .wip/ctrender.swift <FreeMono> .wip/gate/tall.lines .wip/gate/coretext-freemono-tall.png
+python -I <mark bounds script> <FreeMono>        # y ranges of the tehtar and tall stems
+python -I <spec rows script> <repo> <FreeMono>   # spec/encodings/freemono.md rows, names from cmap
+python3 tools/render_corpus.py                   # review.html unchanged
+python3 tools/render_corpus.py --encoding freemono
+.venv/bin/ruff format . && .venv/bin/ruff check .
+npm test
+npm run lint
+```
+
+Final output (Python 3.14.8):
+
+```
+Ran 69 tests in 0.873s
+
+OK
+All checks passed!
+62 files already formatted
+```
+
+### LLM Session Summary
+
+- **Thread purpose:** Phases 2 and 3: ADRs, contract, FreeMono encoding, tools.
+- **Key findings / Blockers resolved:** FreeMono works in every renderer the project uses; its marks
+  are cramped on tall letters. Its code points match Alcarin's for the mode.
+- **Context state for next thread:** PR #3 is open for Alex's review. Not merged. On approval, follow
+  the last task in TASKS.md.
